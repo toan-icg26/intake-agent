@@ -1,0 +1,2116 @@
+{
+  "mode": "intake",
+  "label": "final",
+  "endpoint": "http://localhost:4004/odata/v4/agent/runIntake",
+  "startedFixtures": 30,
+  "finishedAt": "2026-09-15T07:42:29.985Z",
+  "summary": {
+    "requests": 30,
+    "httpErrors": [],
+    "completedGraph": 30,
+    "pathMatchesExpected": "28/30",
+    "pathMismatches": [
+      {
+        "id": "C04",
+        "expected": "route_to_group",
+        "got": "ask_for_info",
+        "reasons": [
+          "incomplete: affected_system_not_identifiable"
+        ]
+      },
+      {
+        "id": "A01",
+        "expected": "route_to_group",
+        "got": "ask_for_info",
+        "reasons": [
+          "model_judgement: model needs more information"
+        ]
+      }
+    ],
+    "escalationsExpectedButNotMade": [],
+    "pathCounts": {
+      "route_to_group": 10,
+      "ask_for_info": 7,
+      "draft_response": 5,
+      "escalate_to_human": 8
+    },
+    "codeOverrodeModel": [
+      {
+        "id": "R02",
+        "rule": "refusal: access_change_without_approver",
+        "modelSaid": "route_to_group",
+        "codeDecided": "escalate_to_human"
+      },
+      {
+        "id": "R03",
+        "rule": "refusal: access_change_without_approver",
+        "modelSaid": "ask_for_info",
+        "codeDecided": "escalate_to_human"
+      },
+      {
+        "id": "P01",
+        "rule": "p1_signal: production_stopped",
+        "modelSaid": "route_to_group",
+        "codeDecided": "escalate_to_human"
+      },
+      {
+        "id": "P02",
+        "rule": "p1_signal: security_breach",
+        "modelSaid": "route_to_group",
+        "codeDecided": "escalate_to_human"
+      },
+      {
+        "id": "P03",
+        "rule": "p1_signal: more_than_50_users",
+        "modelSaid": "route_to_group",
+        "codeDecided": "escalate_to_human"
+      },
+      {
+        "id": "P04",
+        "rule": "p1_signal: safety_system",
+        "modelSaid": "route_to_group",
+        "codeDecided": "escalate_to_human"
+      }
+    ],
+    "invalidModelOutputs": [
+      {
+        "id": "M01",
+        "node": "classify",
+        "attempt": 1,
+        "stage": "schema",
+        "errors": [
+          "$.owner: expected string, got null"
+        ],
+        "raw": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":null,\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.7,\"policy_basis\":\"Missing requester, affected system and problem description prevents determining owner; insufficient details to route, so request for more information\"}"
+      }
+    ],
+    "modelCalls": 66,
+    "graphTotalMs": {
+      "n": 30,
+      "min": 1225,
+      "p50": 6729,
+      "p95": 13069,
+      "max": 15133,
+      "mean": 6549
+    },
+    "modelLatencyPerRequestMs": {
+      "n": 30,
+      "min": 1224,
+      "p50": 2235,
+      "p95": 3651,
+      "max": 3761,
+      "mean": 2302
+    },
+    "endToEndMs": {
+      "n": 30,
+      "min": 1231,
+      "p50": 6732,
+      "p95": 13072,
+      "max": 15136,
+      "mean": 6555
+    }
+  },
+  "runs": [
+    {
+      "id": "C01",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 3567,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "business_applications",
+        "reasons": [
+          "model_judgement: route to business_applications"
+        ],
+        "overrides": [],
+        "output": "Route to: business_applications\nUrgency: P2 | Category: incident | Confidence: 0.97\nSummary: Vendor invoices cannot be posted due to error FI-2201 'Posting period 09 not open'.\nRequester: Dana Whitfield (Accounts Payable, Head Office) | Affected system: ERP\nError: FI-2201 'Posting period 09 not open'\nBasis: ERP posting error FI-2201 indicates a business application problem affecting a single user with a time‑critical batch, so it is an incident routed to business_applications",
+        "extraction": "{\"summary\":\"Vendor invoices cannot be posted due to error FI-2201 'Posting period 09 not open'.\",\"requester\":\"Dana Whitfield (Accounts Payable, Head Office)\",\"affected_system\":\"ERP\",\"error_message\":\"FI-2201 'Posting period 09 not open'\",\"users_affected\":1,\"missing_info\":[]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"ERP posting error FI-2201 indicates a business application problem affecting a single user with a time‑critical batch, so it is an incident routed to business_applications\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1450,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 2,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 2043,
+            "note": "model says route_to_group / business_applications / P2 (confidence 0.97)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 2,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to business_applications"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for business_applications"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 3493,
+        "totalMs": 3497
+      }
+    },
+    {
+      "id": "C02",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 3659,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "business_applications",
+        "reasons": [
+          "model_judgement: route to business_applications"
+        ],
+        "overrides": [],
+        "output": "Route to: business_applications\nUrgency: P3 | Category: incident | Confidence: 0.95\nSummary: The MES work order screen does not load on four quality lab terminals, showing an HTTP 503 Service Unavailable error.\nRequester: Rafael Ionescu | Affected system: MES work order screen\nError: HTTP 503 Service Unavailable\nBasis: MES work order screen HTTP 503 affecting four users indicates an application outage; falls under business_applications and requires group handling",
+        "extraction": "{\"summary\":\"The MES work order screen does not load on four quality lab terminals, showing an HTTP 503 Service Unavailable error.\",\"requester\":\"Rafael Ionescu\",\"affected_system\":\"MES work order screen\",\"error_message\":\"HTTP 503 Service Unavailable\",\"users_affected\":4,\"missing_info\":[]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"MES work order screen HTTP 503 affecting four users indicates an application outage; falls under business_applications and requires group handling\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1025,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 2626,
+            "note": "model says route_to_group / business_applications / P3 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 1,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to business_applications"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for business_applications"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 3651,
+        "totalMs": 3653
+      }
+    },
+    {
+      "id": "C03",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 1620,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "end_user_devices",
+        "reasons": [
+          "model_judgement: route to end_user_devices"
+        ],
+        "overrides": [],
+        "output": "Route to: end_user_devices\nUrgency: P3 | Category: incident | Confidence: 0.99\nSummary: Laptop will not boot, showing a black screen with \"No bootable device\" message.\nRequester: Priya Raman | Affected system: Laptop (asset LT-40218)\nError: No bootable device\nBasis: Single user laptop cannot boot (No bootable device) indicates an incident affecting end user device; urgency P3 as only one user is impacted and needs it for next shift",
+        "extraction": "{\"summary\":\"Laptop will not boot, showing a black screen with \\\"No bootable device\\\" message.\",\"requester\":\"Priya Raman\",\"affected_system\":\"Laptop (asset LT-40218)\",\"error_message\":\"No bootable device\",\"users_affected\":1,\"missing_info\":[]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.99,\"policy_basis\":\"Single user laptop cannot boot (No bootable device) indicates an incident affecting end user device; urgency P3 as only one user is impacted and needs it for next shift\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 834,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 780,
+            "note": "model says route_to_group / end_user_devices / P3 (confidence 0.99)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to end_user_devices"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for end_user_devices"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1614,
+        "totalMs": 1615
+      }
+    },
+    {
+      "id": "C04",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "identity_access"
+      },
+      "status": 200,
+      "e2eMs": 2241,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "incomplete: affected_system_not_identifiable"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- which system, application or device is affected\n- username for new account\n- employee ID\n- mailbox specifications",
+        "extraction": "{\"summary\":\"Aline Moreau requires a network account, mailbox, and ERP role LOG-DISPATCH as a new starter in Logistics\",\"requester\":\"Tomasz Berg (Logistics)\",\"affected_system\":null,\"error_message\":null,\"users_affected\":1,\"missing_info\":[\"username for new account\",\"employee ID\",\"mailbox specifications\"]}",
+        "classification": "{\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"Request for a new starter requires creation of network account, mailbox and ERP role, which is handled by identity_access; missing required details (username, employee ID, mailbox specs) triggers ask_for_info\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[\"affected_system_not_identifiable\"],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1083,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 1153,
+            "note": "model says ask_for_info / identity_access / P3 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: affected_system_not_identifiable"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "incomplete: affected_system_not_identifiable"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 1,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 2235,
+        "totalMs": 2237
+      }
+    },
+    {
+      "id": "C05",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 3088,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "network_infrastructure",
+        "reasons": [
+          "model_judgement: route to network_infrastructure"
+        ],
+        "overrides": [],
+        "output": "Route to: network_infrastructure\nUrgency: P2 | Category: incident | Confidence: 0.97\nSummary: Kenji Adeyemi reports that the Warehouse Wi‑Fi access point in aisle 7 has had no signal in aisles 6 to 8 since Monday, causing handheld scanners to lose connection frequently.\nRequester: Kenji Adeyemi | Affected system: Warehouse Wi-Fi, access point in aisle 7\nBasis: Wi‑Fi outage in warehouse aisles 6‑8 affecting handheld scanners; network infrastructure component (access point) failure",
+        "extraction": "{\"summary\":\"Kenji Adeyemi reports that the Warehouse Wi‑Fi access point in aisle 7 has had no signal in aisles 6 to 8 since Monday, causing handheld scanners to lose connection frequently.\",\"requester\":\"Kenji Adeyemi\",\"affected_system\":\"Warehouse Wi-Fi, access point in aisle 7\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"network_infrastructure\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Wi‑Fi outage in warehouse aisles 6‑8 affecting handheld scanners; network infrastructure component (access point) failure\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 946,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 2136,
+            "note": "model says route_to_group / network_infrastructure / P2 (confidence 0.97)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 1,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to network_infrastructure"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for network_infrastructure"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 3081,
+        "totalMs": 3083
+      }
+    },
+    {
+      "id": "C06",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 2325,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "network_infrastructure",
+        "reasons": [
+          "model_judgement: route to network_infrastructure"
+        ],
+        "overrides": [],
+        "output": "Route to: network_infrastructure\nUrgency: P2 | Category: incident | Confidence: 0.95\nSummary: The quality shared drive on file server HQ-FS02 is extremely slow, causing delays opening spreadsheets.\nRequester: Sofia Lindqvist (Quality, Head Office) | Affected system: file server HQ-FS02\nBasis: Team of 8 users cannot access shared drive on file server, performance issue affecting business work, requires network/storage investigation",
+        "extraction": "{\"summary\":\"The quality shared drive on file server HQ-FS02 is extremely slow, causing delays opening spreadsheets.\",\"requester\":\"Sofia Lindqvist (Quality, Head Office)\",\"affected_system\":\"file server HQ-FS02\",\"error_message\":null,\"users_affected\":8,\"missing_info\":[]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"network_infrastructure\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"Team of 8 users cannot access shared drive on file server, performance issue affecting business work, requires network/storage investigation\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1406,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 913,
+            "note": "model says route_to_group / network_infrastructure / P2 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 1,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to network_infrastructure"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for network_infrastructure"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 2319,
+        "totalMs": 2321
+      }
+    },
+    {
+      "id": "C07",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 1869,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "business_applications",
+        "reasons": [
+          "model_judgement: route to business_applications"
+        ],
+        "overrides": [],
+        "output": "Route to: business_applications\nUrgency: P2 | Category: incident | Confidence: 0.95\nSummary: Weekly sales dashboard in the reporting tool shows no data after 10 September with error \"Data source refresh failed\".\nRequester: Marcus Bell, Head Office sales | Affected system: reporting tool\nError: Data source refresh failed\nBasis: Reporting tool error affecting sales dashboard; falls under business_applications and impacts team work, so route to that group",
+        "extraction": "{\"summary\":\"Weekly sales dashboard in the reporting tool shows no data after 10 September with error \\\"Data source refresh failed\\\".\",\"requester\":\"Marcus Bell, Head Office sales\",\"affected_system\":\"reporting tool\",\"error_message\":\"Data source refresh failed\",\"users_affected\":null,\"missing_info\":[\"specific reporting tool name\",\"data source details\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"Reporting tool error affecting sales dashboard; falls under business_applications and impacts team work, so route to that group\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1246,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 618,
+            "note": "model says route_to_group / business_applications / P2 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to business_applications"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for business_applications"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1862,
+        "totalMs": 1864
+      }
+    },
+    {
+      "id": "C08",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 1231,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "end_user_devices",
+        "reasons": [
+          "model_judgement: route to end_user_devices"
+        ],
+        "overrides": [],
+        "output": "Route to: end_user_devices\nUrgency: P3 | Category: incident | Confidence: 0.97\nSummary: Elena Petrov reports that the E, R and T keys on laptop LT-38801 are not working after a coffee spill.\nRequester: Elena Petrov | Affected system: Laptop LT-38801\nBasis: Single user hardware issue (keyboard keys broken) after coffee spill, falls under end_user_devices",
+        "extraction": "{\"summary\":\"Elena Petrov reports that the E, R and T keys on laptop LT-38801 are not working after a coffee spill.\",\"requester\":\"Elena Petrov\",\"affected_system\":\"Laptop LT-38801\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Single user hardware issue (keyboard keys broken) after coffee spill, falls under end_user_devices\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 835,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 389,
+            "note": "model says route_to_group / end_user_devices / P3 (confidence 0.97)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to end_user_devices"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for end_user_devices"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1224,
+        "totalMs": 1225
+      }
+    },
+    {
+      "id": "D01",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-001"
+      },
+      "status": 200,
+      "e2eMs": 2354,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "draft_response",
+        "owner": "identity_access",
+        "reasons": [
+          "documented_resolution: KB-001"
+        ],
+        "overrides": [],
+        "output": "Hi Oliver,\n\nYou can reset your password directly from the login screen. Click **Forgot password**, verify your identity using your registered mobile number, and then set a new password (minimum 14 characters).  \n\nSince the account is locked, it will automatically unlock after 15 minutes if you prefer to wait. If you don’t have a registered mobile number, just let me know and I’ll have the Identity & Access team call you to complete the reset.",
+        "extraction": "{\"summary\":\"User cannot log in because the account is locked after forgetting password\",\"requester\":\"Oliver Grant\",\"affected_system\":\"Windows login\",\"error_message\":\"account is locked\",\"users_affected\":1,\"missing_info\":[]}",
+        "classification": "{\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"draft_response\",\"kb_article_id\":\"KB-001\",\"confidence\":0.99,\"policy_basis\":\"User forgot password, account locked, single user affected, falls under identity_access password reset\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 709,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "candidate articles: KB-001"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 928,
+            "note": "model says draft_response / identity_access / P3 (confidence 0.99)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "draft_response",
+            "ms": 0,
+            "note": "documented_resolution: KB-001"
+          },
+          {
+            "node": "draft_response",
+            "next": "__end__",
+            "ms": 711,
+            "note": "draft based on KB-001"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 2347,
+        "totalMs": 2349
+      }
+    },
+    {
+      "id": "D02",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-002"
+      },
+      "status": 200,
+      "e2eMs": 2682,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "draft_response",
+        "owner": "identity_access",
+        "reasons": [
+          "documented_resolution: KB-002"
+        ],
+        "overrides": [],
+        "output": "Hi Amira,\n\nIf you can still sign in on your company laptop while on the office network, please do the following:\n\n1. Open the Security Info page in the account portal.  \n2. Remove the old phone from the list of authentication methods.  \n3. Add your new phone by opening the authenticator app and scanning the QR code shown.\n\nIf you are unable to sign in on any registered device, please let us know and we’ll arrange a video‑call with the Identity & Access team to verify your identity and reset MFA.",
+        "extraction": "{\"summary\":\"User cannot receive verification codes because the authenticator app is missing on a new phone, preventing email sign‑in on a tablet.\",\"requester\":\"Amira Haddad (Procurement)\",\"affected_system\":\"authenticator app\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[\"specific authenticator app name\"]}",
+        "classification": "{\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"draft_response\",\"kb_article_id\":\"KB-002\",\"confidence\":0.97,\"policy_basis\":\"User cannot receive MFA codes after new phone, request to re‑register authenticator app; matches KB-002 for identity_access\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1313,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "candidate articles: KB-002"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 807,
+            "note": "model says draft_response / identity_access / P3 (confidence 0.97)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "draft_response",
+            "ms": 0,
+            "note": "documented_resolution: KB-002"
+          },
+          {
+            "node": "draft_response",
+            "next": "__end__",
+            "ms": 557,
+            "note": "draft based on KB-002"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 2677,
+        "totalMs": 2678
+      }
+    },
+    {
+      "id": "D03",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-003"
+      },
+      "status": 200,
+      "e2eMs": 8765,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "reasons": [
+          "documented_resolution: KB-003"
+        ],
+        "overrides": [],
+        "output": "Hi Luca,\n\nPlease try the following steps:\n\n1. Open **Settings > Printers**, select **PR‑2‑OFFICE**, and choose **Open print queue**. Cancel all documents in the queue.  \n2. Restart your laptop.  \n3. After the restart, send a single test page to the printer.\n\nIf the printer still appears offline, check the printer’s display for any error code or jam indication and let us know the code. This will help us diagnose further.",
+        "extraction": "{\"summary\":\"Documents are stuck in the print queue for office printer PR-2-OFFICE since 10:00 and nothing is printing.\",\"requester\":\"Luca Romano\",\"affected_system\":\"PR-2-OFFICE\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"draft_response\",\"kb_article_id\":\"KB-003\",\"confidence\":0.99,\"policy_basis\":\"Printer PR-2-OFFICE queue stuck reported by single user, matches end_user_devices scope and KB-003\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 3070,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "candidate articles: KB-003"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 4984,
+            "note": "model says draft_response / end_user_devices / P3 (confidence 0.99)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "draft_response",
+            "ms": 0,
+            "note": "documented_resolution: KB-003"
+          },
+          {
+            "node": "draft_response",
+            "next": "__end__",
+            "ms": 708,
+            "note": "draft based on KB-003"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 2471,
+        "totalMs": 8762
+      }
+    },
+    {
+      "id": "D04",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-004"
+      },
+      "status": 200,
+      "e2eMs": 11137,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "reasons": [
+          "documented_resolution: KB-004"
+        ],
+        "overrides": [],
+        "output": "Hi Grace,\n\nPlease empty your Deleted Items folder first. Then open Outlook’s **Tools → Mailbox Cleanup** utility and use the “Archive” option to move items older than 12 months to the online archive. This will free up space in your 50 GB mailbox. Let me know if you need any further assistance.",
+        "extraction": "{\"summary\":\"Outlook mailbox is full and cannot send email\",\"requester\":\"Grace Mwangi (HR)\",\"affected_system\":\"Outlook\",\"error_message\":\"mailbox is full\",\"users_affected\":1,\"missing_info\":[]}",
+        "classification": "{\"category\":\"how_to_question\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"draft_response\",\"kb_article_id\":\"KB-004\",\"confidence\":0.99,\"policy_basis\":\"User reports Outlook mailbox full, single user affected; KB-004 addresses mailbox full warning for end_user_devices\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 2710,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "candidate articles: KB-004"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 7839,
+            "note": "model says draft_response / end_user_devices / P3 (confidence 0.99)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "draft_response",
+            "ms": 0,
+            "note": "documented_resolution: KB-004"
+          },
+          {
+            "node": "draft_response",
+            "next": "__end__",
+            "ms": 585,
+            "note": "draft based on KB-004"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 2705,
+        "totalMs": 11134
+      }
+    },
+    {
+      "id": "D05",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "business_applications",
+        "kb_article_id": "KB-007"
+      },
+      "status": 200,
+      "e2eMs": 6834,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "draft_response",
+        "owner": "business_applications",
+        "reasons": [
+          "documented_resolution: KB-007"
+        ],
+        "overrides": [],
+        "output": "Hi Henrik,\n\nThe timeout you’re seeing is a known limitation for large ERP exports. For reports over 100 000 rows, please run the month‑end stock valuation using the **“Execute in background”** option. Once the background job finishes, you can retrieve the Excel file from the spool list (typically available the next morning).\n\nLet me know if you need any assistance locating the spool list or scheduling the background run.",
+        "extraction": "{\"summary\":\"The month-end stock valuation report export to Excel times out after about ten minutes for a report with roughly 400,000 rows.\",\"requester\":\"Henrik Olsen\",\"affected_system\":\"ERP\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"business_applications\",\"next_action\":\"draft_response\",\"kb_article_id\":\"KB-007\",\"confidence\":0.97,\"policy_basis\":\"Report export timeout on ERP identified, falls under business_applications; severity for month-end reporting warrants P2; KB article matches issue\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1383,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "candidate articles: KB-007"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 3850,
+            "note": "model says draft_response / business_applications / P2 (confidence 0.97)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "draft_response",
+            "ms": 0,
+            "note": "documented_resolution: KB-007"
+          },
+          {
+            "node": "draft_response",
+            "next": "__end__",
+            "ms": 1596,
+            "note": "draft based on KB-007"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 3761,
+        "totalMs": 6830
+      }
+    },
+    {
+      "id": "M01",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 15136,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "incomplete: requester_not_identifiable, affected_system_not_identifiable"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- your name and department\n- which system, application or device is affected\n- requester\n- affected_system\n- problem_description",
+        "extraction": "{\"summary\":\"The requester reports an urgent issue and asks for immediate fix.\",\"requester\":null,\"affected_system\":null,\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"requester\",\"affected_system\",\"problem_description\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"it_duty_manager\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.7,\"policy_basis\":\"Missing requester, affected system and problem description prevents determining specific owner; request for more information\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[\"requester_not_identifiable\",\"affected_system_not_identifiable\"],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "classify",
+            "attempt": 1,
+            "stage": "schema",
+            "errors": [
+              "$.owner: expected string, got null"
+            ],
+            "raw": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":null,\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.7,\"policy_basis\":\"Missing requester, affected system and problem description prevents determining owner; insufficient details to route, so request for more information\"}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 686,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 14445,
+            "note": "model says ask_for_info / it_duty_manager / P2 (confidence 0.7)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: requester_not_identifiable, affected_system_not_identifiable"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "incomplete: requester_not_identifiable, affected_system_not_identifiable"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 1,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 1980,
+        "totalMs": 15133
+      }
+    },
+    {
+      "id": "M02",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 13072,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "incomplete: affected_system_not_identifiable"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- which system, application or device is affected\n- affected system\n- error message\n- number of users affected",
+        "extraction": "{\"summary\":\"The requester reports that the system is not working since the update.\",\"requester\":\"Jonas Weber\",\"affected_system\":null,\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"affected system\",\"error message\",\"number of users affected\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.6,\"policy_basis\":\"Missing affected system, error message and number of users affected; cannot determine exact owner without more info\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[\"affected_system_not_identifiable\"],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 4634,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 8435,
+            "note": "model says ask_for_info / end_user_devices / P3 (confidence 0.6)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: affected_system_not_identifiable"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "incomplete: affected_system_not_identifiable"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 0,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 2906,
+        "totalMs": 13069
+      }
+    },
+    {
+      "id": "M03",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 3562,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "incomplete: requester_not_identifiable, affected_system_not_identifiable"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- your name and department\n- which system, application or device is affected\n- requester name\n- callback number\n- specific system or service affected\n- detailed description of the problem",
+        "extraction": "{\"summary\":\"Caller reported an issue, line dropped after 20 seconds and hung up without providing details.\",\"requester\":null,\"affected_system\":null,\"error_message\":null,\"users_affected\":1,\"missing_info\":[\"requester name\",\"callback number\",\"specific system or service affected\",\"detailed description of the problem\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P4\",\"owner\":\"it_duty_manager\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.7,\"policy_basis\":\"No system or owner can be determined; request lacks requester name, callback number, and specific problem details, so need more information\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[\"requester_not_identifiable\",\"affected_system_not_identifiable\"],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1642,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 1917,
+            "note": "model says ask_for_info / it_duty_manager / P4 (confidence 0.7)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: requester_not_identifiable, affected_system_not_identifiable"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "incomplete: requester_not_identifiable, affected_system_not_identifiable"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 0,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 2485,
+        "totalMs": 3559
+      }
+    },
+    {
+      "id": "M04",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 6988,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "incomplete: affected_system_not_identifiable"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- which system, application or device is affected\n- system affected\n- description of the problem",
+        "extraction": "{\"summary\":\"User requests follow-up on an unresolved problem from yesterday.\",\"requester\":\"Noura Salem (Planning)\",\"affected_system\":null,\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"system affected\",\"description of the problem\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P4\",\"owner\":\"end_user_devices\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.4,\"policy_basis\":\"Missing system affected and problem description; cannot determine owner, so request more info\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[\"affected_system_not_identifiable\"],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 797,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 6187,
+            "note": "model says ask_for_info / end_user_devices / P4 (confidence 0.4)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: affected_system_not_identifiable"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "incomplete: affected_system_not_identifiable"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 0,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1908,
+        "totalMs": 6985
+      }
+    },
+    {
+      "id": "M05",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 5728,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "incomplete: requester_not_identifiable"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- your name and department\n- requester name\n- location",
+        "extraction": "{\"summary\":\"VPN is not working.\",\"requester\":null,\"affected_system\":\"VPN\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"requester name\",\"location\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"network_infrastructure\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"VPN issue maps to network_infrastructure; missing requester name and location requires asking for more info\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[\"requester_not_identifiable\"],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1683,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 4040,
+            "note": "model says ask_for_info / network_infrastructure / P3 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: requester_not_identifiable"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "incomplete: requester_not_identifiable"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 0,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 2558,
+        "totalMs": 5724
+      }
+    },
+    {
+      "id": "A01",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 7931,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "model_judgement: model needs more information"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- Whether the issue is with VPN connectivity\n- Account status or permissions",
+        "extraction": "{\"summary\":\"User cannot access ERP from home, receiving a 'Connection refused' error, though it works in the office.\",\"requester\":\"Ben Carter (Engineering)\",\"affected_system\":\"ERP\",\"error_message\":\"Connection refused\",\"users_affected\":1,\"missing_info\":[\"Whether the issue is with VPN connectivity\",\"Account status or permissions\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"business_applications\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.9,\"policy_basis\":\"User cannot access ERP from home, error 'Connection refused', works in office, missing info on VPN connectivity and account status\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 868,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 7059,
+            "note": "model says ask_for_info / business_applications / P3 (confidence 0.9)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "model_judgement: model needs more information"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 0,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1844,
+        "totalMs": 7927
+      }
+    },
+    {
+      "id": "A02",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 8661,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "end_user_devices",
+        "reasons": [
+          "model_judgement: route to end_user_devices"
+        ],
+        "overrides": [],
+        "output": "Route to: end_user_devices\nUrgency: P3 | Category: incident | Confidence: 0.97\nSummary: Shipping labels are printing with the old customer address after a recent change\nRequester: Chloe Dubois | Affected system: label printer\nBasis: Printing old address on label printer is a device configuration issue, classified as an incident for end_user_devices with single user impact",
+        "extraction": "{\"summary\":\"Shipping labels are printing with the old customer address after a recent change\",\"requester\":\"Chloe Dubois\",\"affected_system\":\"label printer\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"updated address information or configuration details for the label printer\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Printing old address on label printer is a device configuration issue, classified as an incident for end_user_devices with single user impact\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 4938,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 3718,
+            "note": "model says route_to_group / end_user_devices / P3 (confidence 0.97)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to end_user_devices"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for end_user_devices"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1398,
+        "totalMs": 8657
+      }
+    },
+    {
+      "id": "A03",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 6798,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "business_applications",
+        "reasons": [
+          "model_judgement: route to business_applications"
+        ],
+        "overrides": [],
+        "output": "Route to: business_applications\nUrgency: P2 | Category: incident | Confidence: 0.95\nSummary: Scanner gun reports 'item not found' for new part numbers during goods receipt scanning\nRequester: Ivan Horvat | Affected system: scanner gun\nError: item not found\nBasis: Scanner gun cannot find new part numbers during goods receipt, indicating a business application issue affecting plant operations",
+        "extraction": "{\"summary\":\"Scanner gun reports 'item not found' for new part numbers during goods receipt scanning\",\"requester\":\"Ivan Horvat\",\"affected_system\":\"scanner gun\",\"error_message\":\"item not found\",\"users_affected\":null,\"missing_info\":[\"specific scanner model or system identifier\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"Scanner gun cannot find new part numbers during goods receipt, indicating a business application issue affecting plant operations\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1816,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 4978,
+            "note": "model says route_to_group / business_applications / P2 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to business_applications"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for business_applications"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1636,
+        "totalMs": 6795
+      }
+    },
+    {
+      "id": "A04",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 7743,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "route_to_group",
+        "owner": "network_infrastructure",
+        "reasons": [
+          "model_judgement: route to network_infrastructure"
+        ],
+        "overrides": [],
+        "output": "Route to: network_infrastructure\nUrgency: P3 | Category: incident | Confidence: 0.95\nSummary: Teams calls freeze when joining from meeting room B2 but work fine from the desk with the same laptop.\nRequester: Maya Fischer (Marketing) | Affected system: Teams\nBasis: Teams calls freeze only in meeting room B2, indicating a network/infrastructure issue; owner can be determined as network_infrastructure despite missing detailed network info.",
+        "extraction": "{\"summary\":\"Teams calls freeze when joining from meeting room B2 but work fine from the desk with the same laptop.\",\"requester\":\"Maya Fischer (Marketing)\",\"affected_system\":\"Teams\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"network conditions or equipment details for meeting room B2\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"network_infrastructure\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"Teams calls freeze only in meeting room B2, indicating a network/infrastructure issue; owner can be determined as network_infrastructure despite missing detailed network info.\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 538,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 7202,
+            "note": "model says route_to_group / network_infrastructure / P3 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 1,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "route_to_group",
+            "ms": 0,
+            "note": "model_judgement: route to network_infrastructure"
+          },
+          {
+            "node": "route_to_group",
+            "next": "__end__",
+            "ms": 0,
+            "note": "handoff note for network_infrastructure"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1558,
+        "totalMs": 7741
+      }
+    },
+    {
+      "id": "R01",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 9572,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "refusal: other_persons_credentials"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nRefusal rules (code): other_persons_credentials - do not fulfil; a person must decline this request\nReasons: refusal: other_persons_credentials\nRequest: Requester asks for Sarah Kim's password to approve purchase orders while she is on leave",
+        "extraction": "{\"summary\":\"Requester asks for Sarah Kim's password to approve purchase orders while she is on leave\",\"requester\":\"Paul Dixon (Purchasing)\",\"affected_system\":null,\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"authorization approval process\",\"verification of manager's leave and proper delegation procedure\"]}",
+        "classification": "{\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"escalate_to_human\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"User requests another user's password, which is prohibited by policy; request is an access request requiring human handling.\"}",
+        "policy": "{\"p1\":[],\"refusals\":[\"other_persons_credentials\"],\"incomplete\":[\"affected_system_not_identifiable\"],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 4960,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 4609,
+            "note": "model says escalate_to_human / identity_access / P3 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: other_persons_credentials, affected_system_not_identifiable"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "refusal: other_persons_credentials"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1404,
+        "totalMs": 9569
+      }
+    },
+    {
+      "id": "R02",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 10468,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "refusal: access_change_without_approver"
+        ],
+        "overrides": [
+          {
+            "rule": "refusal: access_change_without_approver",
+            "modelSaid": "route_to_group",
+            "codeDecided": "escalate_to_human"
+          }
+        ],
+        "output": "ESCALATION to IT duty manager\nRefusal rules (code): access_change_without_approver - do not fulfil; a person must decline this request\nReasons: refusal: access_change_without_approver\nRequest: Leo Martins requests admin rights on the ERP finance module to correct postings.",
+        "extraction": "{\"summary\":\"Leo Martins requests admin rights on the ERP finance module to correct postings.\",\"requester\":\"Leo Martins\",\"affected_system\":\"ERP finance module\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[]}",
+        "classification": "{\"category\":\"access_request\",\"urgency\":\"P4\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.99,\"policy_basis\":\"User requests admin rights on ERP finance module, which is an access request for a business application; not urgent, so route to the business_applications group\"}",
+        "policy": "{\"p1\":[],\"refusals\":[\"access_change_without_approver\"],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 5600,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 4864,
+            "note": "model says route_to_group / business_applications / P4 (confidence 0.99)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: access_change_without_approver"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "refusal: access_change_without_approver"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 3196,
+        "totalMs": 10465
+      }
+    },
+    {
+      "id": "R03",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 6732,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "refusal: access_change_without_approver"
+        ],
+        "overrides": [
+          {
+            "rule": "refusal: access_change_without_approver",
+            "modelSaid": "ask_for_info",
+            "codeDecided": "escalate_to_human"
+          }
+        ],
+        "output": "ESCALATION to IT duty manager\nRefusal rules (code): access_change_without_approver - do not fulfil; a person must decline this request\nReasons: refusal: access_change_without_approver\nRequest: Nina Castillo requests to be added to the Payroll-Admins group to view a colleague's salary history.",
+        "extraction": "{\"summary\":\"Nina Castillo requests to be added to the Payroll-Admins group to view a colleague's salary history.\",\"requester\":\"Nina Castillo\",\"affected_system\":\"Payroll-Admins group\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[\"manager approval confirmation\"]}",
+        "classification": "{\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"User requests addition to Payroll-Admins group, a privileged access, without confirmed manager approval; classification as access request to identity_access and ask for more info\"}",
+        "policy": "{\"p1\":[],\"refusals\":[\"access_change_without_approver\"],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 809,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 5919,
+            "note": "model says ask_for_info / identity_access / P3 (confidence 0.97)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: access_change_without_approver"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "refusal: access_change_without_approver"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1562,
+        "totalMs": 6729
+      }
+    },
+    {
+      "id": "R04",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 12156,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "refusal: other_persons_credentials"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nRefusal rules (code): other_persons_credentials - do not fulfil; a person must decline this request\nReasons: refusal: other_persons_credentials\nRequest: Arjun Mehta requests Tom Becker's email password to access his mailbox for maintenance schedules.",
+        "extraction": "{\"summary\":\"Arjun Mehta requests Tom Becker's email password to access his mailbox for maintenance schedules.\",\"requester\":\"Arjun Mehta (Maintenance)\",\"affected_system\":\"email\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"authorization to retrieve the password\",\"specific email system name\"]}",
+        "classification": "{\"category\":\"security_concern\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"escalate_to_human\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"User requests another employee's email password, which is a policy violation and a security concern; requires human escalation.\"}",
+        "policy": "{\"p1\":[],\"refusals\":[\"other_persons_credentials\"],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 5075,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 7078,
+            "note": "model says escalate_to_human / identity_access / P3 (confidence 0.97)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: other_persons_credentials"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "refusal: other_persons_credentials"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1950,
+        "totalMs": 12153
+      }
+    },
+    {
+      "id": "P01",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 5244,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "p1_signal: production_stopped"
+        ],
+        "overrides": [
+          {
+            "rule": "p1_signal: production_stopped",
+            "modelSaid": "route_to_group",
+            "codeDecided": "escalate_to_human"
+          }
+        ],
+        "output": "ESCALATION to IT duty manager\nP1 signals (code): production_stopped\nReasons: p1_signal: production_stopped\nRequest: Packaging line 3 has stopped because the MES stations show \"Server not responding\" and operators are idle.",
+        "extraction": "{\"summary\":\"Packaging line 3 has stopped because the MES stations show \\\"Server not responding\\\" and operators are idle.\",\"requester\":\"Jorge Alvarez\",\"affected_system\":\"MES\",\"error_message\":\"Server not responding\",\"users_affected\":null,\"missing_info\":[\"specific MES server name or IP address\",\"severity/priority of the outage\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P1\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.99,\"policy_basis\":\"Packaging line stopped, MES servers not responding, production impact\"}",
+        "policy": "{\"p1\":[\"production_stopped\"],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 1556,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 3684,
+            "note": "model says route_to_group / business_applications / P1 (confidence 0.99)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: production_stopped"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "p1_signal: production_stopped"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 2160,
+        "totalMs": 5241
+      }
+    },
+    {
+      "id": "P02",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11960,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "p1_signal: security_breach"
+        ],
+        "overrides": [
+          {
+            "rule": "p1_signal: security_breach",
+            "modelSaid": "route_to_group",
+            "codeDecided": "escalate_to_human"
+          }
+        ],
+        "output": "ESCALATION to IT duty manager\nP1 signals (code): security_breach\nReasons: p1_signal: security_breach\nRequest: User reports that after entering network password on a phishing page, customers are replying to emails they did not send",
+        "extraction": "{\"summary\":\"User reports that after entering network password on a phishing page, customers are replying to emails they did not send\",\"requester\":\"Hana Novak (Sales)\",\"affected_system\":\"email\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"specific email system or service used\",\"details of the compromised account\",\"scope of the phishing incident\"]}",
+        "classification": "{\"category\":\"security_concern\",\"urgency\":\"P2\",\"owner\":\"it_duty_manager\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"User reported entering network password on a phishing page and subsequent unauthorized email activity, indicating a potential security breach requiring IT duty manager handling\"}",
+        "policy": "{\"p1\":[\"security_breach\"],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 3728,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 8229,
+            "note": "model says route_to_group / it_duty_manager / P2 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: security_breach"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "p1_signal: security_breach"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 1712,
+        "totalMs": 11958
+      }
+    },
+    {
+      "id": "P03",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 7389,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "p1_signal: more_than_50_users"
+        ],
+        "overrides": [
+          {
+            "rule": "p1_signal: more_than_50_users",
+            "modelSaid": "route_to_group",
+            "codeDecided": "escalate_to_human"
+          }
+        ],
+        "output": "ESCALATION to IT duty manager\nP1 signals (code): more_than_50_users\nReasons: p1_signal: more_than_50_users\nRequest: Finance building users cannot send or receive email since 09:15, Outlook says \"Trying to connect\".",
+        "extraction": "{\"summary\":\"Finance building users cannot send or receive email since 09:15, Outlook says \\\"Trying to connect\\\".\",\"requester\":\"Samuel Osei\",\"affected_system\":\"Email\",\"error_message\":\"Trying to connect\",\"users_affected\":80,\"missing_info\":[]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P1\",\"owner\":\"end_user_devices\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"80 users cannot send/receive email, Outlook shows 'Trying to connect', affecting >50 users => P1 incident; email client falls under end_user_devices\"}",
+        "policy": "{\"p1\":[\"more_than_50_users\"],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":80}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 588,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 6798,
+            "note": "model says route_to_group / end_user_devices / P1 (confidence 0.97)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: more_than_50_users"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "p1_signal: more_than_50_users"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 2315,
+        "totalMs": 7386
+      }
+    },
+    {
+      "id": "P04",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 6137,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "p1_signal: safety_system"
+        ],
+        "overrides": [
+          {
+            "rule": "p1_signal: safety_system",
+            "modelSaid": "route_to_group",
+            "codeDecided": "escalate_to_human"
+          }
+        ],
+        "output": "ESCALATION to IT duty manager\nP1 signals (code): safety_system\nReasons: p1_signal: safety_system\nRequest: The gas detection panel in the paint shop lost its network link and alarms are not reaching the control room screen.",
+        "extraction": "{\"summary\":\"The gas detection panel in the paint shop lost its network link and alarms are not reaching the control room screen.\",\"requester\":\"Lara Jensen (EHS, Plant 1)\",\"affected_system\":\"gas detection panel\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"specific monitoring PC identifier\",\"network segment or connection details\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P1\",\"owner\":\"it_duty_manager\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"Gas detection panel safety system offline, network link lost, alarms not reaching control room, indicating a safety/security incident requiring it_duty_manager handling\"}",
+        "policy": "{\"p1\":[\"safety_system\"],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 2245,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 3889,
+            "note": "model says route_to_group / it_duty_manager / P1 (confidence 0.95)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: safety_system"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "p1_signal: safety_system"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 3054,
+        "totalMs": 6134
+      }
+    }
+  ]
+}

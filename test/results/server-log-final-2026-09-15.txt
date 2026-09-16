@@ -1,0 +1,280 @@
+[cds] - loaded model from 2 file(s):
+ 
+  srv/agent-service.cds
+  db/schema.cds
+
+[cds] - connect to db > sqlite { url: ':memory:' }
+  > init from db/data/intake-KnowledgeArticles.csv 
+/> successfully deployed to in-memory database. 
+
+[cds] - using auth strategy { kind: 'mocked' }
+[cds] - serving AgentService {
+  at: [ '/odata/v4/agent' ],
+  decl: 'srv/agent-service.cds:3',
+  impl: 'srv/agent-service.js'
+}
+[cds] - server listening on { url: 'http://localhost:4004' }
+[cds] - server v10.1.0 launched in 463 ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1450ms tokens=639
+[model] - [classify#1] model=openai/gpt-oss-120b latency=2043ms tokens=919
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=3493ms total=3497ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1025ms tokens=616
+[model] - [classify#1] model=openai/gpt-oss-120b latency=2626ms tokens=958
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=3651ms total=3653ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=834ms tokens=618
+[model] - [classify#1] model=openai/gpt-oss-120b latency=780ms tokens=840
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=1614ms total=1615ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1082ms tokens=739
+[model] - [classify#1] model=openai/gpt-oss-120b latency=1153ms tokens=911
+[agent] - [runIntake] path=ask_for_info nodes=extract>lookup_context>classify>check_policy>choose_path>ask_for_info modelCalls=2 modelLatency=2235ms total=2237ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=945ms tokens=717
+[model] - [classify#1] model=openai/gpt-oss-120b latency=2136ms tokens=962
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=3081ms total=3083ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1406ms tokens=657
+[model] - [classify#1] model=openai/gpt-oss-120b latency=913ms tokens=942
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=2319ms total=2321ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1245ms tokens=674
+[model] - [classify#1] model=openai/gpt-oss-120b latency=617ms tokens=884
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=1862ms total=1864ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=835ms tokens=651
+[model] - [classify#1] model=openai/gpt-oss-120b latency=389ms tokens=844
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=1224ms total=1225ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=709ms tokens=573
+[model] - [classify#1] model=openai/gpt-oss-120b latency=927ms tokens=848
+[model] - [draft_response] model=openai/gpt-oss-120b latency=711ms tokens=412
+[agent] - [runIntake] path=draft_response nodes=extract>lookup_context>classify>check_policy>choose_path>draft_response modelCalls=3 modelLatency=2347ms total=2349ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1313ms tokens=677
+[model] - [classify#1] model=openai/gpt-oss-120b latency=807ms tokens=918
+[model] - [draft_response] model=openai/gpt-oss-120b latency=557ms tokens=404
+[agent] - [runIntake] path=draft_response nodes=extract>lookup_context>classify>check_policy>choose_path>draft_response modelCalls=3 modelLatency=2677ms total=2678ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [extract#1] HTTP 429, waiting retry-after=1s (attempt 2/3)
+[model] - [extract#1] model=openai/gpt-oss-120b latency=928ms tokens=665 waited=2000ms
+[model] - [classify#1] HTTP 429, waiting retry-after=3s (attempt 1/3)
+[model] - [classify#1] HTTP 429, waiting retry-after=1s (attempt 2/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=835ms tokens=865 waited=4000ms
+[model] - [draft_response] model=openai/gpt-oss-120b latency=708ms tokens=382
+[agent] - [runIntake] path=draft_response nodes=extract>lookup_context>classify>check_policy>choose_path>draft_response modelCalls=3 modelLatency=2471ms total=8762ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [extract#1] model=openai/gpt-oss-120b latency=637ms tokens=587 waited=2000ms
+[model] - [classify#1] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [classify#1] HTTP 429, waiting retry-after=2s (attempt 2/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=1483ms tokens=850 waited=6000ms
+[model] - [draft_response] model=openai/gpt-oss-120b latency=585ms tokens=300
+[agent] - [runIntake] path=draft_response nodes=extract>lookup_context>classify>check_policy>choose_path>draft_response modelCalls=3 modelLatency=2705ms total=11134ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1383ms tokens=588
+[model] - [classify#1] HTTP 429, waiting retry-after=3s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=782ms tokens=870 waited=3000ms
+[model] - [draft_response] model=openai/gpt-oss-120b latency=1596ms tokens=343
+[agent] - [runIntake] path=draft_response nodes=extract>lookup_context>classify>check_policy>choose_path>draft_response modelCalls=3 modelLatency=3761ms total=6830ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=686ms tokens=560
+[model] - [classify#1] HTTP 429, waiting retry-after=6s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=508ms tokens=842 waited=6000ms
+[structured] - [classify#1] invalid structure at stage=schema: $.owner: expected string, got null
+--- raw model output ---
+{"category":"incident","urgency":"P2","owner":null,"next_action":"ask_for_info","kb_article_id":null,"confidence":0.7,"policy_basis":"Missing requester, affected system and problem description prevents determining owner; insufficient details to route, so request for more information"}
+--- end raw ---
+[model] - [classify#2] HTTP 429, waiting retry-after=7s (attempt 1/3)
+[model] - [classify#2] model=openai/gpt-oss-120b latency=786ms tokens=947 waited=7000ms
+[agent] - [runIntake] path=ask_for_info nodes=extract>lookup_context>classify>check_policy>choose_path>ask_for_info modelCalls=3 modelLatency=1980ms total=15133ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [extract#1] model=openai/gpt-oss-120b latency=567ms tokens=617 waited=4000ms
+[model] - [classify#1] HTTP 429, waiting retry-after=6s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=2339ms tokens=903 waited=6000ms
+[agent] - [runIntake] path=ask_for_info nodes=extract>lookup_context>classify>check_policy>choose_path>ask_for_info modelCalls=2 modelLatency=2906ms total=13069ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1641ms tokens=613
+[model] - [classify#1] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=844ms tokens=870 waited=1000ms
+[agent] - [runIntake] path=ask_for_info nodes=extract>lookup_context>classify>check_policy>choose_path>ask_for_info modelCalls=2 modelLatency=2485ms total=3559ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=796ms tokens=584
+[model] - [classify#1] HTTP 429, waiting retry-after=5s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=1112ms tokens=946 waited=5000ms
+[agent] - [runIntake] path=ask_for_info nodes=extract>lookup_context>classify>check_policy>choose_path>ask_for_info modelCalls=2 modelLatency=1908ms total=6985ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1683ms tokens=632
+[model] - [classify#1] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [classify#1] HTTP 429, waiting retry-after=1s (attempt 2/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=875ms tokens=829 waited=3000ms
+[agent] - [runIntake] path=ask_for_info nodes=extract>lookup_context>classify>check_policy>choose_path>ask_for_info modelCalls=2 modelLatency=2558ms total=5724ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=867ms tokens=654
+[model] - [classify#1] HTTP 429, waiting retry-after=6s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=977ms tokens=897 waited=6000ms
+[agent] - [runIntake] path=ask_for_info nodes=extract>lookup_context>classify>check_policy>choose_path>ask_for_info modelCalls=2 modelLatency=1844ms total=7927ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [extract#1] model=openai/gpt-oss-120b latency=860ms tokens=600 waited=4000ms
+[model] - [classify#1] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [classify#1] HTTP 429, waiting retry-after=1s (attempt 2/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=538ms tokens=896 waited=3000ms
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=1398ms total=8657ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [extract#1] model=openai/gpt-oss-120b latency=737ms tokens=640 waited=1000ms
+[model] - [classify#1] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=899ms tokens=884 waited=4000ms
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=1636ms total=6795ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=538ms tokens=624
+[model] - [classify#1] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [classify#1] HTTP 429, waiting retry-after=2s (attempt 2/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=1020ms tokens=989 waited=6000ms
+[agent] - [runIntake] path=route_to_group nodes=extract>lookup_context>classify>check_policy>choose_path>route_to_group modelCalls=2 modelLatency=1558ms total=7741ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [extract#1] model=openai/gpt-oss-120b latency=882ms tokens=637 waited=4000ms
+[model] - [classify#1] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=522ms tokens=897 waited=4000ms
+[agent] - [runIntake] path=escalate_to_human nodes=extract>lookup_context>classify>check_policy>choose_path>escalate_to_human modelCalls=2 modelLatency=1404ms total=9569ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [extract#1] HTTP 429, waiting retry-after=2s (attempt 2/3)
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1440ms tokens=643 waited=4000ms
+[model] - [classify#1] HTTP 429, waiting retry-after=3s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=1756ms tokens=896 waited=3000ms
+[agent] - [runIntake] path=escalate_to_human nodes=extract>lookup_context>classify>check_policy>choose_path>escalate_to_human modelCalls=2 modelLatency=3196ms total=10465ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=809ms tokens=640
+[model] - [classify#1] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [classify#1] HTTP 429, waiting retry-after=1s (attempt 2/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=753ms tokens=854 waited=5000ms
+[agent] - [runIntake] path=escalate_to_human nodes=extract>lookup_context>classify>check_policy>choose_path>escalate_to_human modelCalls=2 modelLatency=1562ms total=6729ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [extract#1] HTTP 429, waiting retry-after=2s (attempt 2/3)
+[model] - [extract#1] model=openai/gpt-oss-120b latency=941ms tokens=671 waited=4000ms
+[model] - [classify#1] HTTP 429, waiting retry-after=6s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=1009ms tokens=874 waited=6000ms
+[agent] - [runIntake] path=escalate_to_human nodes=extract>lookup_context>classify>check_policy>choose_path>escalate_to_human modelCalls=2 modelLatency=1950ms total=12153ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=1556ms tokens=661
+[model] - [classify#1] HTTP 429, waiting retry-after=3s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=604ms tokens=854 waited=3000ms
+[agent] - [runIntake] path=escalate_to_human nodes=extract>lookup_context>classify>check_policy>choose_path>escalate_to_human modelCalls=2 modelLatency=2160ms total=5241ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [extract#1] HTTP 429, waiting retry-after=1s (attempt 2/3)
+[model] - [extract#1] model=openai/gpt-oss-120b latency=570ms tokens=650 waited=3000ms
+[model] - [classify#1] HTTP 429, waiting retry-after=7s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=1142ms tokens=926 waited=7000ms
+[agent] - [runIntake] path=escalate_to_human nodes=extract>lookup_context>classify>check_policy>choose_path>escalate_to_human modelCalls=2 modelLatency=1712ms total=11958ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=587ms tokens=589
+[model] - [classify#1] HTTP 429, waiting retry-after=5s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=1728ms tokens=926 waited=5000ms
+[agent] - [runIntake] path=escalate_to_human nodes=extract>lookup_context>classify>check_policy>choose_path>escalate_to_human modelCalls=2 modelLatency=2315ms total=7386ms
+[odata] - POST /odata/v4/agent/runIntake 
+[model] - [extract#1] model=openai/gpt-oss-120b latency=2245ms tokens=640
+[model] - [classify#1] HTTP 429, waiting retry-after=3s (attempt 1/3)
+[model] - [classify#1] model=openai/gpt-oss-120b latency=809ms tokens=936 waited=3000ms
+[agent] - [runIntake] path=escalate_to_human nodes=extract>lookup_context>classify>check_policy>choose_path>escalate_to_human modelCalls=2 modelLatency=3054ms total=6134ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [triage] HTTP 429, waiting retry-after=2s (attempt 2/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1188ms tokens=1150 waited=3000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=5s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1592ms tokens=1168 waited=5000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1252ms tokens=1207 waited=2000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=851ms tokens=1090 waited=1000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=8s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1403ms tokens=1216 waited=8000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=973ms tokens=1177 waited=1000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=5s (attempt 1/3)
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 2/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1056ms tokens=1137 waited=6000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 2/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1093ms tokens=1156 waited=5000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1108ms tokens=1106 waited=2000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=962ms tokens=1162 waited=2000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] model=openai/gpt-oss-120b latency=1550ms tokens=1150
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=3s (attempt 1/3)
+[model] - [triage] HTTP 429, waiting retry-after=3s (attempt 2/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=2019ms tokens=1100 waited=6000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 2/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=968ms tokens=1111 waited=3000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1082ms tokens=1127 waited=2000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=6s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1151ms tokens=1112 waited=6000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [triage] HTTP 429, waiting retry-after=2s (attempt 2/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1314ms tokens=1234 waited=3000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=2s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1269ms tokens=1190 waited=2000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=6s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=970ms tokens=1067 waited=6000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=3s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1410ms tokens=1167 waited=3000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [triage] HTTP 429, waiting retry-after=2s (attempt 2/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1841ms tokens=1136 waited=3000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] model=openai/gpt-oss-120b latency=792ms tokens=1106
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=5s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=2016ms tokens=1182 waited=5000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=955ms tokens=1155 waited=1000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=4s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1687ms tokens=1119 waited=4000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1270ms tokens=1093 waited=1000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=1s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1455ms tokens=1223 waited=1000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] model=openai/gpt-oss-120b latency=1274ms tokens=1118
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] model=openai/gpt-oss-120b latency=1364ms tokens=1136
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=7s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1378ms tokens=1159 waited=7000ms
+[odata] - POST /odata/v4/agent/triage 
+[model] - [triage] HTTP 429, waiting retry-after=6s (attempt 1/3)
+[model] - [triage] model=openai/gpt-oss-120b latency=1032ms tokens=1114 waited=6000ms

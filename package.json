@@ -1,0 +1,19 @@
+{
+  "name": "intake-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@sap/cds": "10.1.0"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "3.1.0"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch": "cds watch",
+    "fixtures:ask": "node test/run-fixtures.js ask",
+    "fixtures:triage": "node test/run-fixtures.js triage",
+    "fixtures:intake": "node test/run-fixtures.js intake"
+  },
+  "private": true
+}

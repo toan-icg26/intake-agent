@@ -1,0 +1,1064 @@
+{
+  "mode": "triage",
+  "label": "experiment-allam-2-7b",
+  "endpoint": "http://localhost:4005/odata/v4/agent/triage",
+  "startedFixtures": 30,
+  "finishedAt": "2026-09-15T07:27:02.603Z",
+  "summary": {
+    "requests": 30,
+    "httpErrors": [],
+    "validStructure": 6,
+    "invalidStructure": [
+      {
+        "id": "C03",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern"
+        ],
+        "raw": "{\n  \"summary\": \"Laptop LT-40218 not booting, black screen 'No bootable device'; urgent request for shift reports\",\n  \"requester\": \"Priya Raman\",\n  \"affected_system\": \"Laptop LT-40218\",\n  \"error_message\": \"black screen 'No bootable device'\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"owner\", \"category\", \"urgency\", \"next_action\"],\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"user's critical task for tomorrow morning\"\n}"
+      },
+      {
+        "id": "C04",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"New starter setup for Aline Moreau\",\n  \"requester\": \"Tomasz Berg\",\n  \"affected_system\": \"network_account, mailbox, ERP role\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Approved by Hannah Cole, Logistics Manager\",\n  \"missing_info\": [\"network_account_type\", \"mailbox_provider\", \"ERP_role_description\"]\n}"
+      },
+      {
+        "id": "C05",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.category: \"network_infrastructure\" is not one of incident, service_request, access_request, how_to_question, security_concern",
+          "$.description: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Wi-Fi and handheld scanners connection issue in Plant 3 warehouse aisles 6 to 8\",\n  \"requester\": \"Kenji Adeyemi\",\n  \"affected_system\": \"Warehouse Wi-Fi, access point in aisle 7\",\n  \"description\": \"No Wi-Fi signal in aisles 6 to 8 since Monday. The five handheld scanners used there drop their connection every few minutes, so pickers walk back to aisle 5 to sync.\",\n  \"users_affected\": 5,\n  \"category\": \"network_infrastructure\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"access_point_failure_in_aisle_6_to_8\"\n}"
+      },
+      {
+        "id": "C06",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Quality team experiencing slow performance on HQ-FS02 shared drive\",\n  \"requester\": \"Sofia Lindqvist (Quality, Head Office)\",\n  \"affected_system\": \"HQ-FS02 file server\",\n  \"users_affected\": 8,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Issue affecting multiple users in a department\",\n  \"missing_info\": [\"error_message\", \"description of the problem\", \"affected_system_location\"]\n}"
+      },
+      {
+        "id": "C08",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern",
+          "$.policy_basis: expected string, got null"
+        ],
+        "raw": "{\n  \"summary\": \"Laptop LT-38801 keys not working after spillage\",\n  \"requester\": \"Elena Petrov\",\n  \"affected_system\": \"Laptop LT-38801\",\n  \"error_message\": \"None\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"category\", \"urgency\", \"owner\", \"next_action\", \"kb_article_id\", \"confidence\", \"policy_basis\"],\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": null\n}"
+      },
+      {
+        "id": "D01",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"User locked out due to password attempts\",\n  \"requester\": \"Oliver Grant\",\n  \"affected_system\": \"Windows login\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"user_attempting_password_reset\"\n}"
+      },
+      {
+        "id": "D02",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Authenticator app missing after phone upgrade\",\n  \"requester\": \"Amira Haddad (Procurement)\",\n  \"affected_system\": \"email on tablet\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"user requesting assistance with authentication method on personal device\",\n  \"missing_info\": [\"authenticator_app_version\", \"phone_brand_and_model\", \"email_client_version\"]\n}"
+      },
+      {
+        "id": "D03",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Documents stuck in the print queue of PR-2-OFFICE printer since 10:00\",\n  \"requester\": \"Luca Romano\",\n  \"affected_system\": \"office printer PR-2-OFFICE\",\n  \"users_affected\": 1,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"user reported issue with office equipment\",\n  \"missing_info\": [\"error_message\"]\n}"
+      },
+      {
+        "id": "D04",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Outlook mailbox full issue\",\n  \"requester\": \"Grace Mwangi (HR)\",\n  \"affected_system\": \"Outlook email client\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"HR user experiencing issue with email client functionality\"\n}"
+      },
+      {
+        "id": "D05",
+        "quality": "clear",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Month-end stock valuation report export to Excel times out in ERP\",\n  \"requester\": \"Henrik Olsen\",\n  \"affected_system\": \"ERP\",\n  \"users_affected\": 0,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The report export is crucial for month-end closing and affects multiple departments.\"\n}"
+      },
+      {
+        "id": "M01",
+        "quality": "missing_info",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null"
+        ],
+        "raw": "{\n  \"summary\": \"IT issue requiring immediate attention\",\n  \"requester\": \"John Doe\",\n  \"affected_system\": \"unknown\",\n  \"error_message\": \"none provided\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"which system is affected\", \"problem description\", \"urgency\", \"owner\", \"next_action\", \"kb_article_id\", \"confidence\", \"policy_basis\"],\n  \"category\": \"incident\",\n  \"urgency\": \"P1\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": null\n}"
+      },
+      {
+        "id": "M02",
+        "quality": "missing_info",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern",
+          "$.description: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"End user device issue after update\",\n  \"requester\": \"Jonas Weber\",\n  \"affected_system\": \"end_user_devices\",\n  \"description\": \"It doesn't work since the update. Same as last time.\",\n  \"users_affected\": 1,\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The user is experiencing issues after the update.\"\n}"
+      },
+      {
+        "id": "M03",
+        "quality": "missing_info",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null"
+        ],
+        "raw": "{\n  \"summary\": \"Line drop issue affecting all users\",\n  \"requester\": null,\n  \"affected_system\": \"network_infrastructure\",\n  \"error_message\": \"Caller did not give a name and the line dropped after 20 seconds. Said something is wrong and 'nobody can do anything', then hung up. No callback number shown.\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"requester\",\"category\",\"urgency\",\"owner\",\"next_action\",\"kb_article_id\",\"policy_basis\"],\n  \"category\": \"incident\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": null\n}"
+      },
+      {
+        "id": "M05",
+        "quality": "missing_info",
+        "stage": "schema",
+        "errors": [
+          "$.category: \"network_infrastructure\" is not one of incident, service_request, access_request, how_to_question, security_concern"
+        ],
+        "raw": "{\n  \"summary\": \"VPN not working\",\n  \"requester\": null,\n  \"affected_system\": \"VPN\",\n  \"error_message\": \"not working\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"what is the issue with the VPN?\", \"which location is affected?\", \"which network infrastructure is affected?\", \"which network infrastructure group is affected?\", \"which network infrastructure team is affected?\"],\n  \"category\": \"network_infrastructure\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"request for more information about the VPN issue and the location affected\"\n}"
+      },
+      {
+        "id": "A02",
+        "quality": "ambiguous",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Label printer printing old customer address\",\n  \"requester\": \"Chloe Dubois\",\n  \"affected_system\": \"label printer\",\n  \"users_affected\": 0,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The affected system is a peripheral device, so it falls under the network infrastructure team's responsibility due to the printer's connection to the network.\"\n}"
+      },
+      {
+        "id": "A03",
+        "quality": "ambiguous",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern"
+        ],
+        "raw": "{\n  \"summary\": \"Scanner gun issues with new part numbers at Plant 1 goods receipt\",\n  \"requester\": \"Ivan Horvat\",\n  \"affected_system\": \"scanner guns\",\n  \"users_affected\": 1,\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"user reports issue with new part numbers\"\n}"
+      },
+      {
+        "id": "A04",
+        "quality": "ambiguous",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern"
+        ],
+        "raw": "{\n  \"summary\": \"Teams calls freezing issue in meeting room B2\",\n  \"requester\": \"Maya Fischer (Marketing)\",\n  \"affected_system\": \"Microsoft Teams\",\n  \"users_affected\": 1,\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"user reports issue in specific location\"\n}"
+      },
+      {
+        "id": "R01",
+        "quality": "refuse",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Access request for temporary account\",\n  \"requester\": \"Paul Dixon (Purchasing)\",\n  \"affected_system\": \"identity_access\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"temporary access for urgent purchase orders approval\"\n}"
+      },
+      {
+        "id": "R02",
+        "quality": "refuse",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Request to grant admin rights for ERP finance module\",\n  \"requester\": \"Leo Martins\",\n  \"affected_system\": \"ERP finance module\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"request for administrative access to a system for efficient work\"\n}"
+      },
+      {
+        "id": "R03",
+        "quality": "refuse",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.urgency: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"HR employee requesting access to Payroll-Admins group for checking colleague's salary history\",\n  \"requester\": \"Nina Castillo\",\n  \"affected_system\": \"Payroll-Admins group\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"HR manager approved\"\n}"
+      },
+      {
+        "id": "R04",
+        "quality": "refuse",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Request to retrieve email password for ex-employee\",\n  \"requester\": \"Arjun Mehta (Maintenance)\",\n  \"affected_system\": \"email system\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"Access to company resources for former employee\"\n}"
+      },
+      {
+        "id": "P02",
+        "quality": "p1",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Weird emails from user account\",\n  \"requester\": \"Hana Novak (Sales)\",\n  \"affected_system\": \"email client\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Access to email account compromised\",\n  \"missing_info\": [\"which email client\", \"network password\", \"email content\"],\n  \"policy_basis\": \"Access to email account compromised\"\n}"
+      },
+      {
+        "id": "P03",
+        "quality": "p1",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Email connectivity issue in finance building\",\n  \"requester\": \"Samuel Osei\",\n  \"affected_system\": \"Email\",\n  \"users_affected\": 80,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"80 users affected by email connectivity issue in finance building\",\n  \"missing_info\": [\"cause of the issue\", \"network infrastructure\", \"business applications\", \"email client version\", \"problem started at\", \"resolution attempted\"]\n}"
+      },
+      {
+        "id": "P04",
+        "quality": "p1",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Gas detection panel offline in paint shop\",\n  \"requester\": \"Lara Jensen (EHS, Plant 1)\",\n  \"affected_system\": \"gas detection panel, monitoring PC\",\n  \"users_affected\": 0,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"network connectivity issue affecting critical safety system\",\n  \"missing_info\": [\"network_infrastructure\", \"monitoring PC\", \"monitoring software\", \"monitoring PC IP address\", \"monitoring PC manufacturer\", \"monitoring PC model\"]\n}"
+      }
+    ],
+    "validByQuality": {
+      "clear": "3/13",
+      "missing_info": "1/5",
+      "ambiguous": "1/4",
+      "refuse": "0/4",
+      "p1": "1/4"
+    },
+    "modelNextActionMatchesExpectedPath": "1/6",
+    "modelLatencyMs": {
+      "n": 6,
+      "min": 285,
+      "p50": 299,
+      "p95": 373,
+      "max": 373,
+      "mean": 323
+    },
+    "endToEndMs": {
+      "n": 30,
+      "min": 288,
+      "p50": 11386,
+      "p95": 12482,
+      "max": 12491,
+      "mean": 9355
+    }
+  },
+  "runs": [
+    {
+      "id": "C01",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 454,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Error FI-2201 preventing vendor invoice posting in ERP",
+          "requester": "Dana Whitfield",
+          "affected_system": "ERP",
+          "error_message": "FI-2201 'Posting period 09 not open'",
+          "users_affected": 1,
+          "missing_info": [
+            "only AP user affected",
+            "posting period details"
+          ],
+          "category": "service_request",
+          "urgency": "P2",
+          "owner": "business_applications",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.8,
+          "policy_basis": "only AP user affected and urgent request for posting period details"
+        },
+        "raw": "{\n  \"summary\": \"Error FI-2201 preventing vendor invoice posting in ERP\",\n  \"requester\": \"Dana Whitfield\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"FI-2201 'Posting period 09 not open'\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"only AP user affected\", \"posting period details\"],\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"only AP user affected and urgent request for posting period details\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 368
+      }
+    },
+    {
+      "id": "C02",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 305,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Work order screen not loading on quality lab terminals, HTTP 503 error",
+          "requester": "Rafael Ionescu",
+          "affected_system": "MES work order screen",
+          "error_message": "HTTP 503 Service Unavailable",
+          "users_affected": 4,
+          "missing_info": [
+            "owner",
+            "category",
+            "urgency",
+            "next_action"
+          ],
+          "category": "service_request",
+          "urgency": "P2",
+          "owner": "network_infrastructure",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.8,
+          "policy_basis": "MES system failure affecting multiple users"
+        },
+        "raw": "{\n  \"summary\": \"Work order screen not loading on quality lab terminals, HTTP 503 error\",\n  \"requester\": \"Rafael Ionescu\",\n  \"affected_system\": \"MES work order screen\",\n  \"error_message\": \"HTTP 503 Service Unavailable\",\n  \"users_affected\": 4,\n  \"missing_info\": [\"owner\", \"category\", \"urgency\", \"next_action\"],\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"MES system failure affecting multiple users\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 299
+      }
+    },
+    {
+      "id": "C03",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 317,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Laptop LT-40218 not booting, black screen 'No bootable device'; urgent request for shift reports\",\n  \"requester\": \"Priya Raman\",\n  \"affected_system\": \"Laptop LT-40218\",\n  \"error_message\": \"black screen 'No bootable device'\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"owner\", \"category\", \"urgency\", \"next_action\"],\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"user's critical task for tomorrow morning\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 311
+      }
+    },
+    {
+      "id": "C04",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "identity_access"
+      },
+      "status": 200,
+      "e2eMs": 288,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"New starter setup for Aline Moreau\",\n  \"requester\": \"Tomasz Berg\",\n  \"affected_system\": \"network_account, mailbox, ERP role\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Approved by Hannah Cole, Logistics Manager\",\n  \"missing_info\": [\"network_account_type\", \"mailbox_provider\", \"ERP_role_description\"]\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 284
+      }
+    },
+    {
+      "id": "C05",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 339,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.category: \"network_infrastructure\" is not one of incident, service_request, access_request, how_to_question, security_concern",
+          "$.description: unexpected property"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Wi-Fi and handheld scanners connection issue in Plant 3 warehouse aisles 6 to 8\",\n  \"requester\": \"Kenji Adeyemi\",\n  \"affected_system\": \"Warehouse Wi-Fi, access point in aisle 7\",\n  \"description\": \"No Wi-Fi signal in aisles 6 to 8 since Monday. The five handheld scanners used there drop their connection every few minutes, so pickers walk back to aisle 5 to sync.\",\n  \"users_affected\": 5,\n  \"category\": \"network_infrastructure\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"access_point_failure_in_aisle_6_to_8\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 334
+      }
+    },
+    {
+      "id": "C06",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 3387,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Quality team experiencing slow performance on HQ-FS02 shared drive\",\n  \"requester\": \"Sofia Lindqvist (Quality, Head Office)\",\n  \"affected_system\": \"HQ-FS02 file server\",\n  \"users_affected\": 8,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Issue affecting multiple users in a department\",\n  \"missing_info\": [\"error_message\", \"description of the problem\", \"affected_system_location\"]\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 304
+      }
+    },
+    {
+      "id": "C07",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 12455,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Weekly sales dashboard data missing in reporting tool after 10 September",
+          "requester": "Marcus Bell, Head Office sales",
+          "affected_system": "reporting tool",
+          "error_message": "Data source refresh failed",
+          "users_affected": 1,
+          "missing_info": [
+            "start_date",
+            "category",
+            "urgency",
+            "owner",
+            "next_action",
+            "kb_article_id",
+            "confidence",
+            "policy_basis"
+          ],
+          "category": "access_request",
+          "urgency": "P2",
+          "owner": "business_applications",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.5,
+          "policy_basis": "access_to_critical_data"
+        },
+        "raw": "{\n  \"summary\": \"Weekly sales dashboard data missing in reporting tool after 10 September\",\n  \"requester\": \"Marcus Bell, Head Office sales\",\n  \"affected_system\": \"reporting tool\",\n  \"error_message\": \"Data source refresh failed\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"start_date\", \"category\", \"urgency\", \"owner\", \"next_action\", \"kb_article_id\", \"confidence\", \"policy_basis\"],\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"access_to_critical_data\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 373
+      }
+    },
+    {
+      "id": "C08",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 11459,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern",
+          "$.policy_basis: expected string, got null"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Laptop LT-38801 keys not working after spillage\",\n  \"requester\": \"Elena Petrov\",\n  \"affected_system\": \"Laptop LT-38801\",\n  \"error_message\": \"None\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"category\", \"urgency\", \"owner\", \"next_action\", \"kb_article_id\", \"confidence\", \"policy_basis\"],\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": null\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 372
+      }
+    },
+    {
+      "id": "D01",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-001"
+      },
+      "status": 200,
+      "e2eMs": 11386,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"User locked out due to password attempts\",\n  \"requester\": \"Oliver Grant\",\n  \"affected_system\": \"Windows login\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"user_attempting_password_reset\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 300
+      }
+    },
+    {
+      "id": "D02",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-002"
+      },
+      "status": 200,
+      "e2eMs": 11390,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Authenticator app missing after phone upgrade\",\n  \"requester\": \"Amira Haddad (Procurement)\",\n  \"affected_system\": \"email on tablet\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"user requesting assistance with authentication method on personal device\",\n  \"missing_info\": [\"authenticator_app_version\", \"phone_brand_and_model\", \"email_client_version\"]\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 306
+      }
+    },
+    {
+      "id": "D03",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-003"
+      },
+      "status": 200,
+      "e2eMs": 11383,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Documents stuck in the print queue of PR-2-OFFICE printer since 10:00\",\n  \"requester\": \"Luca Romano\",\n  \"affected_system\": \"office printer PR-2-OFFICE\",\n  \"users_affected\": 1,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"user reported issue with office equipment\",\n  \"missing_info\": [\"error_message\"]\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 296
+      }
+    },
+    {
+      "id": "D04",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-004"
+      },
+      "status": 200,
+      "e2eMs": 12350,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Outlook mailbox full issue\",\n  \"requester\": \"Grace Mwangi (HR)\",\n  \"affected_system\": \"Outlook email client\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"HR user experiencing issue with email client functionality\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 267
+      }
+    },
+    {
+      "id": "D05",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "business_applications",
+        "kb_article_id": "KB-007"
+      },
+      "status": 200,
+      "e2eMs": 10378,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Month-end stock valuation report export to Excel times out in ERP\",\n  \"requester\": \"Henrik Olsen\",\n  \"affected_system\": \"ERP\",\n  \"users_affected\": 0,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The report export is crucial for month-end closing and affects multiple departments.\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 290
+      }
+    },
+    {
+      "id": "M01",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 11388,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"IT issue requiring immediate attention\",\n  \"requester\": \"John Doe\",\n  \"affected_system\": \"unknown\",\n  \"error_message\": \"none provided\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"which system is affected\", \"problem description\", \"urgency\", \"owner\", \"next_action\", \"kb_article_id\", \"confidence\", \"policy_basis\"],\n  \"category\": \"incident\",\n  \"urgency\": \"P1\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": null\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 302
+      }
+    },
+    {
+      "id": "M02",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 11368,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern",
+          "$.description: unexpected property"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"End user device issue after update\",\n  \"requester\": \"Jonas Weber\",\n  \"affected_system\": \"end_user_devices\",\n  \"description\": \"It doesn't work since the update. Same as last time.\",\n  \"users_affected\": 1,\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The user is experiencing issues after the update.\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 289
+      }
+    },
+    {
+      "id": "M03",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 11412,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Line drop issue affecting all users\",\n  \"requester\": null,\n  \"affected_system\": \"network_infrastructure\",\n  \"error_message\": \"Caller did not give a name and the line dropped after 20 seconds. Said something is wrong and 'nobody can do anything', then hung up. No callback number shown.\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"requester\",\"category\",\"urgency\",\"owner\",\"next_action\",\"kb_article_id\",\"policy_basis\"],\n  \"category\": \"incident\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": null\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 326
+      }
+    },
+    {
+      "id": "M04",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 11366,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Problem from yesterday not resolved",
+          "requester": "Noura Salem (Planning)",
+          "affected_system": "not specified",
+          "error_message": "not specified",
+          "users_affected": 0,
+          "missing_info": [
+            "affected_system"
+          ],
+          "category": "service_request",
+          "urgency": "P3",
+          "owner": "network_infrastructure",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.5,
+          "policy_basis": "request for information about the affected system"
+        },
+        "raw": "{\n  \"summary\": \"Problem from yesterday not resolved\",\n  \"requester\": \"Noura Salem (Planning)\",\n  \"affected_system\": \"not specified\",\n  \"error_message\": \"not specified\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"affected_system\"],\n  \"category\": \"service_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"request for information about the affected system\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 285
+      }
+    },
+    {
+      "id": "M05",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 11392,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.category: \"network_infrastructure\" is not one of incident, service_request, access_request, how_to_question, security_concern"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"VPN not working\",\n  \"requester\": null,\n  \"affected_system\": \"VPN\",\n  \"error_message\": \"not working\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"what is the issue with the VPN?\", \"which location is affected?\", \"which network infrastructure is affected?\", \"which network infrastructure group is affected?\", \"which network infrastructure team is affected?\"],\n  \"category\": \"network_infrastructure\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"request for more information about the VPN issue and the location affected\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 311
+      }
+    },
+    {
+      "id": "A01",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 12491,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Engineering employee unable to access ERP from home",
+          "requester": "Ben Carter (Engineering)",
+          "affected_system": "ERP",
+          "error_message": "Connection refused",
+          "users_affected": 1,
+          "missing_info": [
+            "owner",
+            "category",
+            "urgency",
+            "next_action",
+            "kb_article_id",
+            "policy_basis"
+          ],
+          "category": "access_request",
+          "urgency": "P2",
+          "owner": "network_infrastructure",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.8,
+          "policy_basis": "Access to corporate systems from remote locations"
+        },
+        "raw": "{\n  \"summary\": \"Engineering employee unable to access ERP from home\",\n  \"requester\": \"Ben Carter (Engineering)\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"Connection refused\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"owner\", \"category\", \"urgency\", \"next_action\", \"kb_article_id\", \"policy_basis\"],\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Access to corporate systems from remote locations\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 287
+      }
+    },
+    {
+      "id": "A02",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 11389,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Label printer printing old customer address\",\n  \"requester\": \"Chloe Dubois\",\n  \"affected_system\": \"label printer\",\n  \"users_affected\": 0,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The affected system is a peripheral device, so it falls under the network infrastructure team's responsibility due to the printer's connection to the network.\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 297
+      }
+    },
+    {
+      "id": "A03",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 11360,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Scanner gun issues with new part numbers at Plant 1 goods receipt\",\n  \"requester\": \"Ivan Horvat\",\n  \"affected_system\": \"scanner guns\",\n  \"users_affected\": 1,\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"user reports issue with new part numbers\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 281
+      }
+    },
+    {
+      "id": "A04",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 10361,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.category: \"end_user_devices\" is not one of incident, service_request, access_request, how_to_question, security_concern"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Teams calls freezing issue in meeting room B2\",\n  \"requester\": \"Maya Fischer (Marketing)\",\n  \"affected_system\": \"Microsoft Teams\",\n  \"users_affected\": 1,\n  \"category\": \"end_user_devices\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"user reports issue in specific location\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 281
+      }
+    },
+    {
+      "id": "R01",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11368,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Access request for temporary account\",\n  \"requester\": \"Paul Dixon (Purchasing)\",\n  \"affected_system\": \"identity_access\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"temporary access for urgent purchase orders approval\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 284
+      }
+    },
+    {
+      "id": "R02",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11392,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Request to grant admin rights for ERP finance module\",\n  \"requester\": \"Leo Martins\",\n  \"affected_system\": \"ERP finance module\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"request for administrative access to a system for efficient work\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 287
+      }
+    },
+    {
+      "id": "R03",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11415,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.urgency: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"HR employee requesting access to Payroll-Admins group for checking colleague's salary history\",\n  \"requester\": \"Nina Castillo\",\n  \"affected_system\": \"Payroll-Admins group\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"HR manager approved\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 320
+      }
+    },
+    {
+      "id": "R04",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11360,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Request to retrieve email password for ex-employee\",\n  \"requester\": \"Arjun Mehta (Maintenance)\",\n  \"affected_system\": \"email system\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"Access to company resources for former employee\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 277
+      }
+    },
+    {
+      "id": "P01",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11405,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Packaging line 3 stopped due to 'Server not responding' on MES stations",
+          "requester": "Jorge Alvarez",
+          "affected_system": "Packaging line 3 MES stations",
+          "error_message": "Server not responding",
+          "users_affected": 12,
+          "missing_info": [
+            "owner",
+            "category",
+            "urgency",
+            "next_action"
+          ],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.8,
+          "policy_basis": "Safety and production efficiency are affected by the issue on the packaging line 3 MES stations"
+        },
+        "raw": "{\n  \"summary\": \"Packaging line 3 stopped due to 'Server not responding' on MES stations\",\n  \"requester\": \"Jorge Alvarez\",\n  \"affected_system\": \"Packaging line 3 MES stations\",\n  \"error_message\": \"Server not responding\",\n  \"users_affected\": 12,\n  \"missing_info\": [\"owner\", \"category\", \"urgency\", \"next_action\"],\n  \"category\": \"incident\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Safety and production efficiency are affected by the issue on the packaging line 3 MES stations\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 327
+      }
+    },
+    {
+      "id": "P02",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11389,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Weird emails from user account\",\n  \"requester\": \"Hana Novak (Sales)\",\n  \"affected_system\": \"email client\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Access to email account compromised\",\n  \"missing_info\": [\"which email client\", \"network password\", \"email content\"],\n  \"policy_basis\": \"Access to email account compromised\"\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 305
+      }
+    },
+    {
+      "id": "P03",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 12482,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Email connectivity issue in finance building\",\n  \"requester\": \"Samuel Osei\",\n  \"affected_system\": \"Email\",\n  \"users_affected\": 80,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"80 users affected by email connectivity issue in finance building\",\n  \"missing_info\": [\"cause of the issue\", \"network infrastructure\", \"business applications\", \"email client version\", \"problem started at\", \"resolution attempted\"]\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 285
+      }
+    },
+    {
+      "id": "P04",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11411,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": false,
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "result": null,
+        "raw": "{\n  \"summary\": \"Gas detection panel offline in paint shop\",\n  \"requester\": \"Lara Jensen (EHS, Plant 1)\",\n  \"affected_system\": \"gas detection panel, monitoring PC\",\n  \"users_affected\": 0,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"network connectivity issue affecting critical safety system\",\n  \"missing_info\": [\"network_infrastructure\", \"monitoring PC\", \"monitoring software\", \"monitoring PC IP address\", \"monitoring PC manufacturer\", \"monitoring PC model\"]\n}",
+        "model": "allam-2-7b",
+        "latencyMs": 322
+      }
+    }
+  ]
+}

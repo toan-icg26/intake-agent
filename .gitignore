@@ -1,0 +1,31 @@
+node_modules/
+target/
+_out/
+gen/
+
+.cdsrc-private.json
+default-*.json
+*.sqlite
+
+# MTA
+mta_archives/
+*_mta_build_tmp
+*.mtar
+
+# Other
+.DS_Store
+
+# @cap-js/cds-typer
+@cds-models
+
+# secrets
+.env
+.env.*
+!.env.example
+rules/api_key.txt
+
+# internal programme material and working notes used to build this with AI assistance —
+# not part of the deliverable; kept locally only
+rules/
+docs/
+/CLAUDE.md

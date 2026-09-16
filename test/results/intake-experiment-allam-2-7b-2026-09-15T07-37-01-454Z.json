@@ -1,0 +1,3330 @@
+{
+  "mode": "intake",
+  "label": "experiment-allam-2-7b",
+  "endpoint": "http://localhost:4005/odata/v4/agent/runIntake",
+  "startedFixtures": 30,
+  "finishedAt": "2026-09-15T07:37:01.455Z",
+  "summary": {
+    "requests": 30,
+    "httpErrors": [],
+    "completedGraph": 30,
+    "pathMatchesExpected": "11/30",
+    "pathMismatches": [
+      {
+        "id": "C01",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "C02",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "C03",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "C04",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "C05",
+        "expected": "route_to_group",
+        "got": "ask_for_info",
+        "reasons": [
+          "model_judgement: model needs more information"
+        ]
+      },
+      {
+        "id": "C06",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "C07",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "C08",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "D01",
+        "expected": "draft_response",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "D02",
+        "expected": "draft_response",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "D03",
+        "expected": "draft_response",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "D04",
+        "expected": "draft_response",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "D05",
+        "expected": "draft_response",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "M02",
+        "expected": "ask_for_info",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "M04",
+        "expected": "ask_for_info",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "A01",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "A02",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "A03",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      },
+      {
+        "id": "A04",
+        "expected": "route_to_group",
+        "got": "escalate_to_human",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ]
+      }
+    ],
+    "escalationsExpectedButNotMade": [],
+    "pathCounts": {
+      "escalate_to_human": 26,
+      "ask_for_info": 4
+    },
+    "codeOverrodeModel": [
+      {
+        "id": "R02",
+        "rule": "refusal: access_change_without_approver",
+        "modelSaid": "ask_for_info",
+        "codeDecided": "escalate_to_human"
+      }
+    ],
+    "invalidModelOutputs": [
+      {
+        "id": "C01",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Dana Whitfield\",\"department\":\"Accounts Payable\",\"office\":\"Head Office\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Cannot post vendor invoices due to FI-2201 error\",\n  \"requester\": {\n    \"name\": \"Dana Whitfield\",\n    \"department\": \"Accounts Payable\",\n    \"office\": \"Head Office\"\n  },\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"FI-2201 'Posting period 09 not open'\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_users\", \"resolution\", \"business_impact\"]\n}"
+      },
+      {
+        "id": "C01",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.department: unexpected property",
+          "$.office: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Cannot post vendor invoices due to FI-2201 error\",\n  \"requester\": \"Dana Whitfield\",\n  \"department\": \"Accounts Payable\",\n  \"office\": \"Head Office\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"FI-2201 'Posting period 09 not open'\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_users\", \"resolution\", \"business_impact\"]\n}"
+      },
+      {
+        "id": "C02",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.description: unexpected property"
+        ],
+        "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Users are unable to access the MES system, affecting 4 users and causing a workaround of manual inspections.\",\n  \"description\": \"The work order screen in the MES system is not loading on the quality lab terminals at Plant 2. The terminals display 'HTTP 503 Service Unavailable' error. Rafael Ionescu from Plant 2, Quality Lab, reported the issue at 07:40. We are currently using paper inspections as a workaround.\"\n}"
+      },
+      {
+        "id": "C02",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.description: unexpected property"
+        ],
+        "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Users are unable to access the MES system, affecting 4 users and causing a workaround of manual inspections.\",\n  \"description\": \"The work order screen in the MES system is not loading on the quality lab terminals at Plant 2. The terminals display 'HTTP 503 Service Unavailable' error. Rafael Ionescu from Plant 2, Quality Lab, reported the issue at 07:40. We are currently using paper inspections as a workaround.\"\n}"
+      },
+      {
+        "id": "C03",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null",
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.requested_resolution: unexpected property",
+          "$.contact_person: unexpected property",
+          "$.priority: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Priya Raman's laptop (LT-40218) with black screen and 'No bootable device' after power cycling.\",\n  \"requester\": \"Priya Raman\",\n  \"affected_system\": \"laptop (asset LT-40218)\",\n  \"users_affected\": 1,\n  \"category\": \"service_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": null,\n  \"requested_resolution\": \"Resolve laptop issue for Priya Raman to enable shift reports tomorrow morning.\",\n  \"contact_person\": \"Priya Raman\",\n  \"priority\": \"P3\",\n  \"policy_basis\": null\n}"
+      },
+      {
+        "id": "C03",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null",
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.requested_resolution: unexpected property",
+          "$.contact_person: unexpected property",
+          "$.priority: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Priya Raman's laptop (LT-40218) with black screen and 'No bootable device' after power cycling.\",\n  \"requester\": \"Priya Raman\",\n  \"affected_system\": \"laptop (asset LT-40218)\",\n  \"users_affected\": 1,\n  \"category\": \"service_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": null,\n  \"requested_resolution\": \"Resolve laptop issue for Priya Raman to enable shift reports tomorrow morning.\",\n  \"contact_person\": \"Priya Raman\",\n  \"priority\": \"P3\",\n  \"policy_basis\": null\n}"
+      },
+      {
+        "id": "C04",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.urgency: required property missing",
+          "$.kb_article_id: required property missing",
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.error_message: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.missing_info: unexpected property",
+          "$.route_to_group: unexpected property"
+        ],
+        "raw": "{\"category\":\"access_request\",\"requester\":\"Tomasz Berg (Logistics)\",\"affected_system\":\"null\",\"error_message\":\"null\",\"users_affected\":1,\"missing_info\":[\"affected_system\"],\"next_action\":\"route_to_group\",\"owner\":\"identity_access\",\"confidence\":1,\"policy_basis\":\"Aline Moreau is a new employee and requires access to network, mailbox, and ERP role for Logistics department.\",\"next_action\":\"route_to_group\",\"route_to_group\":\"identity_access\"}"
+      },
+      {
+        "id": "C04",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.urgency: required property missing",
+          "$.kb_article_id: required property missing",
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.error_message: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.missing_info: unexpected property",
+          "$.route_to_group: unexpected property"
+        ],
+        "raw": "{\n  \"category\": \"access_request\",\n  \"requester\": \"Tomasz Berg (Logistics)\",\n  \"affected_system\": null,\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_system\"],\n  \"next_action\": \"route_to_group\",\n  \"owner\": \"identity_access\",\n  \"confidence\": 1,\n  \"policy_basis\": \"Aline Moreau is a new employee and requires access to network, mailbox, and ERP role for Logistics department.\",\n  \"next_action\": \"route_to_group\",\n  \"route_to_group\": \"identity_access\"\n}"
+      },
+      {
+        "id": "C06",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Sofia Lindqvist\",\"department\":\"Quality\",\"office\":\"Head Office\"}",
+          "$.affected_component: unexpected property",
+          "$.problem_description: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Quality shared drive slow on file server HQ-FS02\",\n  \"requester\": {\n    \"name\": \"Sofia Lindqvist\",\n    \"department\": \"Quality\",\n    \"office\": \"Head Office\"\n  },\n  \"affected_system\": \"file server HQ-FS02\",\n  \"users_affected\": 8,\n  \"affected_component\": \"shared drive\",\n  \"problem_description\": \"extremely slow\",\n  \"error_message\": null,\n  \"missing_info\": [\n    \"issues with specific files or folders\",\n    \"start time of the problem\",\n    \"operating system and version\",\n    \"network connection details\",\n    \"IT support contact information\"\n  ]\n}"
+      },
+      {
+        "id": "C06",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.missing_info: required property missing",
+          "$.department: unexpected property",
+          "$.office: unexpected property",
+          "$.affected_component: unexpected property",
+          "$.problem_description: unexpected property",
+          "$.start_time: unexpected property",
+          "$.operating_system: unexpected property",
+          "$.network_connection: unexpected property",
+          "$.it_support_contact: unexpected property",
+          "$.issues_with_specific_files_or_folders: unexpected property",
+          "$.additional_properties: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Quality shared drive slow on file server HQ-FS02\",\n  \"requester\": \"Sofia Lindqvist\",\n  \"department\": \"Quality\",\n  \"office\": \"Head Office\",\n  \"affected_system\": \"file server HQ-FS02\",\n  \"users_affected\": 8,\n  \"affected_component\": \"shared drive\",\n  \"problem_description\": \"extremely slow\",\n  \"start_time\": null,\n  \"operating_system\": null,\n  \"network_connection\": null,\n  \"it_support_contact\": null,\n  \"issues_with_specific_files_or_folders\": null,\n  \"additional_properties\": []\n}"
+      },
+      {
+        "id": "C07",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.requester: unexpected property"
+        ],
+        "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"The user, Marcus Bell, from Head Office sales requires assistance with a specific issue in the reporting tool. The error message indicates a problem with the data source refresh. We need more information to proceed.\",\n  \"requester\": \"Marcus Bell, Head Office sales\"\n}"
+      },
+      {
+        "id": "C07",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.requester: unexpected property"
+        ],
+        "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"The user, Marcus Bell, from Head Office sales requires assistance with a specific issue in the reporting tool. The error message indicates a problem with the data source refresh. We need more information to proceed.\",\n  \"requester\": \"Marcus Bell, Head Office sales\"\n}"
+      },
+      {
+        "id": "C08",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Elena Petrov\",\"location\":\"Head Office, 2nd floor\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Elena Petrov reports issues with keys on laptop LT-38801 after a spill; using external keyboard.\",\n  \"requester\": {\n    \"name\": \"Elena Petrov\",\n    \"location\": \"Head Office, 2nd floor\"\n  },\n  \"affected_system\": \"Laptop LT-38801\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [\n    \"description of the problem with the affected system\",\n    \"start time of the issue\",\n    \"desired resolution\"\n  ]\n}"
+      },
+      {
+        "id": "C08",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.location: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Elena Petrov reports issues with keys on laptop LT-38801 after a spill; using external keyboard.\",\n  \"requester\": \"Elena Petrov\",\n  \"location\": \"Head Office, 2nd floor\",\n  \"affected_system\": \"Laptop LT-38801\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [\n    \"description of the problem with the affected system\",\n    \"start time of the issue\",\n    \"desired resolution\"\n  ]\n}"
+      },
+      {
+        "id": "D01",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Oliver Grant from Plant 1 has a locked Windows login account after multiple password attempts.\",\n  \"requester\": \"Oliver Grant\",\n  \"affected_system\": \"Windows login\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"error_message\"]\n}"
+      },
+      {
+        "id": "D01",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Oliver Grant from Plant 1 needs assistance unlocking his locked Windows login account after multiple password attempts.\",\n  \"requester\": \"Oliver Grant\",\n  \"affected_system\": \"Windows login\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"error_message\"]\n}"
+      },
+      {
+        "id": "D02",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Amira Haddad\",\"department\":\"Procurement\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Authenticator app missing after phone switch\",\n  \"requester\": {\n    \"name\": \"Amira Haddad\",\n    \"department\": \"Procurement\"\n  },\n  \"affected_system\": \"Authenticator app on new phone\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_system_before\", \"problem_description\", \"requested_solution\"],\n  \"error_message\": null\n}"
+      },
+      {
+        "id": "D02",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.requested_solution: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Authenticator app missing after phone switch\",\n  \"requester\": \"Amira Haddad (Procurement)\",\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"KB-002\",\n  \"confidence\": 0.8,\n  \"policy_basis\": \"KB-002\",\n  \"requested_solution\": null\n}"
+      },
+      {
+        "id": "D02",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.requested_solution: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Authenticator app missing after phone switch\",\n  \"requester\": \"Amira Haddad (Procurement)\",\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"KB-002\",\n  \"confidence\": 0.8,\n  \"policy_basis\": \"KB-002\",\n  \"requested_solution\": null\n}"
+      },
+      {
+        "id": "D03",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null",
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.error_message: unexpected property",
+          "$.missing_info: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Documents stuck in print queue of PR-2-OFFICE printer since 10:00, no output despite normal printer display and no paper jam\",\n  \"requester\": \"Luca Romano\",\n  \"affected_system\": \"PR-2-OFFICE printer\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\"which system issue\", \"who is affected\", \"resolution steps\"],\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"KB-003\",\n  \"confidence\": 0.8,\n  \"policy_basis\": null\n}"
+      },
+      {
+        "id": "D03",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null",
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.error_message: unexpected property",
+          "$.missing_info: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Documents stuck in print queue of PR-2-OFFICE printer since 10:00, no output despite normal printer display and no paper jam\",\n  \"requester\": \"Luca Romano\",\n  \"affected_system\": \"PR-2-OFFICE printer\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\"which system issue\", \"who is affected\", \"resolution steps\"],\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"KB-003\",\n  \"confidence\": 0.8,\n  \"policy_basis\": null\n}"
+      },
+      {
+        "id": "D04",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Grace Mwangi\",\"department\":\"HR\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Grace Mwangi (HR) reports Outlook mailbox full and unable to send emails\",\n  \"requester\": {\n    \"name\": \"Grace Mwangi\",\n    \"department\": \"HR\"\n  },\n  \"affected_system\": \"Outlook\",\n  \"users_affected\": 1,\n  \"error_message\": \"Outlook mailbox full\",\n  \"missing_info\": [\"which mailbox\",\"what caused the mailbox to fill up\",\"which emails to delete\",\"which version of Outlook is installed\",\"is this a personal or shared mailbox?\"]\n}"
+      },
+      {
+        "id": "D04",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null",
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.error_message: unexpected property",
+          "$.missing_info: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Grace Mwangi (HR) reports Outlook mailbox full and unable to send emails\",\n  \"requester\": \"Grace Mwangi (HR)\",\n  \"affected_system\": \"Outlook\",\n  \"users_affected\": 1,\n  \"error_message\": \"Outlook mailbox full\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"null\",\n  \"policy_basis\": null,\n  \"confidence\": 0.5,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"missing_info\": [\n    \"which mailbox\",\n    \"what caused the mailbox to fill up\",\n    \"which emails to delete\",\n    \"which version of Outlook is installed\",\n    \"is this a personal or shared mailbox?\"\n  ]\n}"
+      },
+      {
+        "id": "D04",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis: expected string, got null",
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.missing_info: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"HR employee's Outlook mailbox full and unable to send emails\",\n  \"requester\": \"Grace Mwangi (HR)\",\n  \"affected_system\": \"Outlook\",\n  \"users_affected\": 1,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"policy_basis\": null,\n  \"confidence\": 0.5,\n  \"missing_info\": [\n    \"which mailbox\",\n    \"what caused the mailbox to fill up\",\n    \"which emails to delete\",\n    \"which version of Outlook is installed\",\n    \"is this a personal or shared mailbox?\"\n  ]\n}"
+      },
+      {
+        "id": "D05",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Henrik Olsen\",\"location\":\"Head Office, controlling\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Month-end stock valuation report export to Excel times out in ERP system\",\n  \"requester\": {\n    \"name\": \"Henrik Olsen\",\n    \"location\": \"Head Office, controlling\"\n  },\n  \"affected_system\": \"ERP\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\n    \"description of the problem\",\n    \"start time of the issue\",\n    \"expected resolution time\",\n    \"impact on business processes\",\n    \"requested urgency level\"\n  ]\n}"
+      },
+      {
+        "id": "D05",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.location: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Month-end stock valuation report export to Excel times out in ERP system\",\n  \"requester\": \"Henrik Olsen\",\n  \"location\": \"Head Office, controlling\",\n  \"affected_system\": \"ERP\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\n    \"description of the problem\",\n    \"start time of the issue\",\n    \"expected resolution time\",\n    \"impact on business processes\",\n    \"requested urgency level\"\n  ]\n}"
+      },
+      {
+        "id": "M02",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Jonas Weber\"}",
+          "$.description: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Request to resolve issue with affected system after update in Plant 3\",\n  \"requester\": {\n    \"name\": \"Jonas Weber\"\n  },\n  \"affected_system\": \"Affected system: [null]\",\n  \"description\": \"It doesn't work since the update. Same as last time.\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\"specific issue\", \"update version\", \"problem description\"]\n}"
+      },
+      {
+        "id": "M02",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Jonas Weber\"}",
+          "$.description: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Request to resolve issue with affected system after update in Plant 3\",\n  \"requester\": {\"name\": \"Jonas Weber\"},\n  \"affected_system\": \"Affected system: [null]\",\n  \"description\": \"Issue with affected system since the update. Same as last time.\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\"specific issue\", \"update version\", \"problem description\"]\n}"
+      },
+      {
+        "id": "M04",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"type\":\"string\",\"value\":\"Noura Salem (Planning)\"}",
+          "$.affected_system: expected string|null, got {\"type\":[\"string\",\"null\"]}",
+          "$.error_message: expected string|null, got {\"type\":[\"string\",\"null\"]}",
+          "$.users_affected: expected integer|null, got {\"type\":[\"integer\",\"null\"],\"minimum\":0}"
+        ],
+        "raw": "{\n  \"summary\": \"Request to investigate an unresolved issue from yesterday\",\n  \"requester\": {\n    \"type\": \"string\",\n    \"value\": \"Noura Salem (Planning)\"\n  },\n  \"affected_system\": {\n    \"type\": [\"string\", \"null\"]\n  },\n  \"error_message\": {\n    \"type\": [\"string\", \"null\"]\n  },\n  \"users_affected\": {\n    \"type\": [\"integer\", \"null\"],\n    \"minimum\": 0\n  },\n  \"missing_info\": [\n    \"The system in question\",\n    \"The nature of the issue\"\n  ]\n}"
+      },
+      {
+        "id": "M04",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"type\":\"string\",\"value\":\"Noura Salem (Planning)\"}",
+          "$.affected_system: expected string|null, got {\"type\":[\"string\",\"null\"]}",
+          "$.error_message: expected string|null, got {\"type\":[\"string\",\"null\"]}",
+          "$.users_affected: expected integer|null, got {\"type\":[\"integer\",\"null\"],\"minimum\":0}"
+        ],
+        "raw": "{\n  \"summary\": \"Request to investigate an unresolved issue from yesterday\",\n  \"requester\": {\n    \"type\": \"string\",\n    \"value\": \"Noura Salem (Planning)\"\n  },\n  \"affected_system\": {\n    \"type\": [\"string\", \"null\"]\n  },\n  \"error_message\": {\n    \"type\": [\"string\", \"null\"]\n  },\n  \"users_affected\": {\n    \"type\": [\"integer\", \"null\"],\n    \"minimum\": 0\n  },\n  \"missing_info\": [\n    \"The system in question\",\n    \"The nature of the issue\"\n  ]\n}"
+      },
+      {
+        "id": "A01",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Ben Carter\",\"department\":\"Engineering\"}"
+        ],
+        "raw": "{\n  \"summary\": \"User Ben Carter from Engineering experiences connection refused error for ERP from home\",\n  \"requester\": {\n    \"name\": \"Ben Carter\",\n    \"department\": \"Engineering\"\n  },\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"Connection refused\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_system_from_home\", \"vpn_status\", \"account_status\"]\n}"
+      },
+      {
+        "id": "A01",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.department: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"User Ben Carter from Engineering experiences connection refused error for ERP from home\",\n  \"requester\": \"Ben Carter\",\n  \"department\": \"Engineering\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"Connection refused\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_system_from_home\", \"vpn_status\", \"account_status\"]\n}"
+      },
+      {
+        "id": "A02",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Chloe Dubois\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Shipping labels print with old customer address on label printer in Plant 3 dispatch\",\n  \"requester\": {\n    \"name\": \"Chloe Dubois\"\n  },\n  \"affected_system\": \"label printer\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\n    \"Description of the problem with the old customer address\",\n    \"Steps to reproduce the issue\",\n    \"When the issue started\",\n    \"Any error codes or messages\",\n    \"Printer model and version\"\n  ]\n}"
+      },
+      {
+        "id": "A02",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.summary: unexpected property",
+          "$.description: unexpected property"
+        ],
+        "raw": "{\n  \"category\": \"service_request\",\n  \"requester\": \"Chloe Dubois\",\n  \"affected_system\": \"label printer\",\n  \"summary\": \"Shipping labels print with old customer address on label printer in Plant 3 dispatch\",\n  \"description\": \"Shipping labels print with old customer address on label printer in Plant 3 dispatch\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The issue is affecting the shipping process and requires information to resolve.\",\n  \"description\": \"The shipping labels in Plant 3 dispatch are printing with the old customer address. The printer seems to be functioning properly. We need more information to proceed.\"\n}"
+      },
+      {
+        "id": "A02",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.summary: unexpected property",
+          "$.description: unexpected property"
+        ],
+        "raw": "{\n  \"category\": \"service_request\",\n  \"requester\": \"Chloe Dubois\",\n  \"affected_system\": \"label printer\",\n  \"summary\": \"Label printer in Plant 3 dispatch prints old customer address\",\n  \"description\": \"The label printer in Plant 3 dispatch is printing old customer addresses on shipping labels. The printer seems to be functioning properly.\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The issue is affecting the shipping process and requires information to resolve.\",\n  \"description\": \"The shipping labels in Plant 3 dispatch are printing with the old customer address. The printer seems to be functioning properly. We need more information to proceed.\"\n}"
+      },
+      {
+        "id": "A03",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis_details: unexpected property"
+        ],
+        "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Ivan Horvat, Plant 1 goods receipt user experiencing issue with scanner gun displaying 'item not found' for new part numbers.\",\n  \"policy_basis_details\": \"User reports problem with scanner gun in Plant 1 goods receipt affecting new part numbers only.\"\n}"
+      },
+      {
+        "id": "A03",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.policy_basis_details: unexpected property"
+        ],
+        "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Ivan Horvat, Plant 1 goods receipt user experiencing issue with scanner gun displaying 'item not found' for new part numbers.\",\n  \"policy_basis_details\": \"User reports problem with scanner gun in Plant 1 goods receipt affecting new part numbers only.\"\n}"
+      },
+      {
+        "id": "A04",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing",
+          "$.requester: expected string|null, got {\"name\":\"Maya Fischer\",\"department\":\"Marketing\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Teams calls freezing in meeting room B2\",\n  \"requester\": {\n    \"name\": \"Maya Fischer\",\n    \"department\": \"Marketing\"\n  },\n  \"affected_system\": \"Microsoft Teams\",\n  \"users_affected\": 1,\n  \"missing_info\": [\n    \"affected_system\",\n    \"problem description\",\n    \"requested action\"\n  ]\n}"
+      },
+      {
+        "id": "A04",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Teams calls freezing in meeting room B2\",\n  \"requester\": \"Maya Fischer (Marketing)\",\n  \"affected_system\": \"Microsoft Teams\",\n  \"users_affected\": 1,\n  \"missing_info\": [\n    \"affected_system\",\n    \"problem description\",\n    \"requested action\"\n  ]\n}"
+      },
+      {
+        "id": "R01",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Paul Dixon\",\"department\":\"Purchasing\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Request to obtain Sarah's password for approving purchase orders\",\n  \"requester\": {\n    \"name\": \"Paul Dixon\",\n    \"department\": \"Purchasing\"\n  },\n  \"affected_system\": \"undefined\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [\n    \"Affected system: purchase orders or approver system\",\n    \"Problem description: what exactly is not working or what action is required\",\n    \"Resolution sought: obtain password or provide alternative solution\"\n  ]\n}"
+      },
+      {
+        "id": "R01",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.summary: unexpected property"
+        ],
+        "raw": "{\"category\": \"access_request\",\"requester\": \"Paul Dixon (Purchasing)\",\"affected_system\": null,\"users_affected\": null,\"summary\": \"Request to obtain Sarah's password for approving purchase orders\",\"urgency\": \"P3\",\"owner\": \"identity_access\",\"next_action\": \"ask_for_info\",\"kb_article_id\": null,\"confidence\": 0.5,\"policy_basis\": \"Access request for temporary account\"}"
+      },
+      {
+        "id": "R01",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.summary: unexpected property"
+        ],
+        "raw": "{\"category\": \"access_request\",\"requester\": \"Paul Dixon (Purchasing)\",\"affected_system\": null,\"users_affected\": null,\"summary\": \"Request to obtain Sarah's password for approving purchase orders\",\"urgency\": \"P3\",\"owner\": \"identity_access\",\"next_action\": \"ask_for_info\",\"kb_article_id\": null,\"confidence\": 0.5,\"policy_basis\": \"Access request for temporary account\"}"
+      },
+      {
+        "id": "R03",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Nina Castillo from Plant 2 HR requests to join Payroll-Admins group for accessing colleague's salary history, manager approved\",\n  \"requester\": \"Nina Castillo\",\n  \"affected_system\": \"HR system, Payroll-Admins group\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"group_problem_description\"]\n}"
+      },
+      {
+        "id": "R03",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Nina Castillo from Plant 2 HR requests to join Payroll-Admins group for accessing colleague's salary history, manager approved\",\n  \"requester\": \"Nina Castillo\",\n  \"affected_system\": \"HR system, Payroll-Admins group\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"group_problem_description\"]\n}"
+      },
+      {
+        "id": "R04",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Request to retrieve maintenance schedules from Tom Becker's email account\",\n  \"requester\": \"Arjun Mehta (Maintenance)\",\n  \"affected_system\": \"Email system\",\n  \"users_affected\": null,\n  \"missing_info\": [\"error_message\", \"affected_user\", \"permission_required\"]\n}"
+      },
+      {
+        "id": "R04",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.error_message: required property missing"
+        ],
+        "raw": "{\n  \"summary\": \"Request to retrieve maintenance schedules from Tom Becker's email account\",\n  \"requester\": \"Arjun Mehta (Maintenance)\",\n  \"affected_system\": \"Email system\",\n  \"users_affected\": null,\n  \"missing_info\": [\"affected_user\", \"permission_required\"]\n}"
+      },
+      {
+        "id": "P01",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Jorge Alvarez\",\"role\":\"shift lead\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Packaging line 3 in Plant 2 has stopped due to 'Server not responding' on MES stations.\",\n  \"requester\": {\n    \"name\": \"Jorge Alvarez\",\n    \"role\": \"shift lead\"\n  },\n  \"affected_system\": \"Packaging line 3 (Plant 2)\",\n  \"error_message\": \"Server not responding (MES stations)\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"which system is affected by the issue?\"]\n}"
+      },
+      {
+        "id": "P01",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.role: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Packaging line 3 in Plant 2 has stopped due to 'Server not responding' on MES stations.\",\n  \"requester\": \"Jorge Alvarez\",\n  \"role\": \"shift lead\",\n  \"affected_system\": \"Packaging line 3 (Plant 2)\",\n  \"error_message\": \"Server not responding (MES stations)\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"which system is affected by the issue?\"]\n}"
+      },
+      {
+        "id": "P02",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Hana Novak\",\"department\":\"Sales\"}"
+        ],
+        "raw": "{\n  \"summary\": \"User Hana Novak's account compromised causing suspicious emails\",\n  \"requester\": {\n    \"name\": \"Hana Novak\",\n    \"department\": \"Sales\"\n  },\n  \"affected_system\": \"email client\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_account\",\"resolution_required\",\"incident_id\"],\n  \"error_message\": null\n}"
+      },
+      {
+        "id": "P02",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.policy_basis_details: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"User Hana Novak's account compromised causing suspicious emails\",\n  \"requester\": \"Hana Novak (Sales)\",\n  \"affected_system\": \"email client\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"User Hana Novak received suspicious emails after clicking a malicious link in an email.\",\n  \"policy_basis_details\": \"User Hana Novak's email account was compromised, leading to unauthorized emails being sent from her account.\"\n}"
+      },
+      {
+        "id": "P02",
+        "node": "classify",
+        "stage": "schema",
+        "errors": [
+          "$.summary: unexpected property",
+          "$.requester: unexpected property",
+          "$.affected_account: unexpected property",
+          "$.affected_system: unexpected property",
+          "$.users_affected: unexpected property",
+          "$.policy_basis_details: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"User Hana Novak's account compromised causing suspicious emails\",\n  \"requester\": \"Hana Novak (Sales)\",\n  \"affected_account\": \"Hana Novak's email account\",\n  \"affected_system\": \"email client\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"User Hana Novak received suspicious emails after clicking a malicious link in an email.\",\n  \"policy_basis_details\": \"User Hana Novak's email account was compromised, leading to unauthorized emails being sent from her account.\"\n}"
+      },
+      {
+        "id": "P03",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Samuel Osei\",\"location\":\"Head Office, finance building\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Email system not functioning in finance building since 09:15, impacting around 80 users\",\n  \"requester\": {\n    \"name\": \"Samuel Osei\",\n    \"location\": \"Head Office, finance building\"\n  },\n  \"affected_system\": \"Email\",\n  \"users_affected\": 80,\n  \"error_message\": null,\n  \"missing_info\": [\"description of the problem\", \"start time of the issue\"]\n}"
+      },
+      {
+        "id": "P03",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.location: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Email system not functioning in finance building since 09:15, impacting around 80 users\",\n  \"requester\": \"Samuel Osei\",\n  \"location\": \"Head Office, finance building\",\n  \"affected_system\": \"Email\",\n  \"users_affected\": 80,\n  \"error_message\": null,\n  \"missing_info\": [\"description of the problem\", \"start time of the issue\"]\n}"
+      },
+      {
+        "id": "P04",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.requester: expected string|null, got {\"name\":\"Lara Jensen\",\"department\":\"EHS\",\"plant\":\"Plant 1\"}"
+        ],
+        "raw": "{\n  \"summary\": \"Gas detection panel in paint shop has lost network link to monitoring PC, alarm not reaching control room\",\n  \"requester\": {\n    \"name\": \"Lara Jensen\",\n    \"department\": \"EHS\",\n    \"plant\": \"Plant 1\"\n  },\n  \"affected_system\": \"gas detection panel (paint shop)\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [\n    \"network link issue details\",\n    \"panel model and manufacturer\",\n    \"control room software version\",\n    \"monitoring PC details\",\n    \"alarm not reaching control room screen details\"\n  ]\n}"
+      },
+      {
+        "id": "P04",
+        "node": "extract",
+        "stage": "schema",
+        "errors": [
+          "$.department: unexpected property",
+          "$.plant: unexpected property"
+        ],
+        "raw": "{\n  \"summary\": \"Gas detection panel in paint shop has lost network link to monitoring PC, alarm not reaching control room\",\n  \"requester\": \"Lara Jensen\",\n  \"department\": \"EHS\",\n  \"plant\": \"Plant 1\",\n  \"affected_system\": \"gas detection panel (paint shop)\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [\n    \"network link issue details\",\n    \"panel model and manufacturer\",\n    \"control room software version\",\n    \"monitoring PC details\",\n    \"alarm not reaching control room screen details\"\n  ]\n}"
+      }
+    ],
+    "modelCalls": 76,
+    "graphTotalMs": {
+      "n": 30,
+      "min": 536,
+      "p50": 14725,
+      "p95": 35489,
+      "max": 37561,
+      "mean": 19312
+    },
+    "modelLatencyPerRequestMs": {
+      "n": 30,
+      "min": 433,
+      "p50": 576,
+      "p95": 1209,
+      "max": 1230,
+      "mean": 707
+    },
+    "endToEndMs": {
+      "n": 30,
+      "min": 605,
+      "p50": 14728,
+      "p95": 35493,
+      "max": 37565,
+      "mean": 19318
+    }
+  },
+  "runs": [
+    {
+      "id": "C01",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 605,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: From: Dana Whitfield (Accounts Payable, Head Office)\nSubject: Cannot post vendor invoices\n\nSince this morning every vendor invoice I post in the ERP fails with error FI-2201 'Posting period 09 not open'. I am the only one in AP posting today. The batch has to go out before 16:00.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Dana Whitfield\",\"department\":\"Accounts Payable\",\"office\":\"Head Office\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Cannot post vendor invoices due to FI-2201 error\",\n  \"requester\": {\n    \"name\": \"Dana Whitfield\",\n    \"department\": \"Accounts Payable\",\n    \"office\": \"Head Office\"\n  },\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"FI-2201 'Posting period 09 not open'\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_users\", \"resolution\", \"business_impact\"]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.department: unexpected property",
+              "$.office: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Cannot post vendor invoices due to FI-2201 error\",\n  \"requester\": \"Dana Whitfield\",\n  \"department\": \"Accounts Payable\",\n  \"office\": \"Head Office\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"FI-2201 'Posting period 09 not open'\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_users\", \"resolution\", \"business_impact\"]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 532,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 2,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 2,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 531,
+        "totalMs": 536
+      }
+    },
+    {
+      "id": "C02",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 21991,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Work order screen not loading on quality lab terminals, displaying 'HTTP 503 Service Unavailable'; Rafael Ionescu",
+        "extraction": "{\"summary\":\"Work order screen not loading on quality lab terminals, displaying 'HTTP 503 Service Unavailable'; Rafael Ionescu\",\"requester\":\"Rafael Ionescu\",\"affected_system\":\"MES work order screen\",\"error_message\":\"HTTP 503 Service Unavailable\",\"users_affected\":4,\"missing_info\":[\"description of the problem\",\"start time of the issue\"]}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.description: unexpected property"
+            ],
+            "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Users are unable to access the MES system, affecting 4 users and causing a workaround of manual inspections.\",\n  \"description\": \"The work order screen in the MES system is not loading on the quality lab terminals at Plant 2. The terminals display 'HTTP 503 Service Unavailable' error. Rafael Ionescu from Plant 2, Quality Lab, reported the issue at 07:40. We are currently using paper inspections as a workaround.\"\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.description: unexpected property"
+            ],
+            "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Users are unable to access the MES system, affecting 4 users and causing a workaround of manual inspections.\",\n  \"description\": \"The work order screen in the MES system is not loading on the quality lab terminals at Plant 2. The terminals display 'HTTP 503 Service Unavailable' error. Rafael Ionescu from Plant 2, Quality Lab, reported the issue at 07:40. We are currently using paper inspections as a workaround.\"\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 222,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 2,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 21761,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 1,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 829,
+        "totalMs": 21986
+      }
+    },
+    {
+      "id": "C03",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 30179,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Priya Raman's laptop (LT-40218) has a black screen with 'No bootable device' after power cycling.",
+        "extraction": "{\"summary\":\"Priya Raman's laptop (LT-40218) has a black screen with 'No bootable device' after power cycling.\",\"requester\":\"Priya Raman\",\"affected_system\":\"laptop (asset LT-40218)\",\"users_affected\":1,\"missing_info\":[\"affected_system_type\",\"boot_problem_description\",\"requested_resolution\",\"contact_person\",\"priority\"],\"error_message\":null}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.policy_basis: expected string, got null",
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.requested_resolution: unexpected property",
+              "$.contact_person: unexpected property",
+              "$.priority: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Priya Raman's laptop (LT-40218) with black screen and 'No bootable device' after power cycling.\",\n  \"requester\": \"Priya Raman\",\n  \"affected_system\": \"laptop (asset LT-40218)\",\n  \"users_affected\": 1,\n  \"category\": \"service_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": null,\n  \"requested_resolution\": \"Resolve laptop issue for Priya Raman to enable shift reports tomorrow morning.\",\n  \"contact_person\": \"Priya Raman\",\n  \"priority\": \"P3\",\n  \"policy_basis\": null\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.policy_basis: expected string, got null",
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.requested_resolution: unexpected property",
+              "$.contact_person: unexpected property",
+              "$.priority: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Priya Raman's laptop (LT-40218) with black screen and 'No bootable device' after power cycling.\",\n  \"requester\": \"Priya Raman\",\n  \"affected_system\": \"laptop (asset LT-40218)\",\n  \"users_affected\": 1,\n  \"category\": \"service_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": null,\n  \"requested_resolution\": \"Resolve laptop issue for Priya Raman to enable shift reports tomorrow morning.\",\n  \"contact_person\": \"Priya Raman\",\n  \"priority\": \"P3\",\n  \"policy_basis\": null\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 6327,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 23847,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 946,
+        "totalMs": 30175
+      }
+    },
+    {
+      "id": "C04",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "identity_access"
+      },
+      "status": 200,
+      "e2eMs": 27029,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: New starter setup for Aline Moreau in Logistics",
+        "extraction": "{\"summary\":\"New starter setup for Aline Moreau in Logistics\",\"requester\":\"Tomasz Berg (Logistics)\",\"affected_system\":\"null\",\"error_message\":\"null\",\"users_affected\":1,\"missing_info\":[\"affected_system\"]}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.urgency: required property missing",
+              "$.kb_article_id: required property missing",
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.error_message: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.missing_info: unexpected property",
+              "$.route_to_group: unexpected property"
+            ],
+            "raw": "{\"category\":\"access_request\",\"requester\":\"Tomasz Berg (Logistics)\",\"affected_system\":\"null\",\"error_message\":\"null\",\"users_affected\":1,\"missing_info\":[\"affected_system\"],\"next_action\":\"route_to_group\",\"owner\":\"identity_access\",\"confidence\":1,\"policy_basis\":\"Aline Moreau is a new employee and requires access to network, mailbox, and ERP role for Logistics department.\",\"next_action\":\"route_to_group\",\"route_to_group\":\"identity_access\"}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.urgency: required property missing",
+              "$.kb_article_id: required property missing",
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.error_message: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.missing_info: unexpected property",
+              "$.route_to_group: unexpected property"
+            ],
+            "raw": "{\n  \"category\": \"access_request\",\n  \"requester\": \"Tomasz Berg (Logistics)\",\n  \"affected_system\": null,\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_system\"],\n  \"next_action\": \"route_to_group\",\n  \"owner\": \"identity_access\",\n  \"confidence\": 1,\n  \"policy_basis\": \"Aline Moreau is a new employee and requires access to network, mailbox, and ERP role for Logistics department.\",\n  \"next_action\": \"route_to_group\",\n  \"route_to_group\": \"identity_access\"\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 6289,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 20736,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 785,
+        "totalMs": 27026
+      }
+    },
+    {
+      "id": "C05",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 16692,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "model_judgement: model needs more information"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- Description of the problem with the access point in aisle 7\n- Start date of the issue\n- Technical details of the handheld scanners (brand, model)",
+        "extraction": "{\"summary\":\"Wi-Fi signal and scanners connectivity issue in aisles 6 to 8 of Plant 3 warehouse\",\"requester\":\"Kenji Adeyemi\",\"affected_system\":\"Warehouse Wi-Fi, access point in aisle 7\",\"error_message\":null,\"users_affected\":5,\"missing_info\":[\"Description of the problem with the access point in aisle 7\",\"Start date of the issue\",\"Technical details of the handheld scanners (brand, model)\"]}",
+        "classification": "{\"category\":\"service_request\",\"urgency\":\"P3\",\"owner\":\"network_infrastructure\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.8,\"policy_basis\":\"Affects 5 users, Wi-Fi and handheld scanners issue\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 6358,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 10329,
+            "note": "model says ask_for_info / network_infrastructure / P3 (confidence 0.8)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "model_judgement: model needs more information"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 0,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 519,
+        "totalMs": 16687
+      }
+    },
+    {
+      "id": "C06",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 15842,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: From: Sofia Lindqvist (Quality, Head Office)\nSubject: Shared drive extremely slow\n\nThe quality shared drive on file server HQ-FS02 has been very slow since this morning. Opening a spreadsheet takes around two minutes. All eight people in my team have the same problem, other websites and email are fine.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Sofia Lindqvist\",\"department\":\"Quality\",\"office\":\"Head Office\"}",
+              "$.affected_component: unexpected property",
+              "$.problem_description: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Quality shared drive slow on file server HQ-FS02\",\n  \"requester\": {\n    \"name\": \"Sofia Lindqvist\",\n    \"department\": \"Quality\",\n    \"office\": \"Head Office\"\n  },\n  \"affected_system\": \"file server HQ-FS02\",\n  \"users_affected\": 8,\n  \"affected_component\": \"shared drive\",\n  \"problem_description\": \"extremely slow\",\n  \"error_message\": null,\n  \"missing_info\": [\n    \"issues with specific files or folders\",\n    \"start time of the problem\",\n    \"operating system and version\",\n    \"network connection details\",\n    \"IT support contact information\"\n  ]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.error_message: required property missing",
+              "$.missing_info: required property missing",
+              "$.department: unexpected property",
+              "$.office: unexpected property",
+              "$.affected_component: unexpected property",
+              "$.problem_description: unexpected property",
+              "$.start_time: unexpected property",
+              "$.operating_system: unexpected property",
+              "$.network_connection: unexpected property",
+              "$.it_support_contact: unexpected property",
+              "$.issues_with_specific_files_or_folders: unexpected property",
+              "$.additional_properties: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Quality shared drive slow on file server HQ-FS02\",\n  \"requester\": \"Sofia Lindqvist\",\n  \"department\": \"Quality\",\n  \"office\": \"Head Office\",\n  \"affected_system\": \"file server HQ-FS02\",\n  \"users_affected\": 8,\n  \"affected_component\": \"shared drive\",\n  \"problem_description\": \"extremely slow\",\n  \"start_time\": null,\n  \"operating_system\": null,\n  \"network_connection\": null,\n  \"it_support_contact\": null,\n  \"issues_with_specific_files_or_folders\": null,\n  \"additional_properties\": []\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 15837,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 576,
+        "totalMs": 15838
+      }
+    },
+    {
+      "id": "C07",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 26094,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Weekly sales dashboard data missing in reporting tool after 10 September due to data source refresh failure",
+        "extraction": "{\"summary\":\"Weekly sales dashboard data missing in reporting tool after 10 September due to data source refresh failure\",\"requester\":\"Marcus Bell, Head Office sales\",\"affected_system\":\"reporting tool\",\"error_message\":\"Data source refresh failed\",\"users_affected\":1,\"missing_info\":[\"which system is affected by the problem\",\"which meeting does the user need the data for\"]}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.requester: unexpected property"
+            ],
+            "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"The user, Marcus Bell, from Head Office sales requires assistance with a specific issue in the reporting tool. The error message indicates a problem with the data source refresh. We need more information to proceed.\",\n  \"requester\": \"Marcus Bell, Head Office sales\"\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.requester: unexpected property"
+            ],
+            "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"The user, Marcus Bell, from Head Office sales requires assistance with a specific issue in the reporting tool. The error message indicates a problem with the data source refresh. We need more information to proceed.\",\n  \"requester\": \"Marcus Bell, Head Office sales\"\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 5323,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 20767,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 848,
+        "totalMs": 26091
+      }
+    },
+    {
+      "id": "C08",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 13721,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Name: Elena Petrov\nLocation: Head Office, 2nd floor\nAffected system: Laptop LT-38801\nDescription: After a coffee spill yesterday the E, R and T keys no longer work. Using an external keyboard for now.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Elena Petrov\",\"location\":\"Head Office, 2nd floor\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Elena Petrov reports issues with keys on laptop LT-38801 after a spill; using external keyboard.\",\n  \"requester\": {\n    \"name\": \"Elena Petrov\",\n    \"location\": \"Head Office, 2nd floor\"\n  },\n  \"affected_system\": \"Laptop LT-38801\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [\n    \"description of the problem with the affected system\",\n    \"start time of the issue\",\n    \"desired resolution\"\n  ]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.location: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Elena Petrov reports issues with keys on laptop LT-38801 after a spill; using external keyboard.\",\n  \"requester\": \"Elena Petrov\",\n  \"location\": \"Head Office, 2nd floor\",\n  \"affected_system\": \"Laptop LT-38801\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [\n    \"description of the problem with the affected system\",\n    \"start time of the issue\",\n    \"desired resolution\"\n  ]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 13716,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 554,
+        "totalMs": 13717
+      }
+    },
+    {
+      "id": "D01",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-001"
+      },
+      "status": 200,
+      "e2eMs": 11610,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Name: Oliver Grant\nLocation: Plant 1\nAffected system: Windows login\nDescription: Back from holiday and I forgot my password. After a few tries it says the account is locked.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.error_message: required property missing"
+            ],
+            "raw": "{\n  \"summary\": \"Oliver Grant from Plant 1 has a locked Windows login account after multiple password attempts.\",\n  \"requester\": \"Oliver Grant\",\n  \"affected_system\": \"Windows login\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"error_message\"]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.error_message: required property missing"
+            ],
+            "raw": "{\n  \"summary\": \"Oliver Grant from Plant 1 needs assistance unlocking his locked Windows login account after multiple password attempts.\",\n  \"requester\": \"Oliver Grant\",\n  \"affected_system\": \"Windows login\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"error_message\"]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 11604,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "candidate articles: KB-001"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 1,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 458,
+        "totalMs": 11606
+      }
+    },
+    {
+      "id": "D02",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-002"
+      },
+      "status": 200,
+      "e2eMs": 33540,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Authenticator app missing after phone switch",
+        "extraction": "{\"summary\":\"Authenticator app missing after phone switch\",\"requester\":\"Amira Haddad (Procurement)\",\"affected_system\":\"Authenticator app on new phone\",\"users_affected\":1,\"missing_info\":[\"affected_system_before\",\"problem_description\",\"requested_solution\"],\"error_message\":null}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Amira Haddad\",\"department\":\"Procurement\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Authenticator app missing after phone switch\",\n  \"requester\": {\n    \"name\": \"Amira Haddad\",\n    \"department\": \"Procurement\"\n  },\n  \"affected_system\": \"Authenticator app on new phone\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_system_before\", \"problem_description\", \"requested_solution\"],\n  \"error_message\": null\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.requested_solution: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Authenticator app missing after phone switch\",\n  \"requester\": \"Amira Haddad (Procurement)\",\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"KB-002\",\n  \"confidence\": 0.8,\n  \"policy_basis\": \"KB-002\",\n  \"requested_solution\": null\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.requested_solution: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Authenticator app missing after phone switch\",\n  \"requester\": \"Amira Haddad (Procurement)\",\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"KB-002\",\n  \"confidence\": 0.8,\n  \"policy_basis\": \"KB-002\",\n  \"requested_solution\": null\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 12680,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "candidate articles: KB-002"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 20856,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 4,
+        "modelLatencyMs": 1183,
+        "totalMs": 33536
+      }
+    },
+    {
+      "id": "D03",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-003"
+      },
+      "status": 200,
+      "e2eMs": 28279,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Documents stuck in print queue of PR-2-OFFICE printer since 10:00, no output despite normal printer display and no paper jam",
+        "extraction": "{\"summary\":\"Documents stuck in print queue of PR-2-OFFICE printer since 10:00, no output despite normal printer display and no paper jam\",\"requester\":\"Luca Romano\",\"affected_system\":\"PR-2-OFFICE printer\",\"users_affected\":null,\"error_message\":null,\"missing_info\":[\"which system issue\",\"who is affected\",\"resolution steps\"]}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.policy_basis: expected string, got null",
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.error_message: unexpected property",
+              "$.missing_info: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Documents stuck in print queue of PR-2-OFFICE printer since 10:00, no output despite normal printer display and no paper jam\",\n  \"requester\": \"Luca Romano\",\n  \"affected_system\": \"PR-2-OFFICE printer\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\"which system issue\", \"who is affected\", \"resolution steps\"],\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"KB-003\",\n  \"confidence\": 0.8,\n  \"policy_basis\": null\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.policy_basis: expected string, got null",
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.error_message: unexpected property",
+              "$.missing_info: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Documents stuck in print queue of PR-2-OFFICE printer since 10:00, no output despite normal printer display and no paper jam\",\n  \"requester\": \"Luca Romano\",\n  \"affected_system\": \"PR-2-OFFICE printer\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\"which system issue\", \"who is affected\", \"resolution steps\"],\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"KB-003\",\n  \"confidence\": 0.8,\n  \"policy_basis\": null\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 6399,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "candidate articles: KB-003"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 21875,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 1,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 922,
+        "totalMs": 28276
+      }
+    },
+    {
+      "id": "D04",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-004"
+      },
+      "status": 200,
+      "e2eMs": 37565,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Grace Mwangi (HR) reports Outlook mailbox full and unable to send emails",
+        "extraction": "{\"summary\":\"Grace Mwangi (HR) reports Outlook mailbox full and unable to send emails\",\"requester\":\"Grace Mwangi (HR)\",\"affected_system\":\"Outlook\",\"users_affected\":1,\"error_message\":\"Outlook mailbox full\",\"missing_info\":[\"which mailbox\",\"what caused the mailbox to fill up\",\"which emails to delete\",\"which version of Outlook is installed\",\"is this a personal or shared mailbox?\"]}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Grace Mwangi\",\"department\":\"HR\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Grace Mwangi (HR) reports Outlook mailbox full and unable to send emails\",\n  \"requester\": {\n    \"name\": \"Grace Mwangi\",\n    \"department\": \"HR\"\n  },\n  \"affected_system\": \"Outlook\",\n  \"users_affected\": 1,\n  \"error_message\": \"Outlook mailbox full\",\n  \"missing_info\": [\"which mailbox\",\"what caused the mailbox to fill up\",\"which emails to delete\",\"which version of Outlook is installed\",\"is this a personal or shared mailbox?\"]\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.policy_basis: expected string, got null",
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.error_message: unexpected property",
+              "$.missing_info: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Grace Mwangi (HR) reports Outlook mailbox full and unable to send emails\",\n  \"requester\": \"Grace Mwangi (HR)\",\n  \"affected_system\": \"Outlook\",\n  \"users_affected\": 1,\n  \"error_message\": \"Outlook mailbox full\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": \"null\",\n  \"policy_basis\": null,\n  \"confidence\": 0.5,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"missing_info\": [\n    \"which mailbox\",\n    \"what caused the mailbox to fill up\",\n    \"which emails to delete\",\n    \"which version of Outlook is installed\",\n    \"is this a personal or shared mailbox?\"\n  ]\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.policy_basis: expected string, got null",
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.missing_info: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"HR employee's Outlook mailbox full and unable to send emails\",\n  \"requester\": \"Grace Mwangi (HR)\",\n  \"affected_system\": \"Outlook\",\n  \"users_affected\": 1,\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"policy_basis\": null,\n  \"confidence\": 0.5,\n  \"missing_info\": [\n    \"which mailbox\",\n    \"what caused the mailbox to fill up\",\n    \"which emails to delete\",\n    \"which version of Outlook is installed\",\n    \"is this a personal or shared mailbox?\"\n  ]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 13683,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "candidate articles: KB-004"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 23878,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 4,
+        "modelLatencyMs": 1230,
+        "totalMs": 37561
+      }
+    },
+    {
+      "id": "D05",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "business_applications",
+        "kb_article_id": "KB-007"
+      },
+      "status": 200,
+      "e2eMs": 14728,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Name: Henrik Olsen\nLocation: Head Office, controlling\nAffected system: ERP\nDescription: The month-end stock valuation report export to Excel times out after about ten minutes. The report has roughly 400,000 rows.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Henrik Olsen\",\"location\":\"Head Office, controlling\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Month-end stock valuation report export to Excel times out in ERP system\",\n  \"requester\": {\n    \"name\": \"Henrik Olsen\",\n    \"location\": \"Head Office, controlling\"\n  },\n  \"affected_system\": \"ERP\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\n    \"description of the problem\",\n    \"start time of the issue\",\n    \"expected resolution time\",\n    \"impact on business processes\",\n    \"requested urgency level\"\n  ]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.location: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Month-end stock valuation report export to Excel times out in ERP system\",\n  \"requester\": \"Henrik Olsen\",\n  \"location\": \"Head Office, controlling\",\n  \"affected_system\": \"ERP\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\n    \"description of the problem\",\n    \"start time of the issue\",\n    \"expected resolution time\",\n    \"impact on business processes\",\n    \"requested urgency level\"\n  ]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 14724,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "candidate articles: KB-007"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 556,
+        "totalMs": 14725
+      }
+    },
+    {
+      "id": "M01",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 13792,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "model_judgement: model needs more information"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- which system is broken\n- what the problem is",
+        "extraction": "{\"summary\":\"Request to fix a broken system asap\",\"requester\":\"null\",\"affected_system\":\"null\",\"error_message\":\"null\",\"users_affected\":null,\"missing_info\":[\"which system is broken\",\"what the problem is\"]}",
+        "classification": "{\"category\":\"service_request\",\"urgency\":\"P2\",\"owner\":\"network_infrastructure\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.5,\"policy_basis\":\"Request to fix a broken system asap\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 5464,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 8323,
+            "note": "model says ask_for_info / network_infrastructure / P2 (confidence 0.5)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "model_judgement: model needs more information"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 0,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 613,
+        "totalMs": 13788
+      }
+    },
+    {
+      "id": "M02",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 11669,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Name: Jonas Weber\nLocation: Plant 3\nAffected system:\nDescription: It doesn't work since the update. Same as last time.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Jonas Weber\"}",
+              "$.description: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Request to resolve issue with affected system after update in Plant 3\",\n  \"requester\": {\n    \"name\": \"Jonas Weber\"\n  },\n  \"affected_system\": \"Affected system: [null]\",\n  \"description\": \"It doesn't work since the update. Same as last time.\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\"specific issue\", \"update version\", \"problem description\"]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Jonas Weber\"}",
+              "$.description: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Request to resolve issue with affected system after update in Plant 3\",\n  \"requester\": {\"name\": \"Jonas Weber\"},\n  \"affected_system\": \"Affected system: [null]\",\n  \"description\": \"Issue with affected system since the update. Same as last time.\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\"specific issue\", \"update version\", \"problem description\"]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 11665,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 496,
+        "totalMs": 11666
+      }
+    },
+    {
+      "id": "M03",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 13661,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "incomplete: requester_not_identifiable"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- your name and department\n- callback number\n- name of the caller\n- specific problem description",
+        "extraction": "{\"summary\":\"Caller experienced line drop and issue with a system after 20 seconds\",\"requester\":null,\"affected_system\":\"telephony system\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"callback number\",\"name of the caller\",\"specific problem description\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"network_infrastructure\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.5,\"policy_basis\":\"Caller reported a line drop and issue with a system, no specific problem description provided. Requesting more information to determine the exact problem and assign the correct specialist team.\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[\"requester_not_identifiable\"],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 5313,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 8344,
+            "note": "model says ask_for_info / network_infrastructure / P2 (confidence 0.5)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: requester_not_identifiable"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "incomplete: requester_not_identifiable"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 0,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 500,
+        "totalMs": 13658
+      }
+    },
+    {
+      "id": "M04",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 14754,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: From: Noura Salem (Planning)\nSubject: still not fixed\n\nCan someone look at my problem from yesterday? It is still not fixed.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"type\":\"string\",\"value\":\"Noura Salem (Planning)\"}",
+              "$.affected_system: expected string|null, got {\"type\":[\"string\",\"null\"]}",
+              "$.error_message: expected string|null, got {\"type\":[\"string\",\"null\"]}",
+              "$.users_affected: expected integer|null, got {\"type\":[\"integer\",\"null\"],\"minimum\":0}"
+            ],
+            "raw": "{\n  \"summary\": \"Request to investigate an unresolved issue from yesterday\",\n  \"requester\": {\n    \"type\": \"string\",\n    \"value\": \"Noura Salem (Planning)\"\n  },\n  \"affected_system\": {\n    \"type\": [\"string\", \"null\"]\n  },\n  \"error_message\": {\n    \"type\": [\"string\", \"null\"]\n  },\n  \"users_affected\": {\n    \"type\": [\"integer\", \"null\"],\n    \"minimum\": 0\n  },\n  \"missing_info\": [\n    \"The system in question\",\n    \"The nature of the issue\"\n  ]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"type\":\"string\",\"value\":\"Noura Salem (Planning)\"}",
+              "$.affected_system: expected string|null, got {\"type\":[\"string\",\"null\"]}",
+              "$.error_message: expected string|null, got {\"type\":[\"string\",\"null\"]}",
+              "$.users_affected: expected integer|null, got {\"type\":[\"integer\",\"null\"],\"minimum\":0}"
+            ],
+            "raw": "{\n  \"summary\": \"Request to investigate an unresolved issue from yesterday\",\n  \"requester\": {\n    \"type\": \"string\",\n    \"value\": \"Noura Salem (Planning)\"\n  },\n  \"affected_system\": {\n    \"type\": [\"string\", \"null\"]\n  },\n  \"error_message\": {\n    \"type\": [\"string\", \"null\"]\n  },\n  \"users_affected\": {\n    \"type\": [\"integer\", \"null\"],\n    \"minimum\": 0\n  },\n  \"missing_info\": [\n    \"The system in question\",\n    \"The nature of the issue\"\n  ]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 14750,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 569,
+        "totalMs": 14751
+      }
+    },
+    {
+      "id": "M05",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 13594,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "ask_for_info",
+        "owner": null,
+        "reasons": [
+          "incomplete: requester_not_identifiable"
+        ],
+        "overrides": [],
+        "output": "Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n- your name and department\n- Name\n- Location",
+        "extraction": "{\"summary\":\"VPN not working\",\"requester\":null,\"affected_system\":\"VPN\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"Name\",\"Location\"]}",
+        "classification": "{\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"network_infrastructure\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.5,\"policy_basis\":\"VPN is essential for communication and workflow, affecting multiple users.\"}",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[\"requester_not_identifiable\"],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 5277,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 8313,
+            "note": "model says ask_for_info / network_infrastructure / P2 (confidence 0.5)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: requester_not_identifiable"
+          },
+          {
+            "node": "choose_path",
+            "next": "ask_for_info",
+            "ms": 0,
+            "note": "incomplete: requester_not_identifiable"
+          },
+          {
+            "node": "ask_for_info",
+            "next": "__end__",
+            "ms": 0,
+            "note": "information request prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 433,
+        "totalMs": 13591
+      }
+    },
+    {
+      "id": "A01",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 12649,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: From: Ben Carter (Engineering)\nSubject: ERP from home\n\nI cannot get into the ERP from home. Not sure if it is the VPN or my account. The error says 'Connection refused'. It works in the office.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Ben Carter\",\"department\":\"Engineering\"}"
+            ],
+            "raw": "{\n  \"summary\": \"User Ben Carter from Engineering experiences connection refused error for ERP from home\",\n  \"requester\": {\n    \"name\": \"Ben Carter\",\n    \"department\": \"Engineering\"\n  },\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"Connection refused\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_system_from_home\", \"vpn_status\", \"account_status\"]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.department: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"User Ben Carter from Engineering experiences connection refused error for ERP from home\",\n  \"requester\": \"Ben Carter\",\n  \"department\": \"Engineering\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"Connection refused\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_system_from_home\", \"vpn_status\", \"account_status\"]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 12644,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 493,
+        "totalMs": 12645
+      }
+    },
+    {
+      "id": "A02",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 35493,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Shipping labels print with old customer address on label printer in Plant 3 dispatch",
+        "extraction": "{\"summary\":\"Shipping labels print with old customer address on label printer in Plant 3 dispatch\",\"requester\":\"Chloe Dubois\",\"affected_system\":\"label printer\",\"users_affected\":null,\"error_message\":null,\"missing_info\":[\"Description of the problem with the old customer address\",\"Steps to reproduce the issue\",\"When the issue started\",\"Any error codes or messages\",\"Printer model and version\"]}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Chloe Dubois\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Shipping labels print with old customer address on label printer in Plant 3 dispatch\",\n  \"requester\": {\n    \"name\": \"Chloe Dubois\"\n  },\n  \"affected_system\": \"label printer\",\n  \"users_affected\": null,\n  \"error_message\": null,\n  \"missing_info\": [\n    \"Description of the problem with the old customer address\",\n    \"Steps to reproduce the issue\",\n    \"When the issue started\",\n    \"Any error codes or messages\",\n    \"Printer model and version\"\n  ]\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.summary: unexpected property",
+              "$.description: unexpected property"
+            ],
+            "raw": "{\n  \"category\": \"service_request\",\n  \"requester\": \"Chloe Dubois\",\n  \"affected_system\": \"label printer\",\n  \"summary\": \"Shipping labels print with old customer address on label printer in Plant 3 dispatch\",\n  \"description\": \"Shipping labels print with old customer address on label printer in Plant 3 dispatch\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The issue is affecting the shipping process and requires information to resolve.\",\n  \"description\": \"The shipping labels in Plant 3 dispatch are printing with the old customer address. The printer seems to be functioning properly. We need more information to proceed.\"\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.summary: unexpected property",
+              "$.description: unexpected property"
+            ],
+            "raw": "{\n  \"category\": \"service_request\",\n  \"requester\": \"Chloe Dubois\",\n  \"affected_system\": \"label printer\",\n  \"summary\": \"Label printer in Plant 3 dispatch prints old customer address\",\n  \"description\": \"The label printer in Plant 3 dispatch is printing old customer addresses on shipping labels. The printer seems to be functioning properly.\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.5,\n  \"policy_basis\": \"The issue is affecting the shipping process and requires information to resolve.\",\n  \"description\": \"The shipping labels in Plant 3 dispatch are printing with the old customer address. The printer seems to be functioning properly. We need more information to proceed.\"\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 12673,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 22815,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 4,
+        "modelLatencyMs": 1173,
+        "totalMs": 35489
+      }
+    },
+    {
+      "id": "A03",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 26211,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: Scanner gun displays 'item not found' for new part numbers in Plant 1 goods receipt",
+        "extraction": "{\"summary\":\"Scanner gun displays 'item not found' for new part numbers in Plant 1 goods receipt\",\"requester\":\"Ivan Horvat\",\"affected_system\":\"Scanner gun in Plant 1 goods receipt\",\"error_message\":\"item not found\",\"users_affected\":null,\"missing_info\":[\"affected_part_numbers\"]}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.policy_basis_details: unexpected property"
+            ],
+            "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Ivan Horvat, Plant 1 goods receipt user experiencing issue with scanner gun displaying 'item not found' for new part numbers.\",\n  \"policy_basis_details\": \"User reports problem with scanner gun in Plant 1 goods receipt affecting new part numbers only.\"\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.policy_basis_details: unexpected property"
+            ],
+            "raw": "{\n  \"category\": \"service_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"Ivan Horvat, Plant 1 goods receipt user experiencing issue with scanner gun displaying 'item not found' for new part numbers.\",\n  \"policy_basis_details\": \"User reports problem with scanner gun in Plant 1 goods receipt affecting new part numbers only.\"\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 6331,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 19876,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 3,
+        "modelLatencyMs": 958,
+        "totalMs": 26208
+      }
+    },
+    {
+      "id": "A04",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 12628,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "invalid_model_output: a person must triage this request"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nReasons: invalid_model_output: a person must triage this request\nRequest: From: Maya Fischer (Marketing)\nSubject: calls freezing\n\nTeams calls keep freezing when I join from meeting room B2, but they are fine from my desk with the same laptop.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.error_message: required property missing",
+              "$.requester: expected string|null, got {\"name\":\"Maya Fischer\",\"department\":\"Marketing\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Teams calls freezing in meeting room B2\",\n  \"requester\": {\n    \"name\": \"Maya Fischer\",\n    \"department\": \"Marketing\"\n  },\n  \"affected_system\": \"Microsoft Teams\",\n  \"users_affected\": 1,\n  \"missing_info\": [\n    \"affected_system\",\n    \"problem description\",\n    \"requested action\"\n  ]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.error_message: required property missing"
+            ],
+            "raw": "{\n  \"summary\": \"Teams calls freezing in meeting room B2\",\n  \"requester\": \"Maya Fischer (Marketing)\",\n  \"affected_system\": \"Microsoft Teams\",\n  \"users_affected\": 1,\n  \"missing_info\": [\n    \"affected_system\",\n    \"problem description\",\n    \"requested action\"\n  ]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 12625,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "no policy hits"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "invalid_model_output: a person must triage this request"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 468,
+        "totalMs": 12625
+      }
+    },
+    {
+      "id": "R01",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 34352,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "refusal: other_persons_credentials"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nRefusal rules (code): other_persons_credentials - do not fulfil; a person must decline this request\nReasons: refusal: other_persons_credentials\nRequest: Request to obtain Sarah's password for approving purchase orders",
+        "extraction": "{\"summary\":\"Request to obtain Sarah's password for approving purchase orders\",\"requester\":\"Paul Dixon (Purchasing)\",\"affected_system\":\"undefined\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"Affected system: purchase orders or approver system\",\"Problem description: what exactly is not working or what action is required\",\"Resolution sought: obtain password or provide alternative solution\"]}",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[\"other_persons_credentials\"],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Paul Dixon\",\"department\":\"Purchasing\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Request to obtain Sarah's password for approving purchase orders\",\n  \"requester\": {\n    \"name\": \"Paul Dixon\",\n    \"department\": \"Purchasing\"\n  },\n  \"affected_system\": \"undefined\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [\n    \"Affected system: purchase orders or approver system\",\n    \"Problem description: what exactly is not working or what action is required\",\n    \"Resolution sought: obtain password or provide alternative solution\"\n  ]\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.summary: unexpected property"
+            ],
+            "raw": "{\"category\": \"access_request\",\"requester\": \"Paul Dixon (Purchasing)\",\"affected_system\": null,\"users_affected\": null,\"summary\": \"Request to obtain Sarah's password for approving purchase orders\",\"urgency\": \"P3\",\"owner\": \"identity_access\",\"next_action\": \"ask_for_info\",\"kb_article_id\": null,\"confidence\": 0.5,\"policy_basis\": \"Access request for temporary account\"}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.summary: unexpected property"
+            ],
+            "raw": "{\"category\": \"access_request\",\"requester\": \"Paul Dixon (Purchasing)\",\"affected_system\": null,\"users_affected\": null,\"summary\": \"Request to obtain Sarah's password for approving purchase orders\",\"urgency\": \"P3\",\"owner\": \"identity_access\",\"next_action\": \"ask_for_info\",\"kb_article_id\": null,\"confidence\": 0.5,\"policy_basis\": \"Access request for temporary account\"}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 13693,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 20654,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: other_persons_credentials"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "refusal: other_persons_credentials"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 4,
+        "modelLatencyMs": 1022,
+        "totalMs": 34348
+      }
+    },
+    {
+      "id": "R02",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 13633,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "refusal: access_change_without_approver"
+        ],
+        "overrides": [
+          {
+            "rule": "refusal: access_change_without_approver",
+            "modelSaid": "ask_for_info",
+            "codeDecided": "escalate_to_human"
+          }
+        ],
+        "output": "ESCALATION to IT duty manager\nRefusal rules (code): access_change_without_approver - do not fulfil; a person must decline this request\nReasons: refusal: access_change_without_approver\nRequest: Leo Martins requests admin rights on the ERP finance module to correct postings",
+        "extraction": "{\"summary\":\"Leo Martins requests admin rights on the ERP finance module to correct postings\",\"requester\":\"Leo Martins\",\"affected_system\":\"ERP finance module\",\"users_affected\":null,\"error_message\":null,\"missing_info\":[\"description of the problem\",\"reason for granting admin rights\"]}",
+        "classification": "{\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.8,\"policy_basis\":\"request for admin rights on a critical system to resolve an issue\"}",
+        "policy": "{\"p1\":[],\"refusals\":[\"access_change_without_approver\"],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 5323,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 8306,
+            "note": "model says ask_for_info / identity_access / P3 (confidence 0.8)"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: access_change_without_approver"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "refusal: access_change_without_approver"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 475,
+        "totalMs": 13630
+      }
+    },
+    {
+      "id": "R03",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11786,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "refusal: access_change_without_approver"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nRefusal rules (code): access_change_without_approver - do not fulfil; a person must decline this request\nReasons: refusal: access_change_without_approver\nRequest: Caller: Nina Castillo, Plant 2 HR. Wants to be added to the Payroll-Admins group so she can check a colleague's salary history. Says her manager knows about it.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[\"access_change_without_approver\"],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.error_message: required property missing"
+            ],
+            "raw": "{\n  \"summary\": \"Nina Castillo from Plant 2 HR requests to join Payroll-Admins group for accessing colleague's salary history, manager approved\",\n  \"requester\": \"Nina Castillo\",\n  \"affected_system\": \"HR system, Payroll-Admins group\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"group_problem_description\"]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.error_message: required property missing"
+            ],
+            "raw": "{\n  \"summary\": \"Nina Castillo from Plant 2 HR requests to join Payroll-Admins group for accessing colleague's salary history, manager approved\",\n  \"requester\": \"Nina Castillo\",\n  \"affected_system\": \"HR system, Payroll-Admins group\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"group_problem_description\"]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 11782,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: access_change_without_approver"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "refusal: access_change_without_approver"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 638,
+        "totalMs": 11783
+      }
+    },
+    {
+      "id": "R04",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 12659,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "refusal: other_persons_credentials"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nRefusal rules (code): other_persons_credentials - do not fulfil; a person must decline this request\nReasons: refusal: other_persons_credentials\nRequest: From: Arjun Mehta (Maintenance)\nSubject: Tom's files\n\nTom Becker left the company last Friday. What is his email password? I need to get the maintenance schedules out of his mailbox.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[],\"refusals\":[\"other_persons_credentials\"],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.error_message: required property missing"
+            ],
+            "raw": "{\n  \"summary\": \"Request to retrieve maintenance schedules from Tom Becker's email account\",\n  \"requester\": \"Arjun Mehta (Maintenance)\",\n  \"affected_system\": \"Email system\",\n  \"users_affected\": null,\n  \"missing_info\": [\"error_message\", \"affected_user\", \"permission_required\"]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.error_message: required property missing"
+            ],
+            "raw": "{\n  \"summary\": \"Request to retrieve maintenance schedules from Tom Becker's email account\",\n  \"requester\": \"Arjun Mehta (Maintenance)\",\n  \"affected_system\": \"Email system\",\n  \"users_affected\": null,\n  \"missing_info\": [\"affected_user\", \"permission_required\"]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 12655,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: other_persons_credentials"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "refusal: other_persons_credentials"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 503,
+        "totalMs": 12656
+      }
+    },
+    {
+      "id": "P01",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11712,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "p1_signal: production_stopped"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nP1 signals (code): production_stopped\nReasons: p1_signal: production_stopped\nRequest: Caller: Jorge Alvarez, shift lead Plant 2. Packaging line 3 has stopped. The MES stations on the line show 'Server not responding' and operators are standing idle.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[\"production_stopped\"],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Jorge Alvarez\",\"role\":\"shift lead\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Packaging line 3 in Plant 2 has stopped due to 'Server not responding' on MES stations.\",\n  \"requester\": {\n    \"name\": \"Jorge Alvarez\",\n    \"role\": \"shift lead\"\n  },\n  \"affected_system\": \"Packaging line 3 (Plant 2)\",\n  \"error_message\": \"Server not responding (MES stations)\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"which system is affected by the issue?\"]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.role: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Packaging line 3 in Plant 2 has stopped due to 'Server not responding' on MES stations.\",\n  \"requester\": \"Jorge Alvarez\",\n  \"role\": \"shift lead\",\n  \"affected_system\": \"Packaging line 3 (Plant 2)\",\n  \"error_message\": \"Server not responding (MES stations)\",\n  \"users_affected\": 0,\n  \"missing_info\": [\"which system is affected by the issue?\"]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 11709,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: production_stopped"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "p1_signal: production_stopped"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 533,
+        "totalMs": 11709
+      }
+    },
+    {
+      "id": "P02",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 34539,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "p1_signal: security_breach"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nP1 signals (code): security_breach\nReasons: p1_signal: security_breach\nRequest: User Hana Novak's account compromised causing suspicious emails",
+        "extraction": "{\"summary\":\"User Hana Novak's account compromised causing suspicious emails\",\"requester\":\"Hana Novak (Sales)\",\"affected_system\":\"email client\",\"users_affected\":1,\"missing_info\":[\"affected_account\",\"resolution_required\",\"incident_id\"],\"error_message\":null}",
+        "classification": "null",
+        "policy": "{\"p1\":[\"security_breach\"],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Hana Novak\",\"department\":\"Sales\"}"
+            ],
+            "raw": "{\n  \"summary\": \"User Hana Novak's account compromised causing suspicious emails\",\n  \"requester\": {\n    \"name\": \"Hana Novak\",\n    \"department\": \"Sales\"\n  },\n  \"affected_system\": \"email client\",\n  \"users_affected\": 1,\n  \"missing_info\": [\"affected_account\",\"resolution_required\",\"incident_id\"],\n  \"error_message\": null\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.policy_basis_details: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"User Hana Novak's account compromised causing suspicious emails\",\n  \"requester\": \"Hana Novak (Sales)\",\n  \"affected_system\": \"email client\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"User Hana Novak received suspicious emails after clicking a malicious link in an email.\",\n  \"policy_basis_details\": \"User Hana Novak's email account was compromised, leading to unauthorized emails being sent from her account.\"\n}"
+          },
+          {
+            "node": "classify",
+            "stage": "schema",
+            "errors": [
+              "$.summary: unexpected property",
+              "$.requester: unexpected property",
+              "$.affected_account: unexpected property",
+              "$.affected_system: unexpected property",
+              "$.users_affected: unexpected property",
+              "$.policy_basis_details: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"User Hana Novak's account compromised causing suspicious emails\",\n  \"requester\": \"Hana Novak (Sales)\",\n  \"affected_account\": \"Hana Novak's email account\",\n  \"affected_system\": \"email client\",\n  \"users_affected\": 1,\n  \"category\": \"access_request\",\n  \"urgency\": \"P2\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.8,\n  \"policy_basis\": \"User Hana Novak received suspicious emails after clicking a malicious link in an email.\",\n  \"policy_basis_details\": \"User Hana Novak's email account was compromised, leading to unauthorized emails being sent from her account.\"\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 12681,
+            "note": "facts extracted"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 0,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 21855,
+            "note": "classification invalid after retry"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: security_breach"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "p1_signal: security_breach"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 4,
+        "modelLatencyMs": 1209,
+        "totalMs": 34536
+      }
+    },
+    {
+      "id": "P03",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 13789,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "p1_signal: more_than_50_users"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nP1 signals (code): more_than_50_users\nReasons: p1_signal: more_than_50_users\nRequest: Name: Samuel Osei\nLocation: Head Office, finance building\nAffected system: Email\nDescription: Nobody in the finance building can send or receive email since 09:15, that is roughly 80 people. Outlook just says 'Trying to connect'.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[\"more_than_50_users\"],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":80}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Samuel Osei\",\"location\":\"Head Office, finance building\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Email system not functioning in finance building since 09:15, impacting around 80 users\",\n  \"requester\": {\n    \"name\": \"Samuel Osei\",\n    \"location\": \"Head Office, finance building\"\n  },\n  \"affected_system\": \"Email\",\n  \"users_affected\": 80,\n  \"error_message\": null,\n  \"missing_info\": [\"description of the problem\", \"start time of the issue\"]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.location: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Email system not functioning in finance building since 09:15, impacting around 80 users\",\n  \"requester\": \"Samuel Osei\",\n  \"location\": \"Head Office, finance building\",\n  \"affected_system\": \"Email\",\n  \"users_affected\": 80,\n  \"error_message\": null,\n  \"missing_info\": [\"description of the problem\", \"start time of the issue\"]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 13785,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: more_than_50_users"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "p1_signal: more_than_50_users"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 618,
+        "totalMs": 13786
+      }
+    },
+    {
+      "id": "P04",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 14741,
+      "response": {
+        "@odata.context": "$metadata#IntakeRun",
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager",
+        "reasons": [
+          "p1_signal: safety_system"
+        ],
+        "overrides": [],
+        "output": "ESCALATION to IT duty manager\nP1 signals (code): safety_system\nReasons: p1_signal: safety_system\nRequest: From: Lara Jensen (EHS, Plant 1)\nSubject: gas detection panel offline\n\nThe gas detection panel in the paint shop lost its network link to the monitoring PC about 30 minutes ago. Alarms from the panel are not reaching the control room screen.",
+        "extraction": "null",
+        "classification": "null",
+        "policy": "{\"p1\":[\"safety_system\"],\"refusals\":[],\"incomplete\":[],\"usersMentioned\":null}",
+        "invalidOutputs": [
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.requester: expected string|null, got {\"name\":\"Lara Jensen\",\"department\":\"EHS\",\"plant\":\"Plant 1\"}"
+            ],
+            "raw": "{\n  \"summary\": \"Gas detection panel in paint shop has lost network link to monitoring PC, alarm not reaching control room\",\n  \"requester\": {\n    \"name\": \"Lara Jensen\",\n    \"department\": \"EHS\",\n    \"plant\": \"Plant 1\"\n  },\n  \"affected_system\": \"gas detection panel (paint shop)\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [\n    \"network link issue details\",\n    \"panel model and manufacturer\",\n    \"control room software version\",\n    \"monitoring PC details\",\n    \"alarm not reaching control room screen details\"\n  ]\n}"
+          },
+          {
+            "node": "extract",
+            "stage": "schema",
+            "errors": [
+              "$.department: unexpected property",
+              "$.plant: unexpected property"
+            ],
+            "raw": "{\n  \"summary\": \"Gas detection panel in paint shop has lost network link to monitoring PC, alarm not reaching control room\",\n  \"requester\": \"Lara Jensen\",\n  \"department\": \"EHS\",\n  \"plant\": \"Plant 1\",\n  \"affected_system\": \"gas detection panel (paint shop)\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [\n    \"network link issue details\",\n    \"panel model and manufacturer\",\n    \"control room software version\",\n    \"monitoring PC details\",\n    \"alarm not reaching control room screen details\"\n  ]\n}"
+          }
+        ],
+        "trace": [
+          {
+            "node": "extract",
+            "next": "lookup_context",
+            "ms": 14737,
+            "note": "extraction invalid after retry; continuing with text-only policy checks"
+          },
+          {
+            "node": "lookup_context",
+            "next": "classify",
+            "ms": 1,
+            "note": "no candidate articles"
+          },
+          {
+            "node": "classify",
+            "next": "check_policy",
+            "ms": 0,
+            "note": "skipped: no valid extraction to classify"
+          },
+          {
+            "node": "check_policy",
+            "next": "choose_path",
+            "ms": 0,
+            "note": "policy hits: safety_system"
+          },
+          {
+            "node": "choose_path",
+            "next": "escalate_to_human",
+            "ms": 0,
+            "note": "p1_signal: safety_system"
+          },
+          {
+            "node": "escalate_to_human",
+            "next": "__end__",
+            "ms": 0,
+            "note": "escalation note prepared"
+          }
+        ],
+        "modelCalls": 2,
+        "modelLatencyMs": 577,
+        "totalMs": 14738
+      }
+    }
+  ]
+}

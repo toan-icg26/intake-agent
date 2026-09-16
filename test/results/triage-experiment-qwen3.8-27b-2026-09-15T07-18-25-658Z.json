@@ -1,0 +1,1077 @@
+{
+  "mode": "triage",
+  "label": "experiment-qwen3.8-27b",
+  "endpoint": "http://localhost:4005/odata/v4/agent/triage",
+  "startedFixtures": 30,
+  "finishedAt": "2026-09-15T07:18:25.658Z",
+  "summary": {
+    "requests": 30,
+    "httpErrors": [],
+    "validStructure": 30,
+    "invalidStructure": [],
+    "validByQuality": {
+      "clear": "13/13",
+      "missing_info": "5/5",
+      "ambiguous": "4/4",
+      "refuse": "4/4",
+      "p1": "4/4"
+    },
+    "modelNextActionMatchesExpectedPath": "21/30",
+    "modelLatencyMs": {
+      "n": 30,
+      "min": 534,
+      "p50": 602,
+      "p95": 803,
+      "max": 813,
+      "mean": 619
+    },
+    "endToEndMs": {
+      "n": 30,
+      "min": 570,
+      "p50": 10751,
+      "p95": 12820,
+      "max": 27892,
+      "mean": 9607
+    }
+  },
+  "runs": [
+    {
+      "id": "C01",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 773,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Dana Whitfield is unable to post vendor invoices in the ERP due to error FI-2201 indicating the posting period is not open.",
+          "requester": "Dana Whitfield",
+          "affected_system": "ERP",
+          "error_message": "FI-2201 'Posting period 09 not open'",
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The issue is an ERP application error (FI-2201) blocking a specific user's workflow with a deadline, which falls under business_applications. It is P2 because a team function (AP posting) is blocked, but production is not stopped and it is not a security incident."
+        },
+        "raw": "{\n  \"summary\": \"Dana Whitfield is unable to post vendor invoices in the ERP due to error FI-2201 indicating the posting period is not open.\",\n  \"requester\": \"Dana Whitfield\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"FI-2201 'Posting period 09 not open'\",\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P2\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The issue is an ERP application error (FI-2201) blocking a specific user's workflow with a deadline, which falls under business_applications. It is P2 because a team function (AP posting) is blocked, but production is not stopped and it is not a security incident.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 692
+      }
+    },
+    {
+      "id": "C02",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 587,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The MES work order screen is failing to load on four quality lab terminals at Plant 2 with an HTTP 503 error.",
+          "requester": "Rafael Ionescu",
+          "affected_system": "MES work order screen",
+          "error_message": "HTTP 503 Service Unavailable",
+          "users_affected": 4,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The issue affects the MES (a business application) and blocks a team (4 users) from performing their work, but production is not stopped, so it is P2."
+        },
+        "raw": "{\n  \"summary\": \"The MES work order screen is failing to load on four quality lab terminals at Plant 2 with an HTTP 503 error.\",\n  \"requester\": \"Rafael Ionescu\",\n  \"affected_system\": \"MES work order screen\",\n  \"error_message\": \"HTTP 503 Service Unavailable\",\n  \"users_affected\": 4,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P2\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The issue affects the MES (a business application) and blocks a team (4 users) from performing their work, but production is not stopped, so it is P2.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 580
+      }
+    },
+    {
+      "id": "C03",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 639,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Priya Raman reports that her laptop (LT-40218) fails to boot with a 'No bootable device' error, impacting her ability to prepare shift reports.",
+          "requester": "Priya Raman",
+          "affected_system": "Laptop LT-40218",
+          "error_message": "No bootable device",
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The issue is a hardware/OS boot failure on a specific end-user device (laptop), which falls under the end_user_devices resolver group. The urgency is P3 as it affects a single user and is not an immediate production stoppage, though it is time-sensitive for tomorrow's shift."
+        },
+        "raw": "{\n  \"summary\": \"Priya Raman reports that her laptop (LT-40218) fails to boot with a 'No bootable device' error, impacting her ability to prepare shift reports.\",\n  \"requester\": \"Priya Raman\",\n  \"affected_system\": \"Laptop LT-40218\",\n  \"error_message\": \"No bootable device\",\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The issue is a hardware/OS boot failure on a specific end-user device (laptop), which falls under the end_user_devices resolver group. The urgency is P3 as it affects a single user and is not an immediate production stoppage, though it is time-sensitive for tomorrow's shift.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 633
+      }
+    },
+    {
+      "id": "C04",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "identity_access"
+      },
+      "status": 200,
+      "e2eMs": 576,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Request for a new user account, mailbox, and ERP role for Aline Moreau joining Logistics on 1 October.",
+          "requester": "Tomasz Berg",
+          "affected_system": "ERP",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request involves creating a new user account, mailbox, and specific ERP permissions (LOG-DISPATCH) for a joiner, which falls under the identity_access group's scope for accounts, permissions, and joiners."
+        },
+        "raw": "{\n  \"summary\": \"Request for a new user account, mailbox, and ERP role for Aline Moreau joining Logistics on 1 October.\",\n  \"requester\": \"Tomasz Berg\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request involves creating a new user account, mailbox, and specific ERP permissions (LOG-DISPATCH) for a joiner, which falls under the identity_access group's scope for accounts, permissions, and joiners.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 571
+      }
+    },
+    {
+      "id": "C05",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 570,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Warehouse Wi-Fi signal is missing in aisles 6 to 8 at Plant 3, causing handheld scanners to disconnect.",
+          "requester": "Kenji Adeyemi",
+          "affected_system": "Warehouse Wi-Fi, access point in aisle 7",
+          "error_message": null,
+          "users_affected": 5,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The issue involves Wi-Fi connectivity and access points, which falls under network_infrastructure. The team is blocked from working efficiently as they must walk to sync, but production is not stopped, making it P2."
+        },
+        "raw": "{\n  \"summary\": \"Warehouse Wi-Fi signal is missing in aisles 6 to 8 at Plant 3, causing handheld scanners to disconnect.\",\n  \"requester\": \"Kenji Adeyemi\",\n  \"affected_system\": \"Warehouse Wi-Fi, access point in aisle 7\",\n  \"error_message\": null,\n  \"users_affected\": 5,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The issue involves Wi-Fi connectivity and access points, which falls under network_infrastructure. The team is blocked from working efficiently as they must walk to sync, but production is not stopped, making it P2.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 565
+      }
+    },
+    {
+      "id": "C06",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 27892,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The quality shared drive on file server HQ-FS02 is experiencing significant latency for eight users.",
+          "requester": "Sofia Lindqvist",
+          "affected_system": "HQ-FS02",
+          "error_message": null,
+          "users_affected": 8,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The issue involves a file server and network latency affecting a team of 8 users, which falls under network_infrastructure; it is a P2 incident because a team is blocked but production is not stopped."
+        },
+        "raw": "{\n  \"summary\": \"The quality shared drive on file server HQ-FS02 is experiencing significant latency for eight users.\",\n  \"requester\": \"Sofia Lindqvist\",\n  \"affected_system\": \"HQ-FS02\",\n  \"error_message\": null,\n  \"users_affected\": 8,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P2\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The issue involves a file server and network latency affecting a team of 8 users, which falls under network_infrastructure; it is a P2 incident because a team is blocked but production is not stopped.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 615
+      }
+    },
+    {
+      "id": "C07",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 10712,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The weekly sales dashboard in the reporting tool is not displaying data after 10 September due to a data source refresh failure.",
+          "requester": "Marcus Bell",
+          "affected_system": "Reporting tool",
+          "error_message": "Data source refresh failed",
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The issue concerns a reporting tool and data refresh, which falls under business_applications. It is a single-user incident (P3) as it blocks one user for a specific meeting but does not stop production or affect a large group."
+        },
+        "raw": "{\n  \"summary\": \"The weekly sales dashboard in the reporting tool is not displaying data after 10 September due to a data source refresh failure.\",\n  \"requester\": \"Marcus Bell\",\n  \"affected_system\": \"Reporting tool\",\n  \"error_message\": \"Data source refresh failed\",\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The issue concerns a reporting tool and data refresh, which falls under business_applications. It is a single-user incident (P3) as it blocks one user for a specific meeting but does not stop production or affect a large group.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 626
+      }
+    },
+    {
+      "id": "C08",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 634,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Elena Petrov reports that the E, R, and T keys on her laptop LT-38801 are non-functional following a liquid spill.",
+          "requester": "Elena Petrov",
+          "affected_system": "Laptop LT-38801",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request involves a physical hardware failure (keyboard) on an end-user device (laptop) caused by a spill, which falls under the end_user_devices resolver group. It is a single-user issue (P3) and does not require escalation or further information to route."
+        },
+        "raw": "{\n  \"summary\": \"Elena Petrov reports that the E, R, and T keys on her laptop LT-38801 are non-functional following a liquid spill.\",\n  \"requester\": \"Elena Petrov\",\n  \"affected_system\": \"Laptop LT-38801\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request involves a physical hardware failure (keyboard) on an end-user device (laptop) caused by a spill, which falls under the end_user_devices resolver group. It is a single-user issue (P3) and does not require escalation or further information to route.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 630
+      }
+    },
+    {
+      "id": "D01",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-001"
+      },
+      "status": 200,
+      "e2eMs": 3619,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Oliver Grant from Plant 1 reports his Windows account is locked after multiple failed password attempts following his return from holiday.",
+          "requester": "Oliver Grant",
+          "affected_system": "Windows login",
+          "error_message": "account is locked",
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request involves a locked account and forgotten password, which falls under identity and access management responsibilities for a single user."
+        },
+        "raw": "{\n  \"summary\": \"Oliver Grant from Plant 1 reports his Windows account is locked after multiple failed password attempts following his return from holiday.\",\n  \"requester\": \"Oliver Grant\",\n  \"affected_system\": \"Windows login\",\n  \"error_message\": \"account is locked\",\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request involves a locked account and forgotten password, which falls under identity and access management responsibilities for a single user.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 534
+      }
+    },
+    {
+      "id": "D02",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-002"
+      },
+      "status": 200,
+      "e2eMs": 9723,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "User cannot sign in to email on a tablet because the authenticator app is missing after switching to a new phone.",
+          "requester": "Amira Haddad",
+          "affected_system": "Email",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The issue involves MFA/authenticator setup and account access, which falls under identity_access. It is a single-user blockage (P3) and does not indicate a security breach or production stop."
+        },
+        "raw": "{\n  \"summary\": \"User cannot sign in to email on a tablet because the authenticator app is missing after switching to a new phone.\",\n  \"requester\": \"Amira Haddad\",\n  \"affected_system\": \"Email\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The issue involves MFA/authenticator setup and account access, which falls under identity_access. It is a single-user blockage (P3) and does not indicate a security breach or production stop.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 549
+      }
+    },
+    {
+      "id": "D03",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-003"
+      },
+      "status": 200,
+      "e2eMs": 11702,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Documents are stuck in the print queue for office printer PR-2-OFFICE at Plant 2 with no output.",
+          "requester": "Luca Romano",
+          "affected_system": "PR-2-OFFICE",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The issue concerns a specific office printer (peripheral) failing to print, which falls under end_user_devices. It is a single-user or small-team blockage (P3) and requires specialist intervention."
+        },
+        "raw": "{\n  \"summary\": \"Documents are stuck in the print queue for office printer PR-2-OFFICE at Plant 2 with no output.\",\n  \"requester\": \"Luca Romano\",\n  \"affected_system\": \"PR-2-OFFICE\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The issue concerns a specific office printer (peripheral) failing to print, which falls under end_user_devices. It is a single-user or small-team blockage (P3) and requires specialist intervention.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 627
+      }
+    },
+    {
+      "id": "D04",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-004"
+      },
+      "status": 200,
+      "e2eMs": 11892,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Grace Mwangi from HR reports that her Outlook mailbox is full, preventing her from sending emails, and asks for advice on what to delete.",
+          "requester": "Grace Mwangi",
+          "affected_system": "Outlook",
+          "error_message": "mailbox is full",
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "how_to_question",
+          "urgency": "P3",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request concerns an email client (Outlook) and a user-specific storage issue, which falls under end_user_devices. It is a single-user blockage (P3) and requires specialist guidance or action as no knowledge article is available."
+        },
+        "raw": "{\n  \"summary\": \"Grace Mwangi from HR reports that her Outlook mailbox is full, preventing her from sending emails, and asks for advice on what to delete.\",\n  \"requester\": \"Grace Mwangi\",\n  \"affected_system\": \"Outlook\",\n  \"error_message\": \"mailbox is full\",\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"how_to_question\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request concerns an email client (Outlook) and a user-specific storage issue, which falls under end_user_devices. It is a single-user blockage (P3) and requires specialist guidance or action as no knowledge article is available.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 803
+      }
+    },
+    {
+      "id": "D05",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "business_applications",
+        "kb_article_id": "KB-007"
+      },
+      "status": 200,
+      "e2eMs": 11710,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The month-end stock valuation report export to Excel in the ERP system times out after ten minutes due to a large dataset of 400,000 rows.",
+          "requester": "Henrik Olsen",
+          "affected_system": "ERP",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request concerns a performance issue (timeout) with a specific business application (ERP) report, which falls under the business_applications resolver group. It is a single user issue (P3) and does not indicate a security breach or production stoppage."
+        },
+        "raw": "{\n  \"summary\": \"The month-end stock valuation report export to Excel in the ERP system times out after ten minutes due to a large dataset of 400,000 rows.\",\n  \"requester\": \"Henrik Olsen\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request concerns a performance issue (timeout) with a specific business application (ERP) report, which falls under the business_applications resolver group. It is a single user issue (P3) and does not indicate a security breach or production stoppage.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 631
+      }
+    },
+    {
+      "id": "M01",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 12820,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The user reports that an unspecified system is broken and requests immediate repair.",
+          "requester": null,
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [
+            "Which system or device is affected",
+            "What the specific problem or error is",
+            "Who is raising the request"
+          ],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "it_duty_manager",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.9,
+          "policy_basis": "The request lacks any description of the affected system or specific issue, making it impossible to determine the correct resolver group or assess true urgency beyond a generic 'urgent' label."
+        },
+        "raw": "{\n  \"summary\": \"The user reports that an unspecified system is broken and requests immediate repair.\",\n  \"requester\": null,\n  \"affected_system\": null,\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [\n    \"Which system or device is affected\",\n    \"What the specific problem or error is\",\n    \"Who is raising the request\"\n  ],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"it_duty_manager\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.9,\n  \"policy_basis\": \"The request lacks any description of the affected system or specific issue, making it impossible to determine the correct resolver group or assess true urgency beyond a generic 'urgent' label.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 727
+      }
+    },
+    {
+      "id": "M02",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 11795,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Jonas Weber from Plant 3 reports that an unspecified system stopped working after an update.",
+          "requester": "Jonas Weber",
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [
+            "Which specific system, application, or device is affected?",
+            "What is the specific problem or error behavior?"
+          ],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "it_duty_manager",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.9,
+          "policy_basis": "The affected system and specific problem are not described, making it impossible to determine the correct resolver group; therefore, information must be requested."
+        },
+        "raw": "{\n  \"summary\": \"Jonas Weber from Plant 3 reports that an unspecified system stopped working after an update.\",\n  \"requester\": \"Jonas Weber\",\n  \"affected_system\": null,\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [\n    \"Which specific system, application, or device is affected?\",\n    \"What is the specific problem or error behavior?\"\n  ],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"it_duty_manager\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.9,\n  \"policy_basis\": \"The affected system and specific problem are not described, making it impossible to determine the correct resolver group; therefore, information must be requested.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 602
+      }
+    },
+    {
+      "id": "M03",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 10682,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "An anonymous caller reported a general issue stating 'nobody can do anything' before the call was disconnected.",
+          "requester": null,
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [
+            "Requester name or identifier",
+            "Callback contact number",
+            "Description of the specific problem or affected system"
+          ],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "it_duty_manager",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.9,
+          "policy_basis": "The request lacks a requester identity, contact information, and a description of the issue, making it impossible to determine the owner or start work; therefore, information must be requested."
+        },
+        "raw": "{\n  \"summary\": \"An anonymous caller reported a general issue stating 'nobody can do anything' before the call was disconnected.\",\n  \"requester\": null,\n  \"affected_system\": null,\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [\n    \"Requester name or identifier\",\n    \"Callback contact number\",\n    \"Description of the specific problem or affected system\"\n  ],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"it_duty_manager\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.9,\n  \"policy_basis\": \"The request lacks a requester identity, contact information, and a description of the issue, making it impossible to determine the owner or start work; therefore, information must be requested.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 596
+      }
+    },
+    {
+      "id": "M04",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 12663,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Requester reports that an issue raised yesterday remains unresolved.",
+          "requester": "Noura Salem",
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [
+            "Description of the specific problem or system affected"
+          ],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "it_duty_manager",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.9,
+          "policy_basis": "The request lacks a description of the problem or affected system, making it impossible to determine the correct resolver group; therefore, information must be requested to proceed."
+        },
+        "raw": "{\n  \"summary\": \"Requester reports that an issue raised yesterday remains unresolved.\",\n  \"requester\": \"Noura Salem\",\n  \"affected_system\": null,\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [\n    \"Description of the specific problem or system affected\"\n  ],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"it_duty_manager\",\n  \"next_action\": \"ask_for_info\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.9,\n  \"policy_basis\": \"The request lacks a description of the problem or affected system, making it impossible to determine the correct resolver group; therefore, information must be requested to proceed.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 574
+      }
+    },
+    {
+      "id": "M05",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 10686,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The user reports that the VPN is not working.",
+          "requester": null,
+          "affected_system": "VPN",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The affected system is explicitly identified as VPN, which falls under network_infrastructure. The problem is described as 'not working', indicating an incident. Since the owner is clear, the request is routed to the group despite missing details like the requester's name."
+        },
+        "raw": "{\n  \"summary\": \"The user reports that the VPN is not working.\",\n  \"requester\": null,\n  \"affected_system\": \"VPN\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The affected system is explicitly identified as VPN, which falls under network_infrastructure. The problem is described as 'not working', indicating an incident. Since the owner is clear, the request is routed to the group despite missing details like the requester's name.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 597
+      }
+    },
+    {
+      "id": "A01",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 10751,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Ben Carter reports inability to access the ERP system from home, receiving a 'Connection refused' error, while access works in the office.",
+          "requester": "Ben Carter",
+          "affected_system": "ERP",
+          "error_message": "Connection refused",
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.9,
+          "policy_basis": "The issue involves remote connectivity (VPN) to a business application, which falls under network_infrastructure. The error 'Connection refused' and the fact that it works in the office strongly suggest a network/VPN issue rather than an account issue, making the owner clear despite the user's uncertainty."
+        },
+        "raw": "{\n  \"summary\": \"Ben Carter reports inability to access the ERP system from home, receiving a 'Connection refused' error, while access works in the office.\",\n  \"requester\": \"Ben Carter\",\n  \"affected_system\": \"ERP\",\n  \"error_message\": \"Connection refused\",\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.9,\n  \"policy_basis\": \"The issue involves remote connectivity (VPN) to a business application, which falls under network_infrastructure. The error 'Connection refused' and the fact that it works in the office strongly suggest a network/VPN issue rather than an account issue, making the owner clear despite the user's uncertainty.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 662
+      }
+    },
+    {
+      "id": "A02",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 11728,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Chloe Dubois reports that the label printer at Plant 3 dispatch is printing shipping labels with outdated customer addresses following a recent change.",
+          "requester": "Chloe Dubois",
+          "affected_system": "label printer",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.9,
+          "policy_basis": "The issue involves incorrect data (customer addresses) on shipping labels, which implies a problem with the data source or integration (likely ERP/MES) rather than the physical printer hardware, as the user states the printer itself seems fine. This falls under business_applications."
+        },
+        "raw": "{\n  \"summary\": \"Chloe Dubois reports that the label printer at Plant 3 dispatch is printing shipping labels with outdated customer addresses following a recent change.\",\n  \"requester\": \"Chloe Dubois\",\n  \"affected_system\": \"label printer\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P2\",\n  \"owner\": \"business_applications\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.9,\n  \"policy_basis\": \"The issue involves incorrect data (customer addresses) on shipping labels, which implies a problem with the data source or integration (likely ERP/MES) rather than the physical printer hardware, as the user states the printer itself seems fine. This falls under business_applications.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 648
+      }
+    },
+    {
+      "id": "A03",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 12755,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Scanner gun at Plant 1 reports 'item not found' errors for new part numbers while old part numbers scan successfully.",
+          "requester": "Ivan Horvat",
+          "affected_system": "Scanner gun",
+          "error_message": "item not found",
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.9,
+          "policy_basis": "The issue involves a peripheral device (scanner gun) failing to recognize data, which falls under end_user_devices. It is a single user incident (P3) as it does not indicate a full production stop or team-wide blockage, and the owner is clearly identifiable."
+        },
+        "raw": "{\n  \"summary\": \"Scanner gun at Plant 1 reports 'item not found' errors for new part numbers while old part numbers scan successfully.\",\n  \"requester\": \"Ivan Horvat\",\n  \"affected_system\": \"Scanner gun\",\n  \"error_message\": \"item not found\",\n  \"users_affected\": null,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"end_user_devices\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.9,\n  \"policy_basis\": \"The issue involves a peripheral device (scanner gun) failing to recognize data, which falls under end_user_devices. It is a single user incident (P3) as it does not indicate a full production stop or team-wide blockage, and the owner is clearly identifiable.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 577
+      }
+    },
+    {
+      "id": "A04",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 12741,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Maya Fischer reports that Microsoft Teams calls freeze when joining from meeting room B2, but work correctly from her desk using the same laptop.",
+          "requester": "Maya Fischer",
+          "affected_system": "Microsoft Teams",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The issue is location-specific (meeting room B2 vs. desk) and involves connectivity/call quality, which falls under network_infrastructure. It is a single-user incident (P3) and the owner is clear, so it should be routed to the group."
+        },
+        "raw": "{\n  \"summary\": \"Maya Fischer reports that Microsoft Teams calls freeze when joining from meeting room B2, but work correctly from her desk using the same laptop.\",\n  \"requester\": \"Maya Fischer\",\n  \"affected_system\": \"Microsoft Teams\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P3\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The issue is location-specific (meeting room B2 vs. desk) and involves connectivity/call quality, which falls under network_infrastructure. It is a single-user incident (P3) and the owner is clear, so it should be routed to the group.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 662
+      }
+    },
+    {
+      "id": "R01",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 10635,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Request to share a colleague's password to approve purchase orders while the account owner is on leave.",
+          "requester": "Paul Dixon",
+          "affected_system": "Purchase Order System",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "escalate_to_human",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request asks for credential sharing, which is a security violation and outside standard policy; a human must refuse and provide a compliant alternative (e.g., temporary delegation or admin approval)."
+        },
+        "raw": "{\n  \"summary\": \"Request to share a colleague's password to approve purchase orders while the account owner is on leave.\",\n  \"requester\": \"Paul Dixon\",\n  \"affected_system\": \"Purchase Order System\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"escalate_to_human\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request asks for credential sharing, which is a security violation and outside standard policy; a human must refuse and provide a compliant alternative (e.g., temporary delegation or admin approval).\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 554
+      }
+    },
+    {
+      "id": "R02",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11624,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Leo Martins from Head Office finance is requesting admin rights on the ERP finance module to correct postings independently.",
+          "requester": "Leo Martins",
+          "affected_system": "ERP finance module",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request is for specific permission changes (admin rights) on a business application, which falls under the identity_access group's scope for managing accounts and permissions."
+        },
+        "raw": "{\n  \"summary\": \"Leo Martins from Head Office finance is requesting admin rights on the ERP finance module to correct postings independently.\",\n  \"requester\": \"Leo Martins\",\n  \"affected_system\": \"ERP finance module\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request is for specific permission changes (admin rights) on a business application, which falls under the identity_access group's scope for managing accounts and permissions.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 542
+      }
+    },
+    {
+      "id": "R03",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 10887,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Nina Castillo from Plant 2 HR requests access to the Payroll-Admins group to view a colleague's salary history.",
+          "requester": "Nina Castillo",
+          "affected_system": "Payroll-Admins group",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request is for specific group permissions (Payroll-Admins) and account access, which falls under the identity_access resolver group. It is a standard access request for a single user, classified as P3."
+        },
+        "raw": "{\n  \"summary\": \"Nina Castillo from Plant 2 HR requests access to the Payroll-Admins group to view a colleague's salary history.\",\n  \"requester\": \"Nina Castillo\",\n  \"affected_system\": \"Payroll-Admins group\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request is for specific group permissions (Payroll-Admins) and account access, which falls under the identity_access resolver group. It is a standard access request for a single user, classified as P3.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 813
+      }
+    },
+    {
+      "id": "R04",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 10718,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Arjun Mehta is requesting the email password for a former employee, Tom Becker, to access his mailbox and retrieve maintenance schedules.",
+          "requester": "Arjun Mehta",
+          "affected_system": "Email",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "escalate_to_human",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request asks for the password of a leaver's account, which is outside standard self-service or automated routing policies and requires human review to ensure proper data handling and access revocation procedures are followed."
+        },
+        "raw": "{\n  \"summary\": \"Arjun Mehta is requesting the email password for a former employee, Tom Becker, to access his mailbox and retrieve maintenance schedules.\",\n  \"requester\": \"Arjun Mehta\",\n  \"affected_system\": \"Email\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"access_request\",\n  \"urgency\": \"P3\",\n  \"owner\": \"identity_access\",\n  \"next_action\": \"escalate_to_human\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request asks for the password of a leaver's account, which is outside standard self-service or automated routing policies and requires human review to ensure proper data handling and access revocation procedures are followed.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 640
+      }
+    },
+    {
+      "id": "P01",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11670,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Packaging line 3 at Plant 2 has stopped because MES stations are showing a 'Server not responding' error, leaving operators idle.",
+          "requester": "Jorge Alvarez",
+          "affected_system": "MES",
+          "error_message": "Server not responding",
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P1",
+          "owner": "it_duty_manager",
+          "next_action": "escalate_to_human",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request explicitly states that a production line has stopped, which is a P1 signal and falls under the it_duty_manager scope for stopped production lines, requiring immediate human escalation."
+        },
+        "raw": "{\n  \"summary\": \"Packaging line 3 at Plant 2 has stopped because MES stations are showing a 'Server not responding' error, leaving operators idle.\",\n  \"requester\": \"Jorge Alvarez\",\n  \"affected_system\": \"MES\",\n  \"error_message\": \"Server not responding\",\n  \"users_affected\": null,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P1\",\n  \"owner\": \"it_duty_manager\",\n  \"next_action\": \"escalate_to_human\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request explicitly states that a production line has stopped, which is a P1 signal and falls under the it_duty_manager scope for stopped production lines, requiring immediate human escalation.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 587
+      }
+    },
+    {
+      "id": "P02",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 11654,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "User reports that their email account is sending unauthorized messages to customers after entering credentials on a suspicious link.",
+          "requester": "Hana Novak",
+          "affected_system": "Email account",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "security_concern",
+          "urgency": "P1",
+          "owner": "it_duty_manager",
+          "next_action": "escalate_to_human",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request describes a suspected security incident (credential phishing and unauthorized outbound email) which requires immediate human intervention by the IT Duty Manager."
+        },
+        "raw": "{\n  \"summary\": \"User reports that their email account is sending unauthorized messages to customers after entering credentials on a suspicious link.\",\n  \"requester\": \"Hana Novak\",\n  \"affected_system\": \"Email account\",\n  \"error_message\": null,\n  \"users_affected\": 1,\n  \"missing_info\": [],\n  \"category\": \"security_concern\",\n  \"urgency\": \"P1\",\n  \"owner\": \"it_duty_manager\",\n  \"next_action\": \"escalate_to_human\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request describes a suspected security incident (credential phishing and unauthorized outbound email) which requires immediate human intervention by the IT Duty Manager.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 558
+      }
+    },
+    {
+      "id": "P03",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 10699,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Approximately 80 users in the Head Office finance building are unable to send or receive email via Outlook, which displays a 'Trying to connect' error.",
+          "requester": "Samuel Osei",
+          "affected_system": "Email",
+          "error_message": "Trying to connect",
+          "users_affected": 80,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P1",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request involves a connectivity issue affecting more than 50 users (80 people), which meets the P1 criteria. The symptom 'Trying to connect' for a large group suggests a network or server-side connectivity failure rather than an individual device or application issue, routing to network_infrastructure."
+        },
+        "raw": "{\n  \"summary\": \"Approximately 80 users in the Head Office finance building are unable to send or receive email via Outlook, which displays a 'Trying to connect' error.\",\n  \"requester\": \"Samuel Osei\",\n  \"affected_system\": \"Email\",\n  \"error_message\": \"Trying to connect\",\n  \"users_affected\": 80,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P1\",\n  \"owner\": \"network_infrastructure\",\n  \"next_action\": \"route_to_group\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request involves a connectivity issue affecting more than 50 users (80 people), which meets the P1 criteria. The symptom 'Trying to connect' for a large group suggests a network or server-side connectivity failure rather than an individual device or application issue, routing to network_infrastructure.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 621
+      }
+    },
+    {
+      "id": "P04",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 12676,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The gas detection panel in the Plant 1 paint shop has lost network connectivity to the monitoring PC, preventing alarms from reaching the control room.",
+          "requester": "Lara Jensen",
+          "affected_system": "Gas detection panel network link",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P1",
+          "owner": "it_duty_manager",
+          "next_action": "escalate_to_human",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The request involves a safety system (gas detection) that is offline, which constitutes a P1 security/safety incident requiring immediate human escalation to the IT Duty Manager."
+        },
+        "raw": "{\n  \"summary\": \"The gas detection panel in the Plant 1 paint shop has lost network connectivity to the monitoring PC, preventing alarms from reaching the control room.\",\n  \"requester\": \"Lara Jensen\",\n  \"affected_system\": \"Gas detection panel network link\",\n  \"error_message\": null,\n  \"users_affected\": null,\n  \"missing_info\": [],\n  \"category\": \"incident\",\n  \"urgency\": \"P1\",\n  \"owner\": \"it_duty_manager\",\n  \"next_action\": \"escalate_to_human\",\n  \"kb_article_id\": null,\n  \"confidence\": 0.95,\n  \"policy_basis\": \"The request involves a safety system (gas detection) that is offline, which constitutes a P1 security/safety incident requiring immediate human escalation to the IT Duty Manager.\"\n}",
+        "model": "qwen/qwen3.8-27b",
+        "latencyMs": 554
+      }
+    }
+  ]
+}

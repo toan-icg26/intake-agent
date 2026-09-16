@@ -1,0 +1,92 @@
+{
+  "mode": "ask",
+  "label": "v2",
+  "endpoint": "http://localhost:4004/odata/v4/agent/askAgent",
+  "startedFixtures": 5,
+  "finishedAt": "2026-09-15T07:38:40.542Z",
+  "summary": {
+    "requests": 5,
+    "httpErrors": [],
+    "endToEndMs": {
+      "n": 5,
+      "min": 1005,
+      "p50": 1841,
+      "p95": 1901,
+      "max": 1901,
+      "mean": 1545
+    }
+  },
+  "runs": [
+    {
+      "id": "C01",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 1841,
+      "response": {
+        "@odata.context": "$metadata#Edm.String",
+        "value": "**Root cause**  \nThe ERP’s financial period 09 is closed for posting, so any transaction that tries to post to that period is rejected with FI‑2201.\n\n**Immediate actions (to meet the 16:00 deadline)**  \n\n1. **Verify period status**  \n   - Open the period‑control screen (e.g., *OB52* in SAP).  \n   - Confirm that period 09 is indeed closed for the company code you are posting to.\n\n2. **Open period 09 for posting (if you have authority)**  \n   - If you have the required role (e.g., *FINANCE_POSTING*), select the company code, fiscal year, and change the status of period 09 from **Closed** to **Open** (or **Open for posting**).  \n   - Save the changes.  \n   - Re‑run a test invoice to confirm the error is gone.\n\n3. **If you lack the necessary authorisation**  \n   - Forward this ticket immediately to the Finance / Controlling team (or the user who maintains period control).  \n   - Include:  \n     - Your user ID  \n     - Company code / fiscal year  \n     - Description of the error (FI‑2201, posting period 09 not open)  \n     - Urgency: batch must be posted before 16:00 today.  \n\n4. **Work‑around while waiting for period to be opened**  \n   - Change the posting date on the invoices to a period that is currently open (e.g., period 08) **only if** your accounting policy permits back‑dating and the vendor terms allow it.  \n   - Document the reason for the date change in the invoice notes for audit purposes.\n\n5. **After posting**  \n   - Once the batch is posted, ask Finance to close period 09 again (if it should remain closed) to preserve period integrity.  \n   - Verify that the batch status is “Posted” and that the vendor balances are updated.\n\n**What to send now (if you need help)**  \n\n```\nSubject: URGENT – FI-2201 Posting Period 09 Closed – Vendor Invoices (Due 16:00)\n\nHi Finance/Period‑Control Team,\n\nAll vendor invoices I am posting today are failing with error FI‑2201 “Posting period 09 not open”. The batch must be posted before 16:00.\n\n- User: Dana Whitfield (AP, Head Office)\n- Company Code: [insert]\n- Fiscal Year: [insert]\n- Posting Date on invoices: 2024‑09‑xx\n- Required deadline: 2024‑09‑15 16:00\n\nPlease open period 09 for posting or advise on an approved work‑around.\n\nThank you,\nDana\n```\n\nLet me know if you need step‑by‑step screenshots for the period‑control transaction or if you’d like me to raise the request on your behalf."
+      }
+    },
+    {
+      "id": "C05",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 1005,
+      "response": {
+        "@odata.context": "$metadata#Edm.String",
+        "value": "**Ticket Created**\n\n- **User:** Kenji Adeyemi  \n- **Location:** Plant 3 Warehouse  \n- **Affected System:** Warehouse Wi‑Fi (AP in Aisle 7)  \n- **Issue:** No Wi‑Fi signal in Aisles 6‑8 since Monday; handheld scanners disconnect frequently, forcing pickers to return to Aisle 5 to sync.\n\n**Next Steps**\n\n1. **Initial Check:** Verify AP power and status via the network controller.  \n2. **Physical Inspection:** Confirm the AP in Aisle 7 is mounted correctly, cables are secure, and there’s no obvious damage.  \n3. **Signal Survey:** Run a quick RF sweep in Aisles 6‑8 to identify dead zones or interference.  \n4. **Restart:** If the AP appears online but not broadcasting, perform a remote reboot; if not reachable, schedule an on‑site power cycle.  \n5. **Log Collection:** Capture AP logs and scanner connection logs for further analysis.  \n\n**ETA:** We’ll begin the remote diagnostics within the next hour and update you on findings. If an on‑site visit is required, we’ll schedule it promptly.\n\nThank you,  \nIT Service Desk."
+      }
+    },
+    {
+      "id": "D03",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-003"
+      },
+      "status": 200,
+      "e2eMs": 1901,
+      "response": {
+        "@odata.context": "$metadata#Edm.String",
+        "value": "**Ticket Summary**  \n- **Caller:** Luca Romano (Plant 2 office)  \n- **Printer:** PR‑2‑OFFICE (office printer)  \n- **Issue:** Documents stuck in the print queue since 10:00; nothing prints. Printer display shows normal, no paper jam.\n\n**Immediate Troubleshooting Steps**\n\n1. **Check the print queue**\n   - On the workstation, open **Devices and Printers** (or **Settings → Printers & scanners**).  \n   - Right‑click **PR‑2‑OFFICE** → **See what's printing**.  \n   - If jobs are “Paused” or “Error”, click **Resume printing**.  \n\n2. **Cancel stuck jobs**\n   - Select all jobs in the queue, right‑click and choose **Cancel**.  \n   - Confirm that the queue is empty.\n\n3. **Restart the print spooler service (on the workstation)**\n   - Press **Win + R**, type `services.msc`, press **Enter**.  \n   - Locate **Print Spooler**, right‑click → **Restart**.  \n   - Re‑open the printer queue to confirm it’s clear.\n\n4. **Verify printer connectivity**\n   - Ping the printer IP (ask Luca for the IP or check the label on the printer).  \n   - `ping <printer‑IP>` – should receive replies.  \n   - If ping fails, check the network cable or Wi‑Fi connection and ensure the printer is on the same VLAN as Plant 2.\n\n5. **Print a test page from the workstation**\n   - Right‑click the printer → **Printer properties** → **Print Test Page**.  \n   - If it prints, the issue was a stuck job; advise Luca to resend the document.\n\n6. **If no test page prints**\n   - **Power‑cycle the printer**: turn it off, wait 30 seconds, turn it back on.  \n   - Wait for the printer to initialize, then repeat step 5.\n\n7. **Check for driver or network issues**\n   - Ensure Luca’s PC is using the correct driver version for PR‑2‑OFFICE (compare with the driver stored on the print server).  \n   - If the driver is outdated, reinstall the latest driver from the IT Share.\n\n8. **Escalate if still unresolved**\n   - If the printer still does not print after a power cycle and spooler restart, log a **Level 2** ticket for the hardware team to inspect the printer’s internal controller or network port.\n\n**Next Actions for Luca**\n\n- Follow steps 1‑5 and let you know the result.  \n- If the test page prints, you’re done.  \n- If not, perform the power‑cycle (step 6) and report back.\n\n**Ticket Creation**  \n- Create a ticket in ServiceNow (or your ticketing system) with the above details and mark it **In Progress**.  \n- Assign to the **Print Services** queue; set priority to **Medium** (affects Plant 2 office users).  \n\nLet me know the outcome of the test page, and we’ll proceed from there."
+      }
+    },
+    {
+      "id": "A04",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 1853,
+      "response": {
+        "@odata.context": "$metadata#Edm.String",
+        "value": "Hi Maya,\n\nThanks for the details. Here are a few quick checks to isolate the issue in meeting room B2:\n\n| Step | What to do | Why it matters |\n|------|------------|----------------|\n| 1️⃣ Verify connection type | Confirm whether the laptop is using **Wi‑Fi** or a **wired Ethernet** cable in B2. | Different media can have different bandwidth or interference. |\n| 2️⃣ Test network speed | Run a speed test (e.g., [fast.com](https://fast.com) or [Speedtest.net](https://www.speedtest.net)) from the laptop while in the room. Note download/upload and latency. | Teams needs > 1.2 Mbps (up/down) for video; high latency (>150 ms) can cause freezes. |\n| 3️⃣ Check signal quality (Wi‑Fi) | If on Wi‑Fi, open the Wi‑Fi settings → **Properties** → look at **Signal strength** and **Channel**. <br>If signal < 70 % or the channel is crowded, try moving closer to the AP or switching to a 5 GHz network. | Weak or congested Wi‑Fi leads to packet loss. |\n| 4️⃣ Inspect the Ethernet cable / port | If wired, unplug and re‑plug the cable, try a different port on the wall, and inspect the cable for damage. | Faulty cabling can cause intermittent drops. |\n| 5️⃣ Disable VPN / proxy (temporarily) | If you normally connect through a corporate VPN, disconnect it for a test call. | VPN overhead can add latency, especially on a congested Wi‑Fi. |\n| 6️⃣ Run Teams network diagnostics | In Teams → **Help** → **Troubleshoot** → **Network & device** → **Run test**. Save the report and send it to us. | Gives us exact packet loss, jitter, and bandwidth numbers. |\n| 7️⃣ Try a different device | If possible, join a call from a colleague’s laptop (or a meeting room PC) in B2. | Determines whether the problem is the room’s network or the specific laptop. |\n| 8️⃣ Check room equipment | Verify that the room’s **AV controller** or **conference phone** isn’t sharing the same network segment and causing bandwidth contention. | Some rooms have multiple devices streaming simultaneously. |\n\n**Next steps**\n\n1. Perform steps 1‑4 and let me know the results (speed numbers, signal strength, cable/port status).  \n2. If the call still freezes, run the Teams network diagnostic (step 6) and attach the generated *.txt* file.  \n3. Based on that data we can decide whether to:\n   * Re‑configure the Wi‑Fi AP/channel for B2,  \n   * Replace a faulty Ethernet cable/port, or  \n   * Open a ticket with the network team for deeper analysis.\n\nFeel free to ping me with the test results or any screenshots, and I’ll get this sorted quickly.\n\nBest,  \nIT Service Desk 🚀"
+      }
+    },
+    {
+      "id": "P01",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 1127,
+      "response": {
+        "@odata.context": "$metadata#Edm.String",
+        "value": "**Jorge – Immediate actions**\n\n1. **Confirm network connectivity**  \n   - From a workstation on Plant 2, ping the MES server IP.  \n   - If ping fails, check the switch port and cable to the server.\n\n2. **Restart MES services**  \n   - Log onto the MES server (or ask the server admin) and run:  \n     ```\n     net stop MESService\n     net start MESService\n     ```\n   - If you have access to the server console, you can also restart the server if services won’t start.\n\n3. **Check server health**  \n   - Verify CPU, memory, and disk usage (Task Manager/Performance Monitor).  \n   - Look for any recent Windows Event Log errors (Application/System).\n\n4. **Validate firewall / DNS**  \n   - Ensure the server’s firewall isn’t blocking port 443 (or the port used by MES).  \n   - Confirm the DNS entry for the MES server resolves correctly from the line workstations.\n\n5. **Bring line back online**  \n   - Once the MES service is responding, have operators refresh the MES client (Ctrl + F5) and verify the line status changes to “Running”.  \n   - If the line does not auto‑start, manually start Packaging Line 3 from the MES control screen.\n\n6. **Escalate if needed**  \n   - If the server remains unresponsive after a service restart, open a high‑priority ticket with the Infrastructure team, include:  \n     - Server name/IP  \n     - Time of outage  \n     - Ping/trace results  \n     - Any error messages from Event Log.\n\n**Quick note:** Keep the operators informed that you’re working on the issue; ask them to stand by but not to power‑cycle any equipment until the MES connection is restored."
+      }
+    }
+  ]
+}

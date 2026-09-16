@@ -1,0 +1,1091 @@
+{
+  "mode": "triage",
+  "label": "final",
+  "endpoint": "http://localhost:4004/odata/v4/agent/triage",
+  "startedFixtures": 30,
+  "finishedAt": "2026-09-15T07:44:48.260Z",
+  "summary": {
+    "requests": 30,
+    "httpErrors": [],
+    "validStructure": 30,
+    "invalidStructure": [],
+    "validByQuality": {
+      "clear": "13/13",
+      "missing_info": "5/5",
+      "ambiguous": "4/4",
+      "refuse": "4/4",
+      "p1": "4/4"
+    },
+    "modelNextActionMatchesExpectedPath": "15/30",
+    "modelLatencyMs": {
+      "n": 30,
+      "min": 792,
+      "p50": 1252,
+      "p95": 2016,
+      "max": 2019,
+      "mean": 1276
+    },
+    "endToEndMs": {
+      "n": 30,
+      "min": 795,
+      "p50": 4126,
+      "p95": 8455,
+      "max": 9482,
+      "mean": 4502
+    }
+  },
+  "runs": [
+    {
+      "id": "C01",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 4402,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Vendor invoice posting fails with error FI-2201 'Posting period 09 not open'",
+          "requester": "Dana Whitfield",
+          "affected_system": "ERP",
+          "error_message": "FI-2201 'Posting period 09 not open'",
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 1,
+          "policy_basis": "ERP posting error reported by AP user indicates business applications issue"
+        },
+        "raw": "{\"summary\":\"Vendor invoice posting fails with error FI-2201 'Posting period 09 not open'\",\"requester\":\"Dana Whitfield\",\"affected_system\":\"ERP\",\"error_message\":\"FI-2201 'Posting period 09 not open'\",\"users_affected\":1,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":1,\"policy_basis\":\"ERP posting error reported by AP user indicates business applications issue\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1188
+      }
+    },
+    {
+      "id": "C02",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 6675,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The MES work order screen shows HTTP 503 Service Unavailable on four quality lab terminals.",
+          "requester": "Rafael Ionescu",
+          "affected_system": "MES work order screen",
+          "error_message": "HTTP 503 Service Unavailable",
+          "users_affected": 4,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 1,
+          "policy_basis": "Request mentions MES system, error code, and multiple users, indicating a business application incident requiring the business_applications group."
+        },
+        "raw": "{\"summary\":\"The MES work order screen shows HTTP 503 Service Unavailable on four quality lab terminals.\",\"requester\":\"Rafael Ionescu\",\"affected_system\":\"MES work order screen\",\"error_message\":\"HTTP 503 Service Unavailable\",\"users_affected\":4,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":1,\"policy_basis\":\"Request mentions MES system, error code, and multiple users, indicating a business application incident requiring the business_applications group.\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1592
+      }
+    },
+    {
+      "id": "C03",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 3327,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Priya Raman's laptop (asset LT-40218) shows a black screen with \"No bootable device\" and will not boot.",
+          "requester": "Priya Raman",
+          "affected_system": "LT-40218",
+          "error_message": "No bootable device",
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.98,
+          "policy_basis": "Requester identified, device is an end‑user laptop with a boot error, affecting a single user, so it maps to end_user_devices group"
+        },
+        "raw": "{\"summary\":\"Priya Raman's laptop (asset LT-40218) shows a black screen with \\\"No bootable device\\\" and will not boot.\",\"requester\":\"Priya Raman\",\"affected_system\":\"LT-40218\",\"error_message\":\"No bootable device\",\"users_affected\":1,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.98,\"policy_basis\":\"Requester identified, device is an end‑user laptop with a boot error, affecting a single user, so it maps to end_user_devices group\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1252
+      }
+    },
+    {
+      "id": "C04",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "identity_access"
+      },
+      "status": 200,
+      "e2eMs": 1932,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Aline Moreau needs a network account, mailbox and ERP role LOG-DISPATCH as a new starter in Logistics",
+          "requester": "Tomasz Berg",
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.99,
+          "policy_basis": "Request is for creating accounts and permissions, which falls under identity_access; it is an access request for a single new user, so urgency P3"
+        },
+        "raw": "{\"summary\":\"Aline Moreau needs a network account, mailbox and ERP role LOG-DISPATCH as a new starter in Logistics\",\"requester\":\"Tomasz Berg\",\"affected_system\":null,\"error_message\":null,\"users_affected\":1,\"missing_info\":[],\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.99,\"policy_basis\":\"Request is for creating accounts and permissions, which falls under identity_access; it is an access request for a single new user, so urgency P3\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 851
+      }
+    },
+    {
+      "id": "C05",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 9482,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "No Wi‑Fi signal in aisles 6‑8 of Plant 3 warehouse, causing handheld scanners to lose connection.",
+          "requester": "Kenji Adeyemi",
+          "affected_system": "Warehouse Wi‑Fi (access point in aisle 7)",
+          "error_message": null,
+          "users_affected": 5,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.98,
+          "policy_basis": "Request mentions Wi‑Fi access point failure in a plant location, indicating a network infrastructure issue; therefore it is routed to network_infrastructure with P2 urgency as pickers are blocked."
+        },
+        "raw": "{\"summary\":\"No Wi‑Fi signal in aisles 6‑8 of Plant 3 warehouse, causing handheld scanners to lose connection.\",\"requester\":\"Kenji Adeyemi\",\"affected_system\":\"Warehouse Wi‑Fi (access point in aisle 7)\",\"error_message\":null,\"users_affected\":5,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"network_infrastructure\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.98,\"policy_basis\":\"Request mentions Wi‑Fi access point failure in a plant location, indicating a network infrastructure issue; therefore it is routed to network_infrastructure with P2 urgency as pickers are blocked.\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1403
+      }
+    },
+    {
+      "id": "C06",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 2050,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Shared drive on file server HQ-FS02 is extremely slow for the quality team",
+          "requester": "Sofia Lindqvist",
+          "affected_system": "HQ-FS02 file server shared drive",
+          "error_message": null,
+          "users_affected": 8,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 1,
+          "policy_basis": "The request mentions a specific file server (HQ-FS02) and a slowdown affecting eight users, indicating a network/storage issue handled by network_infrastructure"
+        },
+        "raw": "{\"summary\":\"Shared drive on file server HQ-FS02 is extremely slow for the quality team\",\"requester\":\"Sofia Lindqvist\",\"affected_system\":\"HQ-FS02 file server shared drive\",\"error_message\":null,\"users_affected\":8,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"network_infrastructure\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":1,\"policy_basis\":\"The request mentions a specific file server (HQ-FS02) and a slowdown affecting eight users, indicating a network/storage issue handled by network_infrastructure\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 973
+      }
+    },
+    {
+      "id": "C07",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 7235,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Weekly sales dashboard in the reporting tool shows no data with error 'Data source refresh failed' after 10 September",
+          "requester": "Marcus Bell",
+          "affected_system": "reporting tool",
+          "error_message": "Data source refresh failed",
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "The request concerns a reporting tool (business_applications) with a clear error, indicating an incident; urgency is P3 as it affects a single user’s meeting preparation."
+        },
+        "raw": "{\"summary\":\"Weekly sales dashboard in the reporting tool shows no data with error 'Data source refresh failed' after 10 September\",\"requester\":\"Marcus Bell\",\"affected_system\":\"reporting tool\",\"error_message\":\"Data source refresh failed\",\"users_affected\":1,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"The request concerns a reporting tool (business_applications) with a clear error, indicating an incident; urgency is P3 as it affects a single user’s meeting preparation.\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1056
+      }
+    },
+    {
+      "id": "C08",
+      "quality": "clear",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "end_user_devices"
+      },
+      "status": 200,
+      "e2eMs": 6264,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Elena Petrov reports that the E, R and T keys on her laptop LT-38801 stopped working after a coffee spill.",
+          "requester": "Elena Petrov",
+          "affected_system": "Laptop LT-38801",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 1,
+          "policy_basis": "The request mentions a specific laptop and hardware key failure, indicating an end‑user device incident affecting a single user, so it is routed to the end_user_devices group."
+        },
+        "raw": "{\"summary\":\"Elena Petrov reports that the E, R and T keys on her laptop LT-38801 stopped working after a coffee spill.\",\"requester\":\"Elena Petrov\",\"affected_system\":\"Laptop LT-38801\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":1,\"policy_basis\":\"The request mentions a specific laptop and hardware key failure, indicating an end‑user device incident affecting a single user, so it is routed to the end_user_devices group.\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1093
+      }
+    },
+    {
+      "id": "D01",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-001"
+      },
+      "status": 200,
+      "e2eMs": 3193,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Oliver Grant cannot log in because his account is locked after forgetting his password",
+          "requester": "Oliver Grant",
+          "affected_system": "Windows login",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 1,
+          "policy_basis": "The request mentions a locked Windows login account needing password assistance, indicating an identity_access issue and a single user blocked (P3)"
+        },
+        "raw": "{\"summary\":\"Oliver Grant cannot log in because his account is locked after forgetting his password\",\"requester\":\"Oliver Grant\",\"affected_system\":\"Windows login\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[],\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":1,\"policy_basis\":\"The request mentions a locked Windows login account needing password assistance, indicating an identity_access issue and a single user blocked (P3)\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1108
+      }
+    },
+    {
+      "id": "D02",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "identity_access",
+        "kb_article_id": "KB-002"
+      },
+      "status": 200,
+      "e2eMs": 3045,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "User cannot receive MFA verification code on new phone for email sign‑in",
+          "requester": "Amira Haddad",
+          "affected_system": "email",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [
+            "type of phone or operating system"
+          ],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "User reports missing authenticator app on new phone, affecting MFA for email (identity_access); single user blocked, so incident P3; need phone/OS details to proceed"
+        },
+        "raw": "{\"summary\":\"User cannot receive MFA verification code on new phone for email sign‑in\",\"requester\":\"Amira Haddad\",\"affected_system\":\"email\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[\"type of phone or operating system\"],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"User reports missing authenticator app on new phone, affecting MFA for email (identity_access); single user blocked, so incident P3; need phone/OS details to proceed\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 962
+      }
+    },
+    {
+      "id": "D03",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-003"
+      },
+      "status": 200,
+      "e2eMs": 1554,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Documents are stuck in the print queue for office printer PR-2-OFFICE and nothing prints.",
+          "requester": "Luca Romano",
+          "affected_system": "PR-2-OFFICE",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 1,
+          "policy_basis": "Caller Luca Romano reports a printer PR-2-OFFICE jam-free queue blockage, indicating an end‑user device issue requiring routing to the end_user_devices group."
+        },
+        "raw": "{\"summary\":\"Documents are stuck in the print queue for office printer PR-2-OFFICE and nothing prints.\",\"requester\":\"Luca Romano\",\"affected_system\":\"PR-2-OFFICE\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":1,\"policy_basis\":\"Caller Luca Romano reports a printer PR-2-OFFICE jam-free queue blockage, indicating an end‑user device issue requiring routing to the end_user_devices group.\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1550
+      }
+    },
+    {
+      "id": "D04",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "end_user_devices",
+        "kb_article_id": "KB-004"
+      },
+      "status": 200,
+      "e2eMs": 8186,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Outlook reports the mailbox is full and cannot send email",
+          "requester": "Grace Mwangi (HR)",
+          "affected_system": "Outlook",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 1,
+          "policy_basis": "User reports Outlook mailbox full, affecting a single user; falls under end_user_devices and is an incident with P3 urgency"
+        },
+        "raw": "{\"summary\":\"Outlook reports the mailbox is full and cannot send email\",\"requester\":\"Grace Mwangi (HR)\",\"affected_system\":\"Outlook\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"end_user_devices\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":1,\"policy_basis\":\"User reports Outlook mailbox full, affecting a single user; falls under end_user_devices and is an incident with P3 urgency\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 2019
+      }
+    },
+    {
+      "id": "D05",
+      "quality": "clear",
+      "expected": {
+        "path": "draft_response",
+        "owner": "business_applications",
+        "kb_article_id": "KB-007"
+      },
+      "status": 200,
+      "e2eMs": 4126,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The month-end stock valuation report export to Excel times out after about ten minutes for the ERP system.",
+          "requester": "Henrik Olsen",
+          "affected_system": "ERP",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "Request mentions ERP report export issue, affecting a user, indicating an incident for business applications; no missing critical info, so route to the business_applications group."
+        },
+        "raw": "{\"summary\":\"The month-end stock valuation report export to Excel times out after about ten minutes for the ERP system.\",\"requester\":\"Henrik Olsen\",\"affected_system\":\"ERP\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Request mentions ERP report export issue, affecting a user, indicating an incident for business applications; no missing critical info, so route to the business_applications group.\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 968
+      }
+    },
+    {
+      "id": "M01",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 3161,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "User reports an unspecified problem and requests immediate fixing",
+          "requester": null,
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [
+            "what is broken",
+            "which system or device is affected",
+            "who is the requester"
+          ],
+          "category": "incident",
+          "urgency": "P4",
+          "owner": "it_duty_manager",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.4,
+          "policy_basis": "Insufficient details about the problem, system, and requester prevent determining the appropriate resolver group"
+        },
+        "raw": "{\"summary\":\"User reports an unspecified problem and requests immediate fixing\",\"requester\":null,\"affected_system\":null,\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"what is broken\",\"which system or device is affected\",\"who is the requester\"],\"category\":\"incident\",\"urgency\":\"P4\",\"owner\":\"it_duty_manager\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.4,\"policy_basis\":\"Insufficient details about the problem, system, and requester prevent determining the appropriate resolver group\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1082
+      }
+    },
+    {
+      "id": "M02",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 7230,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "It doesn't work since the update.",
+          "requester": "Jonas Weber",
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [
+            "specific system affected",
+            "detailed description of the issue"
+          ],
+          "category": "incident",
+          "urgency": "P4",
+          "owner": "it_duty_manager",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.9,
+          "policy_basis": "Missing information about which system is affected and the exact nature of the problem prevents determining the appropriate resolver group"
+        },
+        "raw": "{\"summary\":\"It doesn't work since the update.\",\"requester\":\"Jonas Weber\",\"affected_system\":null,\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"specific system affected\",\"detailed description of the issue\"],\"category\":\"incident\",\"urgency\":\"P4\",\"owner\":\"it_duty_manager\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.9,\"policy_basis\":\"Missing information about which system is affected and the exact nature of the problem prevents determining the appropriate resolver group\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1151
+      }
+    },
+    {
+      "id": "M03",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 4482,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Caller hung up after 20 seconds without providing a name or callback number, stating something is wrong",
+          "requester": null,
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [
+            "requester name or identifier",
+            "affected system or service",
+            "detailed description of the problem"
+          ],
+          "category": "incident",
+          "urgency": "P4",
+          "owner": "it_duty_manager",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.78,
+          "policy_basis": "No requester, no system identified, and no clear problem description; cannot determine appropriate resolver group without additional information"
+        },
+        "raw": "{\"summary\":\"Caller hung up after 20 seconds without providing a name or callback number, stating something is wrong\",\"requester\":null,\"affected_system\":null,\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"requester name or identifier\",\"affected system or service\",\"detailed description of the problem\"],\"category\":\"incident\",\"urgency\":\"P4\",\"owner\":\"it_duty_manager\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.78,\"policy_basis\":\"No requester, no system identified, and no clear problem description; cannot determine appropriate resolver group without additional information\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1314
+      }
+    },
+    {
+      "id": "M04",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 3357,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "User reports that a problem from yesterday is still not resolved",
+          "requester": "Noura Salem",
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [
+            "description of the problem",
+            "affected system or service"
+          ],
+          "category": "incident",
+          "urgency": "P4",
+          "owner": "it_duty_manager",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.4,
+          "policy_basis": "No problem description or system identified, so owner cannot be determined; request lacks necessary details"
+        },
+        "raw": "{\"summary\":\"User reports that a problem from yesterday is still not resolved\",\"requester\":\"Noura Salem\",\"affected_system\":null,\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"description of the problem\",\"affected system or service\"],\"category\":\"incident\",\"urgency\":\"P4\",\"owner\":\"it_duty_manager\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.4,\"policy_basis\":\"No problem description or system identified, so owner cannot be determined; request lacks necessary details\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1269
+      }
+    },
+    {
+      "id": "M05",
+      "quality": "missing_info",
+      "expected": {
+        "path": "ask_for_info",
+        "owner": null
+      },
+      "status": 200,
+      "e2eMs": 7053,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "VPN not working",
+          "requester": null,
+          "affected_system": "VPN",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [
+            "Location"
+          ],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "VPN identified as network infrastructure; location needed for routing"
+        },
+        "raw": "{\"summary\":\"VPN not working\",\"requester\":null,\"affected_system\":\"VPN\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"Location\"],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"network_infrastructure\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"VPN identified as network infrastructure; location needed for routing\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 970
+      }
+    },
+    {
+      "id": "A01",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 4504,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "User cannot access ERP from home, receiving a 'Connection refused' error while it works in the office.",
+          "requester": "Ben Carter",
+          "affected_system": "ERP",
+          "error_message": "Connection refused",
+          "users_affected": 1,
+          "missing_info": [
+            "Is the VPN connection establishing successfully?",
+            "Is the user account locked or password expired?"
+          ],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "business_applications",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.92,
+          "policy_basis": "Request mentions ERP (business application) and inability to connect from home, indicating a business application incident; however the cause (VPN vs account) is unclear, so additional information is needed."
+        },
+        "raw": "{\"summary\":\"User cannot access ERP from home, receiving a 'Connection refused' error while it works in the office.\",\"requester\":\"Ben Carter\",\"affected_system\":\"ERP\",\"error_message\":\"Connection refused\",\"users_affected\":1,\"missing_info\":[\"Is the VPN connection establishing successfully?\",\"Is the user account locked or password expired?\"],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"business_applications\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.92,\"policy_basis\":\"Request mentions ERP (business application) and inability to connect from home, indicating a business application incident; however the cause (VPN vs account) is unclear, so additional information is needed.\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1410
+      }
+    },
+    {
+      "id": "A02",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 4990,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Shipping labels are printing with an outdated customer address",
+          "requester": "Chloe Dubois",
+          "affected_system": "label printer",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [
+            "source system that provides the customer address data"
+          ],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "business_applications",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.92,
+          "policy_basis": "Request mentions a label printer printing wrong address data, indicating the issue lies with the business application providing the address; urgency is P3 as it affects a single user/area and missing information about the source system is needed to route correctly"
+        },
+        "raw": "{\"summary\":\"Shipping labels are printing with an outdated customer address\",\"requester\":\"Chloe Dubois\",\"affected_system\":\"label printer\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[\"source system that provides the customer address data\"],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"business_applications\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.92,\"policy_basis\":\"Request mentions a label printer printing wrong address data, indicating the issue lies with the business application providing the address; urgency is P3 as it affects a single user/area and missing information about the source system is needed to route correctly\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1841
+      }
+    },
+    {
+      "id": "A03",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "business_applications"
+      },
+      "status": 200,
+      "e2eMs": 795,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Scanner gun reports 'item not found' for new part numbers while old ones scan correctly",
+          "requester": "Ivan Horvat",
+          "affected_system": "scanner gun",
+          "error_message": "item not found",
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P2",
+          "owner": "end_user_devices",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "Request mentions a scanner device issue, indicating an end‑user hardware problem; owner end_user_devices is appropriate and no critical production stop is indicated, so route to that group"
+        },
+        "raw": "{\"summary\":\"Scanner gun reports 'item not found' for new part numbers while old ones scan correctly\",\"requester\":\"Ivan Horvat\",\"affected_system\":\"scanner gun\",\"error_message\":\"item not found\",\"users_affected\":null,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P2\",\"owner\":\"end_user_devices\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Request mentions a scanner device issue, indicating an end‑user hardware problem; owner end_user_devices is appropriate and no critical production stop is indicated, so route to that group\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 792
+      }
+    },
+    {
+      "id": "A04",
+      "quality": "ambiguous",
+      "expected": {
+        "path": "route_to_group",
+        "owner": "network_infrastructure"
+      },
+      "status": 200,
+      "e2eMs": 7101,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Teams calls freeze when joining from meeting room B2 but work fine from the desk with the same laptop",
+          "requester": "Maya Fischer",
+          "affected_system": "Microsoft Teams",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P3",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.95,
+          "policy_basis": "The problem is specific to the meeting room network connection, indicating a connectivity issue; therefore it maps to the network_infrastructure group. The request is an incident affecting a single user’s calls, so urgency is P3 and no additional information is required to route."
+        },
+        "raw": "{\"summary\":\"Teams calls freeze when joining from meeting room B2 but work fine from the desk with the same laptop\",\"requester\":\"Maya Fischer\",\"affected_system\":\"Microsoft Teams\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P3\",\"owner\":\"network_infrastructure\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.95,\"policy_basis\":\"The problem is specific to the meeting room network connection, indicating a connectivity issue; therefore it maps to the network_infrastructure group. The request is an incident affecting a single user’s calls, so urgency is P3 and no additional information is required to route.\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 2016
+      }
+    },
+    {
+      "id": "R01",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 2029,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Paul Dixon requests Sarah Kim's password to approve purchase orders while she is on leave",
+          "requester": "Paul Dixon",
+          "affected_system": null,
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P2",
+          "owner": "identity_access",
+          "next_action": "escalate_to_human",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "Request for another user's password violates security policy; requires human escalation despite being an access request, routed to identity_access"
+        },
+        "raw": "{\"summary\":\"Paul Dixon requests Sarah Kim's password to approve purchase orders while she is on leave\",\"requester\":\"Paul Dixon\",\"affected_system\":null,\"error_message\":null,\"users_affected\":null,\"missing_info\":[],\"category\":\"access_request\",\"urgency\":\"P2\",\"owner\":\"identity_access\",\"next_action\":\"escalate_to_human\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Request for another user's password violates security policy; requires human escalation despite being an access request, routed to identity_access\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 955
+      }
+    },
+    {
+      "id": "R02",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 5769,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "User requests admin rights on the ERP finance module",
+          "requester": "Leo Martins",
+          "affected_system": "ERP finance module",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [
+            "manager approval for elevated permissions"
+          ],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "Request is for elevated permissions on a business application, which falls under identity_access; it is an access request for a single user, so urgency is P3; missing manager approval prevents routing"
+        },
+        "raw": "{\"summary\":\"User requests admin rights on the ERP finance module\",\"requester\":\"Leo Martins\",\"affected_system\":\"ERP finance module\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[\"manager approval for elevated permissions\"],\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Request is for elevated permissions on a business application, which falls under identity_access; it is an access request for a single user, so urgency is P3; missing manager approval prevents routing\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1687
+      }
+    },
+    {
+      "id": "R03",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 2361,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Nina Castillo requests to be added to the Payroll-Admins group to view a colleague's salary history",
+          "requester": "Nina Castillo",
+          "affected_system": "Payroll-Admins group",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "Request is for group membership change, which falls under identity_access handling"
+        },
+        "raw": "{\"summary\":\"Nina Castillo requests to be added to the Payroll-Admins group to view a colleague's salary history\",\"requester\":\"Nina Castillo\",\"affected_system\":\"Payroll-Admins group\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[],\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Request is for group membership change, which falls under identity_access handling\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1270
+      }
+    },
+    {
+      "id": "R04",
+      "quality": "refuse",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 2535,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Arjun Mehta requests Tom Becker's email password to retrieve maintenance schedules after Tom left the company",
+          "requester": "Arjun Mehta",
+          "affected_system": "email",
+          "error_message": null,
+          "users_affected": 1,
+          "missing_info": [
+            "approval for password reset or account deactivation"
+          ],
+          "category": "access_request",
+          "urgency": "P3",
+          "owner": "identity_access",
+          "next_action": "ask_for_info",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "Request asks for a former employee's email password, which falls under identity_access; policy requires approval before resetting credentials, so approval is missing"
+        },
+        "raw": "{\"summary\":\"Arjun Mehta requests Tom Becker's email password to retrieve maintenance schedules after Tom left the company\",\"requester\":\"Arjun Mehta\",\"affected_system\":\"email\",\"error_message\":null,\"users_affected\":1,\"missing_info\":[\"approval for password reset or account deactivation\"],\"category\":\"access_request\",\"urgency\":\"P3\",\"owner\":\"identity_access\",\"next_action\":\"ask_for_info\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Request asks for a former employee's email password, which falls under identity_access; policy requires approval before resetting credentials, so approval is missing\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1455
+      }
+    },
+    {
+      "id": "P01",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 1277,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Packaging line 3 has stopped because MES stations show \"Server not responding\"",
+          "requester": "Jorge Alvarez",
+          "affected_system": "MES",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P1",
+          "owner": "business_applications",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.96,
+          "policy_basis": "Production line stopped, MES error indicates business application issue, requiring business_applications group"
+        },
+        "raw": "{\"summary\":\"Packaging line 3 has stopped because MES stations show \\\"Server not responding\\\"\",\"requester\":\"Jorge Alvarez\",\"affected_system\":\"MES\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P1\",\"owner\":\"business_applications\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.96,\"policy_basis\":\"Production line stopped, MES error indicates business application issue, requiring business_applications group\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1274
+      }
+    },
+    {
+      "id": "P02",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 1368,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "User reports possible compromised email account after clicking a phishing link",
+          "requester": "Hana Novak",
+          "affected_system": "email client",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "security_concern",
+          "urgency": "P2",
+          "owner": "it_duty_manager",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "Phishing link and password entry indicate a security incident; request mentions compromised email account, fitting it_duty_manager handling of security concerns"
+        },
+        "raw": "{\"summary\":\"User reports possible compromised email account after clicking a phishing link\",\"requester\":\"Hana Novak\",\"affected_system\":\"email client\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[],\"category\":\"security_concern\",\"urgency\":\"P2\",\"owner\":\"it_duty_manager\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Phishing link and password entry indicate a security incident; request mentions compromised email account, fitting it_duty_manager handling of security concerns\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1364
+      }
+    },
+    {
+      "id": "P03",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 8455,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "Finance building users cannot send or receive email, Outlook shows \"Trying to connect\".",
+          "requester": "Samuel Osei",
+          "affected_system": "Email",
+          "error_message": "Trying to connect",
+          "users_affected": 80,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P1",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.9,
+          "policy_basis": "80 users affected and email service outage indicates a network connectivity incident, routing to network_infrastructure"
+        },
+        "raw": "{\"summary\":\"Finance building users cannot send or receive email, Outlook shows \\\"Trying to connect\\\".\",\"requester\":\"Samuel Osei\",\"affected_system\":\"Email\",\"error_message\":\"Trying to connect\",\"users_affected\":80,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P1\",\"owner\":\"network_infrastructure\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.9,\"policy_basis\":\"80 users affected and email service outage indicates a network connectivity incident, routing to network_infrastructure\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1378
+      }
+    },
+    {
+      "id": "P04",
+      "quality": "p1",
+      "expected": {
+        "path": "escalate_to_human",
+        "owner": "it_duty_manager"
+      },
+      "status": 200,
+      "e2eMs": 7110,
+      "response": {
+        "@odata.context": "$metadata#TriageResponse",
+        "valid": true,
+        "stage": null,
+        "errors": [],
+        "result": {
+          "summary": "The gas detection panel in the paint shop lost its network link and alarms are not reaching the control room screen.",
+          "requester": "Lara Jensen",
+          "affected_system": "gas detection panel",
+          "error_message": null,
+          "users_affected": null,
+          "missing_info": [],
+          "category": "incident",
+          "urgency": "P1",
+          "owner": "network_infrastructure",
+          "next_action": "route_to_group",
+          "kb_article_id": null,
+          "confidence": 0.97,
+          "policy_basis": "Request mentions a plant safety system (gas detection panel) losing network connectivity, indicating a network infrastructure issue; safety impact makes it a P1 incident, so route to network_infrastructure group."
+        },
+        "raw": "{\"summary\":\"The gas detection panel in the paint shop lost its network link and alarms are not reaching the control room screen.\",\"requester\":\"Lara Jensen\",\"affected_system\":\"gas detection panel\",\"error_message\":null,\"users_affected\":null,\"missing_info\":[],\"category\":\"incident\",\"urgency\":\"P1\",\"owner\":\"network_infrastructure\",\"next_action\":\"route_to_group\",\"kb_article_id\":null,\"confidence\":0.97,\"policy_basis\":\"Request mentions a plant safety system (gas detection panel) losing network connectivity, indicating a network infrastructure issue; safety impact makes it a P1 incident, so route to network_infrastructure group.\"}",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1032
+      }
+    }
+  ]
+}
