@@ -161,19 +161,26 @@ function recordCall(state, r) {
   if (r.usage?.total_tokens) state.tokens += r.usage.total_tokens
 }
 
-export async function runGraph(text, deps) {
-  const state = {
+export const START = 'extract'
+
+export function initialState(text) {
+  return {
     text, extraction: null, articles: [], classification: null, policy: null, decision: null, output: null,
     invalidOutputs: [], trace: [], modelCalls: 0, modelLatencyMs: 0, rateLimitWaitMs: 0, tokens: 0
   }
+}
+
+// A node is either fully in the saved checkpoint or re-run on resume; totalMs covers this process only.
+export async function runGraph(state, node, deps) {
   const startedAt = Date.now()
-  let node = 'extract'
+  if (state.trace.length) state.trace.push({ node: 'resume', next: node, ms: 0, note: `resumed from checkpoint at ${node}; ${state.trace.filter(t => t.node !== 'resume').length} earlier nodes not re-run` })
   while (node !== END) {
     const t0 = Date.now()
     const { next, note } = await NODES[node](state, deps)
     state.trace.push({ node, next, ms: Date.now() - t0, note })
     node = next
+    state.totalMs = Date.now() - startedAt
+    await deps.saveCheckpoint(state, node)
   }
-  state.totalMs = Date.now() - startedAt
   return state
 }

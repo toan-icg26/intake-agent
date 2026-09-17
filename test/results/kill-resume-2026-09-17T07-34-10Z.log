@@ -1,0 +1,95 @@
+Script started on 2026-09-17 07:34:10+00:00 [COMMAND="bash /tmp/claude-2048/-home-user-projects-intake-agent/31b2d612-9d0e-4248-8385-2ddb1dd45598/scratchpad/kill-resume-demo.sh" <not executed on terminal>]
+
+### Assignment 5: a run survives process death and resumes from the correct node
+$ date -u +%Y-%m-%dT%H:%M:%SZ; git --no-pager log --oneline --no-color -1; git status --short; node -v
+2026-09-17T07:34:10Z
+fdd491e (HEAD -> main, origin/main) Add intake demo run result (30 fixtures, 26/30 paths match expected)
+ [31mM[m db/schema.cds
+ [31mM[m package.json
+ [31mM[m srv/agent-service.cds
+ [31mM[m srv/agent-service.js
+ [31mM[m srv/lib/graph.js
+[31m??[m test/results/kill-resume-2026-09-17T07-34-10Z.log
+[31m??[m test/results/kill-resume-2026-09-17T07-34-10Z.timing
+v24.17.0
+
+### 1. Fresh database (cds deploy recreates the tables, so no old runs)
+$ cds deploy 2>&1 | grep deployed
+/> successfully deployed to db.sqlite 
+
+### 2. Start the server and remember its PID (server log goes to $LOG)
+$ node_modules/.bin/cds-serve > $LOG 2>&1 & SERVER_PID=$!; wait_up; echo "server pid $SERVER_PID"
+server pid 59131
+
+### 3. Start an intake run for fixture D01 in the background (3 model calls: extract, classify, draft_response)
+$ TEXT=$(jq -r ".[] | select(.id==\"D01\") | .text" fixtures/requests.json); echo "$TEXT"
+Name: Oliver Grant
+Location: Plant 1
+Affected system: Windows login
+Description: Back from holiday and I forgot my password. After a few tries it says the account is locked.
+$ curl -sS -X POST $BASE/runIntake -H "Content-Type: application/json" -d "$(jq -n --arg t "$TEXT" "{text:\$t}")" > /dev/null & CLIENT_PID=$!
+
+### 4. As soon as the checkpoint after lookup_context is written, kill the server with SIGKILL (classify is now in flight)
+$ until grep -q "next=classify" $LOG; do sleep 0.05; done; kill -9 $SERVER_PID; echo "sent SIGKILL to $SERVER_PID"
+sent SIGKILL to 59131
+$ wait $CLIENT_PID; echo "client exit code $?"
+curl: (52) Empty reply from server
+/tmp/claude-2048/-home-user-projects-intake-agent/31b2d612-9d0e-4248-8385-2ddb1dd45598/scratchpad/kill-resume-demo.sh: line 7: 59131 Killed                  node_modules/.bin/cds-serve > $LOG 2>&1
+client exit code 52
+$ ps -p $SERVER_PID > /dev/null && echo "server still alive" || echo "server $SERVER_PID is dead"
+server 59131 is dead
+$ grep -E "\[(agent|model)\]" $LOG
+[agent] - [runIntake] run=f8a284d7-63f5-42e0-8375-d052b3eb008e started
+[model] - [extract#1] model=openai/gpt-oss-120b latency=762ms tokens=573
+[agent] - [checkpoint] run=f8a284d7-63f5-42e0-8375-d052b3eb008e next=lookup_context
+[agent] - [checkpoint] run=f8a284d7-63f5-42e0-8375-d052b3eb008e next=classify
+
+### 5. Restart the server (new process) and look for runs left in status running
+$ node_modules/.bin/cds-serve > $LOG 2>&1 & SERVER_PID=$!; wait_up; echo "server pid $SERVER_PID"
+server pid 59336
+$ curl -sS "$BASE/IntakeRuns?\$filter=status%20eq%20%27running%27&\$select=ID,status,nextNode,modifiedAt" | jq -M .value
+[
+  {
+    "ID": "f8a284d7-63f5-42e0-8375-d052b3eb008e",
+    "status": "running",
+    "nextNode": "classify",
+    "modifiedAt": "2026-09-17T07:34:12.898Z"
+  }
+]
+$ RUN_ID=$(curl -sS "$BASE/IntakeRuns?\$filter=status%20eq%20%27running%27&\$select=ID" | jq -M -r ".value[0].ID"); echo "$RUN_ID"
+f8a284d7-63f5-42e0-8375-d052b3eb008e
+
+### 6. Resume it. extract and lookup_context must not run again
+$ curl -sS -X POST $BASE/resumeIntake -H "Content-Type: application/json" -d "{\"runID\":\"$RUN_ID\"}" | jq -M "{runID, path, owner, modelCalls, trace: [.trace[] | \"\(.node) -> \(.next): \(.note)\"]}"
+{
+  "runID": "f8a284d7-63f5-42e0-8375-d052b3eb008e",
+  "path": "draft_response",
+  "owner": "identity_access",
+  "modelCalls": 3,
+  "trace": [
+    "extract -> lookup_context: facts extracted",
+    "lookup_context -> classify: candidate articles: KB-001",
+    "resume -> classify: resumed from checkpoint at classify; 2 earlier nodes not re-run",
+    "classify -> check_policy: model says draft_response / identity_access / P3 (confidence 0.99)",
+    "check_policy -> choose_path: no policy hits",
+    "choose_path -> draft_response: documented_resolution: KB-001",
+    "draft_response -> __end__: draft based on KB-001"
+  ]
+}
+$ grep -E "\[(agent|model)\]" $LOG
+[agent] - [resumeIntake] run=f8a284d7-63f5-42e0-8375-d052b3eb008e status=running resuming at classify
+[model] - [classify#1] model=openai/gpt-oss-120b latency=870ms tokens=857
+[agent] - [checkpoint] run=f8a284d7-63f5-42e0-8375-d052b3eb008e next=check_policy
+[agent] - [checkpoint] run=f8a284d7-63f5-42e0-8375-d052b3eb008e next=choose_path
+[agent] - [checkpoint] run=f8a284d7-63f5-42e0-8375-d052b3eb008e next=draft_response
+[model] - [draft_response] model=openai/gpt-oss-120b latency=819ms tokens=427
+[agent] - [checkpoint] run=f8a284d7-63f5-42e0-8375-d052b3eb008e next=__end__
+[agent] - [intake] run=f8a284d7-63f5-42e0-8375-d052b3eb008e path=draft_response nodes=extract>lookup_context>resume>classify>check_policy>choose_path>draft_response modelCalls=3 modelLatency=2451ms total=1777ms
+$ curl -sS "$BASE/IntakeRuns($RUN_ID)?\$select=status,nextNode,error" | jq -M -c "{status, nextNode, error}"
+{"status":"completed","nextNode":"__end__","error":null}
+
+### 7. Stop the server
+$ kill $SERVER_PID; wait $SERVER_PID 2>/dev/null; echo stopped
+stopped
+
+Script done on 2026-09-17 07:34:16+00:00 [COMMAND_EXIT_CODE="0"]

@@ -15,5 +15,15 @@
     "fixtures:triage": "node test/run-fixtures.js triage",
     "fixtures:intake": "node test/run-fixtures.js intake"
   },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      }
+    }
+  },
   "private": true
 }

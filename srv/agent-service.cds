@@ -4,6 +4,9 @@ service AgentService {
 
   @readonly entity KnowledgeArticles as projection on intake.KnowledgeArticles;
 
+  // Assignment 5: one row per run, holding the checkpoint written after every graph node.
+  @readonly entity IntakeRuns as projection on intake.IntakeRuns;
+
   // Assignment 1: free-text question, free-text answer from the model.
   action askAgent(question : String) returns String;
 
@@ -12,6 +15,9 @@ service AgentService {
 
   // Assignment 3: explicit state graph with deterministic policy checks in code.
   action runIntake(text : LargeString) returns IntakeRun;
+
+  // Assignment 5: continue a run from its last checkpoint, e.g. after the process died.
+  action resumeIntake(runID : UUID) returns IntakeRun;
 }
 
 type Triage {
@@ -41,6 +47,7 @@ type TriageResponse {
 }
 
 type IntakeRun {
+  runID      : UUID;
   path       : String;      // ask_for_info | draft_response | route_to_group | escalate_to_human
   owner      : String;
   reasons    : many String;
