@@ -172,7 +172,7 @@ Tested with: Node.js 24.17.0, `@sap/cds-dk` 10.0.7 (global), `@sap/cds` 10.1.0, 
 ### Steps
 
 ```bash
-git clone <this-repo-url> intake-agent
+git clone https://github.com/toan-icg26/intake-agent.git intake-agent
 cd intake-agent
 npm ci                         # exact versions from package-lock.json
 cp .env.example .env           # then put your key after GROQ_API_KEY=
