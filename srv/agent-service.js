@@ -113,7 +113,9 @@ export function rankArticles(articles, text) {
 function fail(req, err) {
   if (err instanceof ModelError) {
     LOG.error(err.message)
-    return req.error(err.status, err.message)
+    // A 401/403 from the model endpoint is not the caller's auth problem; CAP would reply a bare "Unauthorized".
+    const status = err.status === 401 || err.status === 403 ? 502 : err.status
+    return req.error(status, err.message)
   }
   throw err
 }

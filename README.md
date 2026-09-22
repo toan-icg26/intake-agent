@@ -107,7 +107,7 @@ Also tested while building (not recorded):
 - A run started with a model name that does not exist was stored as `failed`, with `nextNode: extract` and the verbatim `model_not_found` error. `resumeIntake` with the correct model completed it.
 - Calling `resumeIntake` on a completed run returned the stored result without a model call.
 - An unknown `runID` returns 404, and a missing `runID` returns 400.
-- **Regression.** A full 30-fixture replay after the change (`test/results/intake-a5-regression-2026-09-17T09-51-39-736Z.json`) ran on a clean copy of the repo, set up only with the steps in this README. It completed 30/30 with no HTTP errors and 0 missed escalations, and every row in `IntakeRuns` ended `completed`. Its path mismatches (C04, A01, A03, A04) are exactly those of the last run before the change.
+- **Regression.** A full 30-fixture replay after the change (`test/results/intake-a5-regression-2026-09-17T09-51-39-736Z.json`) ran on a clean copy of the repo, set up only with the written setup steps (in this README at the time, now in SETUP.md). It completed 30/30 with no HTTP errors and 0 missed escalations, and every row in `IntakeRuns` ended `completed`. Its path mismatches (C04, A01, A03, A04) are exactly those of the last run before the change.
 - Under `cds watch`, the checkpoint writes to `db.sqlite` did not trigger a restart.
 - After `kill -9`, SQLite leaves `db.sqlite-wal` and `db.sqlite-shm` next to the database. The data committed before the kill is in the WAL file and is read back on the next start. Both files are gitignored.
 
@@ -138,7 +138,7 @@ Every number below is measured, not estimated, and comes from a run saved under 
 | State graph: total per request in a batch run | p50 6729 ms, p95 13069 ms (15 Sep run; includes 124 s of `retry-after` waits across 40 HTTP 429s) |
 | Same graph with `allam-2-7b` (a model that breaks the schema) | 55 invalid outputs, 18 fallback escalations, 0 missed escalations |
 
-The four graph runs, in order: `intake-final-2026-09-15T07-42-29-984Z.json`, `intake-demo-2026-09-16T08-12-47-944Z.json`, `intake-demo-2026-09-16T08-47-56-498Z.json`, and `intake-a5-regression-2026-09-17T09-51-39-736Z.json` (after the checkpointing change, on a clean copy of the repo set up from this README). The requests go out with `temperature: 0`, but the model's answers are not the same from run to run on C04, A01, A03 and A04, so the match count moves between 26 and 28. The P1 and refusal fixtures escalated in every run, because those decisions are made in code.
+The four graph runs, in order: `intake-final-2026-09-15T07-42-29-984Z.json`, `intake-demo-2026-09-16T08-12-47-944Z.json`, `intake-demo-2026-09-16T08-47-56-498Z.json`, and `intake-a5-regression-2026-09-17T09-51-39-736Z.json` (after the checkpointing change, on a clean copy of the repo set up from the written setup steps). The requests go out with `temperature: 0`, but the model's answers are not the same from run to run on C04, A01, A03 and A04, so the match count moves between 26 and 28. The P1 and refusal fixtures escalated in every run, because those decisions are made in code.
 
 **What did not work**
 - **C04** (a joiner request with a named approver) is sent back for information in 3 of the 4 runs: the code completeness rule requires an affected system, and a new starter has none.
@@ -163,98 +163,27 @@ The four graph runs, in order: `intake-final-2026-09-15T07-42-29-984Z.json`, `in
 
 ## Run it yourself
 
-### Prerequisites
-- A BTP trial account with Business Application Studio, and a **Full Stack Cloud Application** dev space. Any machine with Node.js 20+ and `@sap/cds-dk` also works.
-- A free Groq API key from <https://console.groq.com/keys>. No credit card is needed.
+**Step by step, from a new BTP trial account to a resumed run: [SETUP.md](SETUP.md).** Every step there says what you should see and has a troubleshooting table.
+
+If you already have Business Application Studio or Node.js 20+ with `@sap/cds-dk`, and a Groq API key:
+
+```bash
+git clone https://github.com/toan-icg26/intake-agent.git && cd intake-agent
+npm ci
+cp .env.example .env           # put your key after GROQ_API_KEY=
+cds deploy                     # creates db.sqlite; run again after schema changes (deletes stored runs)
+npm start                      # then use the curl commands in SETUP.md, steps 8-10
+```
 
 Tested with: Node.js 24.17.0, `@sap/cds-dk` 10.0.7 (global), `@sap/cds` 10.1.0, `@cap-js/sqlite` 3.1.0.
 
-### Steps
+More runs that SETUP.md does not cover:
 
 ```bash
-git clone https://github.com/toan-icg26/intake-agent.git intake-agent
-cd intake-agent
-npm ci                         # exact versions from package-lock.json
-cp .env.example .env           # then put your key after GROQ_API_KEY=
-cds deploy                     # creates db.sqlite with the tables and the knowledge articles
-```
+npm run fixtures:triage -- --label mine        # single-call triage on all 30 fixtures
+npm run fixtures:intake -- --only P01,R02      # a subset of the graph run
 
-> Run `cds deploy` again after pulling a change to `db/` or to the service definitions. Without it, requests fail with errors such as `no such table: AgentService_IntakeRuns`. Redeploying **deletes all stored runs**.
-
-Check that the endpoint and model work **before** starting the server:
-
-```bash
-set -a; . ./.env; set +a
-curl -s https://api.groq.com/openai/v1/chat/completions \
-  -H "Content-Type: application/json" -H "Authorization: Bearer $GROQ_API_KEY" \
-  -d "{\"model\":\"$GROQ_MODEL\",\"messages\":[{\"role\":\"user\",\"content\":\"Reply with exactly: OK\"}]}"
-```
-
-If you get `model_not_found`, list the models your key can use with `curl -s https://api.groq.com/openai/v1/models -H "Authorization: Bearer $GROQ_API_KEY"` and set `GROQ_MODEL` in `.env`. Any OpenAI-compatible endpoint works: change `GROQ_BASE_URL`, `GROQ_MODEL` and the key. `GROQ_REASONING_EFFORT` only applies to reasoning models; leave it empty for others.
-
-Start the server. CAP loads `.env` automatically in the development profile:
-
-```bash
-cds watch          # or: npm start
-```
-
-In a second terminal:
-
-```bash
-# assignment 1
-curl -s -X POST http://localhost:4004/odata/v4/agent/askAgent \
-  -H "Content-Type: application/json" \
-  -d '{"question": "My VPN disconnects every ten minutes. What should I check?"}'
-
-# assignment 2 - structured fields from one call
-curl -s -X POST http://localhost:4004/odata/v4/agent/triage \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Caller: Jorge Alvarez, shift lead Plant 2. Packaging line 3 has stopped. The MES stations on the line show Server not responding."}'
-
-# assignment 3 - the state graph (compare "path" and "overrides" with the triage result above)
-curl -s -X POST http://localhost:4004/odata/v4/agent/runIntake \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Caller: Jorge Alvarez, shift lead Plant 2. Packaging line 3 has stopped. The MES stations on the line show Server not responding."}'
-```
-
-Kill a run and resume it (assignment 5). A whole run takes only a few seconds, too fast to kill by hand, so the server is killed from the shell as soon as its log shows the checkpoint before `classify`. Stop any `cds watch` on port 4004 first, then run this in one terminal. The server is started through `node_modules/.bin/cds-serve`, not `npm start`, so that `$!` is the server's own PID and not npm's.
-
-```bash
-node_modules/.bin/cds-serve > /tmp/intake-server.log 2>&1 & SERVER_PID=$!
-sleep 5                                           # wait for "server listening"
-
-curl -sS -X POST http://localhost:4004/odata/v4/agent/runIntake \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Name: Oliver Grant\nLocation: Plant 1\nAffected system: Windows login\nDescription: Back from holiday and I forgot my password. After a few tries it says the account is locked."}' &
-
-until grep -q "next=classify" /tmp/intake-server.log; do sleep 0.05; done; kill -9 $SERVER_PID
-# curl prints: curl: (52) Empty reply from server
-
-node_modules/.bin/cds-serve > /tmp/intake-server.log 2>&1 & SERVER_PID=$!
-sleep 5
-curl -sS "http://localhost:4004/odata/v4/agent/IntakeRuns?\$filter=status%20eq%20%27running%27&\$select=ID,status,nextNode"
-curl -sS -X POST http://localhost:4004/odata/v4/agent/resumeIntake \
-  -H "Content-Type: application/json" -d '{"runID": "<ID from the previous command>"}'
-kill $SERVER_PID
-```
-
-The trace in the response contains a `resume` entry, and the nodes before it are not executed again. `grep "\[model\]" /tmp/intake-server.log` shows that only `classify` and `draft_response` called the model after the restart.
-
-Replay all 30 fixtures. A new timestamped file is written to `test/results/`.
-
-```bash
-npm run fixtures:triage -- --label mine
-npm run fixtures:intake -- --label mine
-npm run fixtures:intake -- --only P01,R02      # a subset
-```
-
-> Do not save files in the project while a fixture run is going against `cds watch`. The watcher restarts the server, and the in-flight request fails with `fetch failed (UND_ERR_SOCKET)`. Use `npm start` for long runs.
->
-> A 30-fixture graph run makes ~66 model calls and takes about 3–4 minutes on the free tier because of 429 waits.
-
-To reproduce the invalid-structure experiment, start a second server with a different model. The environment variable takes precedence over `.env`:
-
-```bash
+# invalid-structure experiment: a second server with a weaker model (env vars override .env)
 GROQ_MODEL=allam-2-7b GROQ_REASONING_EFFORT= cds serve --port 4005
 npm run fixtures:triage -- --base http://localhost:4005 --label experiment
 ```
@@ -262,6 +191,7 @@ npm run fixtures:triage -- --base http://localhost:4005 --label experiment
 ## Repository layout
 
 ```
+SETUP.md                         step-by-step setup, from a new BTP trial account to a resumed run
 db/schema.cds, db/data/          knowledge articles (synthetic) and IntakeRuns checkpoints, in db.sqlite
 srv/agent-service.cds|js         CAP service: askAgent, triage, runIntake, resumeIntake, IntakeRuns
 srv/lib/groq.js                  model client, 429 handling, latency logging
@@ -273,6 +203,7 @@ srv/lib/graph.js                 the state graph and branch decision
 fixtures/requests.json           30 synthetic requests with human labels
 test/run-fixtures.js             replays fixtures against the running server
 test/results/                    every run behind the numbers in this README, and the kill-and-resume capture
+test/setup-runs/                 logs of other people following SETUP.md, with every stopping point and its fix
 ```
 
 ## Data and systems
