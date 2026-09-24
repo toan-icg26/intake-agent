@@ -285,7 +285,56 @@ In terminal 1, only `[model] - [classify#1]` and `[model] - [draft_response]` ap
 
 ---
 
-## 11. Stop
+## 11. Release a proposal through the approval gate
+
+Nothing the agent proposes leaves the system on its own. A run stops at `awaiting_approval` until a person with the `approver` role releases it. Mocked users: **`lead`** has that role, **`agent`** does not. There are no passwords, so `-u lead:` is enough.
+
+The run you resumed in step 10 is already waiting. Find it and look at what it proposes:
+
+```bash
+curl -sS -u lead: "http://localhost:4004/odata/v4/agent/IntakeRuns?\$filter=status%20eq%20'awaiting_approval'&\$select=ID,status,proposal" | jq '.value[0]'
+RUN=$(curl -sS -u lead: "http://localhost:4004/odata/v4/agent/IntakeRuns?\$filter=status%20eq%20'awaiting_approval'&\$select=ID" | jq -r '.value[0].ID')
+```
+
+**You should see** `"status": "awaiting_approval"` and a `proposal` holding `path`, `channel`, `recipient` and the message.
+
+Try it as the user without the role, then edit the message as the approver:
+
+```bash
+curl -sS -u agent: -X POST http://localhost:4004/odata/v4/agent/editProposal \
+  -H "Content-Type: application/json" -d "{\"runID\":\"$RUN\",\"message\":\"nope\"}"
+# expected: {"error":{"message":"Forbidden","code":"403",...
+
+curl -sS -u lead: -X POST http://localhost:4004/odata/v4/agent/editProposal \
+  -H "Content-Type: application/json" \
+  -d "{\"runID\":\"$RUN\",\"message\":\"Hi Oliver, I reset your account - please try again in 5 minutes.\"}" | jq '.proposal | fromjson'
+```
+
+Put it on hold and take it back, then approve it:
+
+```bash
+curl -sS -u lead: -X POST http://localhost:4004/odata/v4/agent/pauseRun \
+  -H "Content-Type: application/json" -d "{\"runID\":\"$RUN\",\"reason\":\"checking with Identity & Access\"}" | jq -c
+curl -sS -u lead: -X POST http://localhost:4004/odata/v4/agent/resumeRun \
+  -H "Content-Type: application/json" -d "{\"runID\":\"$RUN\"}" | jq -c
+curl -sS -u lead: -X POST http://localhost:4004/odata/v4/agent/approveRun \
+  -H "Content-Type: application/json" -d "{\"runID\":\"$RUN\"}" | jq '{status, posted: (.posted|fromjson)}'
+```
+
+**You should see** `"status": "completed"` and a `posted` object naming the channel, the recipient and `"postedBy": "lead"`.
+
+Check what left the system and who did what:
+
+```bash
+curl -sS -u lead: "http://localhost:4004/odata/v4/agent/Outbox?\$select=path,channel,recipient,postedBy" | jq -c '.value'
+curl -sS -u lead: "http://localhost:4004/odata/v4/agent/ApprovalEvents?\$filter=runID%20eq%20$RUN&\$select=action,actor,reason&\$orderby=createdAt" | jq -c '[.value[]|{action,actor,reason}]'
+```
+
+**You should see** one `Outbox` row for this run, and the audit trail `parked → edited → paused → resumed → approved → posted`.
+
+> Escalations that a **code** rule decided (a P1 signal or a refusal) do not wait here. They post immediately with `postedBy: code`, because the duty manager has to hear about a P1 straight away.
+
+## 12. Stop
 
 Press **Ctrl+C** in terminal 1. When you are done for the day, stop the dev space on the BAS Dev Spaces page.
 

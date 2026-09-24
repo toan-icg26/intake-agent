@@ -1,10 +1,11 @@
 // Explicit state graph for one intake request, in plain application code.
 //
 //   extract -> lookup_context -> classify -> check_policy -> choose_path
-//                                                               |-> ask_for_info
-//                                                               |-> draft_response
-//                                                               |-> route_to_group
-//                                                               '-> escalate_to_human
+//                                                               |-> ask_for_info      -+
+//                                                               |-> draft_response     +-> approval_gate (pause) -> post
+//                                                               |-> route_to_group    -+                           ^
+//                                                               '-> escalate_to_human -+---------------------------'
+//                                                                   (straight to post when code alone decided it)
 //
 // Branch conditions are written out in the "Branch conditions" section of README.md.
 import { callStructured } from './structured.js'
@@ -14,7 +15,30 @@ import { EXTRACTION_SCHEMA, CLASSIFICATION_SCHEMA } from './schema.js'
 import { extractionMessages, classificationMessages, draftMessages } from './prompts.js'
 
 export const END = '__end__'
+export const POST = 'post'
 const MAX_STRUCTURED_ATTEMPTS = 2
+
+// Where a posted action goes. Nothing leaves this system: "posting" writes a row to the Outbox table.
+export const CHANNEL = {
+  ask_for_info: 'reply_to_requester',
+  draft_response: 'reply_to_requester',
+  route_to_group: 'handoff_to_group',
+  escalate_to_human: 'page_duty_manager'
+}
+
+export function proposalFor(path, owner, message, extraction) {
+  const recipient = CHANNEL[path] === 'reply_to_requester' ? (extraction?.requester || 'requester') : (owner || 'it_duty_manager')
+  return { path, owner: owner ?? null, channel: CHANNEL[path], recipient, message }
+}
+
+// A path node parks its proposal for a person, unless code alone decided to escalate: the brief
+// requires the duty manager to hear about a P1 immediately, and notifying a human is the safe direction.
+function afterProposal(state, message) {
+  const { path, owner } = state.decision
+  state.proposal = proposalFor(path, owner, message, state.extraction)
+  state.output = message
+  return state.decision.gated ? 'approval_gate' : POST
+}
 
 const NODES = {
   async extract(state) {
@@ -52,21 +76,20 @@ const NODES = {
       ...state.policy.incomplete.map(i => i === 'requester_not_identifiable' ? 'your name and department' : 'which system, application or device is affected'),
       ...(state.extraction?.missing_info ?? [])
     ]
-    state.output = `Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n${[...new Set(missing)].map(m => `- ${m}`).join('\n') || '- a description of the problem, the affected system and your name'}`
-    return { next: END, note: 'information request prepared' }
+    const message = `Thanks for contacting the IT Service Desk. Before we can work on this, please reply with:\n${[...new Set(missing)].map(m => `- ${m}`).join('\n') || '- a description of the problem, the affected system and your name'}`
+    return { next: afterProposal(state, message), note: 'information request prepared' }
   },
 
   async draft_response(state) {
     const article = state.articles.find(a => a.ID === state.decision.kbArticleId)
     const reply = await chat(draftMessages(state.text, state.extraction, article), { label: 'draft_response' })
     recordCall(state, reply)
-    state.output = reply.content.trim()
-    return { next: END, note: `draft based on ${article.ID}` }
+    return { next: afterProposal(state, reply.content.trim()), note: `draft based on ${article.ID}` }
   },
 
   async route_to_group(state) {
     const e = state.extraction, c = state.classification
-    state.output = [
+    const message = [
       `Route to: ${state.decision.owner}`,
       `Urgency: ${c.urgency} | Category: ${c.category} | Confidence: ${c.confidence}`,
       `Summary: ${e.summary}`,
@@ -74,19 +97,28 @@ const NODES = {
       e.error_message ? `Error: ${e.error_message}` : null,
       `Basis: ${c.policy_basis}`
     ].filter(Boolean).join('\n')
-    return { next: END, note: `handoff note for ${state.decision.owner}` }
+    return { next: afterProposal(state, message), note: `handoff note for ${state.decision.owner}` }
   },
 
   async escalate_to_human(state) {
     const { p1, refusals } = state.policy
-    state.output = [
+    const message = [
       'ESCALATION to IT duty manager',
       p1.length ? `P1 signals (code): ${p1.join(', ')}` : null,
       refusals.length ? `Refusal rules (code): ${refusals.join(', ')} - do not fulfil; a person must decline this request` : null,
       `Reasons: ${state.decision.reasons.join('; ')}`,
       `Request: ${state.extraction?.summary ?? state.text}`
     ].filter(Boolean).join('\n')
-    return { next: END, note: 'escalation note prepared' }
+    return { next: afterProposal(state, message), note: 'escalation note prepared' }
+  },
+
+  async approval_gate(state) {
+    return { next: POST, pause: true, note: `parked for approval: ${state.proposal.channel} to ${state.proposal.recipient}` }
+  },
+
+  async post(state, { post }) {
+    state.posted = await post(state.proposal)
+    return { next: END, note: `posted: ${state.proposal.channel} to ${state.proposal.recipient}` }
   }
 }
 
@@ -98,7 +130,9 @@ export function decide({ extraction, classification: c, policy, articles }) {
   const reasons = [], overrides = []
   const result = (path, owner, extra = {}) => {
     if (c && path !== c.next_action) overrides.push({ rule: reasons[0], modelSaid: c.next_action, codeDecided: path })
-    return { path, owner, reasons, overrides, ...extra }
+    // Escalations that code decided on its own are posted without waiting for an approver.
+    const gated = !(path === 'escalate_to_human' && /^(p1_signal|refusal|invalid_model_output)/.test(reasons[0]))
+    return { path, owner, reasons, overrides, gated, ...extra }
   }
 
   if (policy.p1.length) {
@@ -173,14 +207,16 @@ export function initialState(text) {
 // A node is either fully in the saved checkpoint or re-run on resume; totalMs covers this process only.
 export async function runGraph(state, node, deps) {
   const startedAt = Date.now()
+  state.paused = false
   if (state.trace.length) state.trace.push({ node: 'resume', next: node, ms: 0, note: `resumed from checkpoint at ${node}; ${state.trace.filter(t => t.node !== 'resume').length} earlier nodes not re-run` })
   while (node !== END) {
     const t0 = Date.now()
-    const { next, note } = await NODES[node](state, deps)
+    const { next, note, pause } = await NODES[node](state, deps)
     state.trace.push({ node, next, ms: Date.now() - t0, note })
     node = next
     state.totalMs = Date.now() - startedAt
-    await deps.saveCheckpoint(state, node)
+    await deps.saveCheckpoint(state, node, pause ? 'awaiting_approval' : node === END ? 'completed' : 'running')
+    if (pause) { state.paused = true; return state }
   }
   return state
 }

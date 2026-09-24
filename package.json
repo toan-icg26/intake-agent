@@ -17,6 +17,13 @@
   },
   "cds": {
     "requires": {
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "lead": { "roles": ["approver"] },
+          "agent": { "roles": [] }
+        }
+      },
       "db": {
         "kind": "sqlite",
         "credentials": {

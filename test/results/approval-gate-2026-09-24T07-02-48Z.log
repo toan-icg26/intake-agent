@@ -1,0 +1,154 @@
+Script started on 2026-09-24 07:02:48+00:00 [COMMAND="bash /tmp/claude-2048/-home-user-projects-intake-agent/31b2d612-9d0e-4248-8385-2ddb1dd45598/scratchpad/approval-demo.sh" <not executed on terminal>]
+
+### Assignment 8: the checkpoint a human has to clear
+$ date -u +%Y-%m-%dT%H:%M:%SZ; git --no-pager log --oneline --no-color -1; git status --short; node -v
+2026-09-24T07:02:48Z
+71dfee6 (HEAD -> main, origin/main) Add SETUP.md for a first-time setup in BAS, and return 502 when the model endpoint rejects the key
+ [31mM[m README.md
+ [31mM[m SETUP.md
+ [31mM[m db/schema.cds
+ [31mM[m package.json
+ [31mM[m srv/agent-service.cds
+ [31mM[m srv/agent-service.js
+ [31mM[m srv/lib/graph.js
+[31m??[m test/results/approval-gate-2026-09-24T07-02-48Z.log
+[31m??[m test/results/approval-gate-2026-09-24T07-02-48Z.timing
+[31m??[m test/results/intake-a8-gate-2026-09-24T07-02-23-696Z.json
+v24.17.0
+
+### 1. Fresh database, then start the server
+$ cds deploy 2>&1 | grep deployed
+/> successfully deployed to db.sqlite 
+$ npm start > $LOG 2>&1 & sleep 1; up; grep -m1 "server listening" $LOG
+[cds] - server listening on { url: 'http://localhost:4004' }
+
+### 2. A normal request: the agent proposes, then stops
+$ curl -sS -X POST $API/runIntake -H "Content-Type: application/json" $LEAD -d @/tmp/claude-2048/-home-user-projects-intake-agent/31b2d612-9d0e-4248-8385-2ddb1dd45598/scratchpad/d01.json | jq -M "{status, path, nodes: [.trace[].node], proposal: (.proposal|fromjson)}"
+{
+  "status": "awaiting_approval",
+  "path": "draft_response",
+  "nodes": [
+    "extract",
+    "lookup_context",
+    "classify",
+    "check_policy",
+    "choose_path",
+    "draft_response",
+    "approval_gate"
+  ],
+  "proposal": {
+    "path": "draft_response",
+    "owner": "identity_access",
+    "channel": "reply_to_requester",
+    "recipient": "Oliver Grant",
+    "message": "Hi Oliver,\n\nYou can reset your password directly from the login screen by selecting **“Forgot password.”** Verify your identity with your registered mobile number and choose a new password (minimum 14 characters).  \n\nSince the account is locked, it will automatically unlock after 15 minutes if you prefer to wait. If you don’t have a registered mobile number, just let me know and I’ll have the Identity & Access team call you to complete the reset."
+  }
+}
+$ RUN=$(curl -sS $LEAD "$API/IntakeRuns?\$filter=status%20eq%20%27awaiting_approval%27&\$select=ID" | jq -M -r ".value[0].ID"); echo $RUN
+49d650c9-7cd7-4c1c-aa3d-da83ed84c587
+
+### 3. The approval queue, and what the run is waiting at
+$ curl -sS $LEAD "$API/IntakeRuns?\$filter=status%20eq%20%27awaiting_approval%27&\$select=ID,status,nextNode" | jq -M ".value"
+[
+  {
+    "ID": "49d650c9-7cd7-4c1c-aa3d-da83ed84c587",
+    "status": "awaiting_approval",
+    "nextNode": "post"
+  }
+]
+$ curl -sS $LEAD "$API/Outbox?\$select=recipient" | jq -M -c ".value"
+[]
+
+### 4. EDIT - and only an approver may do it
+$ curl -sS -X POST $API/editProposal -H "Content-Type: application/json" $AGENT -d "{\"runID\":\"$RUN\",\"message\":\"nope\"}" | jq -M -c ".error | {code, message}"
+{"code":"403","message":"Forbidden"}
+$ curl -sS -X POST $API/editProposal -H "Content-Type: application/json" $LEAD -d "{\"runID\":\"$RUN\",\"message\":\"Hi Oliver, I unlocked your account - please try again in 5 minutes.\"}" | jq -M "{status, proposal: (.proposal|fromjson|{path,recipient,message})}"
+{
+  "status": "awaiting_approval",
+  "proposal": {
+    "path": "draft_response",
+    "recipient": "Oliver Grant",
+    "message": "Hi Oliver, I unlocked your account - please try again in 5 minutes."
+  }
+}
+
+### 5. PAUSE - take it out of the queue; approving is refused while on hold
+$ curl -sS -X POST $API/pauseRun -H "Content-Type: application/json" $LEAD -d "{\"runID\":\"$RUN\",\"reason\":\"checking with Identity and Access first\"}" | jq -M -c
+{"@odata.context":"$metadata#Approval","runID":"49d650c9-7cd7-4c1c-aa3d-da83ed84c587","status":"on_hold","proposal":"{\"path\":\"draft_response\",\"owner\":\"identity_access\",\"channel\":\"reply_to_requester\",\"recipient\":\"Oliver Grant\",\"message\":\"Hi Oliver, I unlocked your account - please try again in 5 minutes.\"}"}
+$ curl -sS -X POST $API/approveRun -H "Content-Type: application/json" $LEAD -d "{\"runID\":\"$RUN\"}" | jq -M -c ".error | {code, message}"
+{"code":"409","message":"run 49d650c9-7cd7-4c1c-aa3d-da83ed84c587 is on_hold; expected awaiting_approval"}
+
+### 6. RESUME - back into the queue
+$ curl -sS -X POST $API/resumeRun -H "Content-Type: application/json" $LEAD -d "{\"runID\":\"$RUN\"}" | jq -M -c
+{"@odata.context":"$metadata#Approval","runID":"49d650c9-7cd7-4c1c-aa3d-da83ed84c587","status":"awaiting_approval","proposal":"{\"path\":\"draft_response\",\"owner\":\"identity_access\",\"channel\":\"reply_to_requester\",\"recipient\":\"Oliver Grant\",\"message\":\"Hi Oliver, I unlocked your account - please try again in 5 minutes.\"}"}
+
+### 7. The wait survives a crash: kill -9 the server while the run is parked
+$ pkill -9 -f "[c]ds-serve" && echo "SIGKILL sent"; sleep 1; ss -ltn | grep -q ":4004 " && echo "still up" || echo "server is gone"
+SIGKILL sent
+/tmp/claude-2048/-home-user-projects-intake-agent/31b2d612-9d0e-4248-8385-2ddb1dd45598/scratchpad/approval-demo.sh: line 8: 30242 Killed                  npm start > $LOG 2>&1
+server is gone
+$ npm start > $LOG 2>&1 & sleep 1; up; grep -m1 "server listening" $LOG
+[cds] - server listening on { url: 'http://localhost:4004' }
+$ curl -sS $LEAD "$API/IntakeRuns($RUN)?\$select=status,nextNode,proposal" | jq -M "{status, nextNode, proposal: (.proposal|fromjson|{path,recipient})}"
+{
+  "status": "awaiting_approval",
+  "nextNode": "post",
+  "proposal": {
+    "path": "draft_response",
+    "recipient": "Oliver Grant"
+  }
+}
+
+### 8. APPROVE - the graph continues from the checkpoint and posts
+$ curl -sS -X POST $API/approveRun -H "Content-Type: application/json" $LEAD -d "{\"runID\":\"$RUN\"}" | jq -M "{status, nodes: [.trace[].node], posted: (.posted|fromjson)}"
+{
+  "status": "completed",
+  "nodes": [
+    "extract",
+    "lookup_context",
+    "classify",
+    "check_policy",
+    "choose_path",
+    "draft_response",
+    "approval_gate",
+    "resume",
+    "post"
+  ],
+  "posted": {
+    "ID": "8c4f3f2b-21ab-4994-aecf-4cfd0c996b86",
+    "channel": "reply_to_requester",
+    "recipient": "Oliver Grant",
+    "postedBy": "lead"
+  }
+}
+
+### 9. What left the system, and who did what
+$ curl -sS $LEAD "$API/Outbox?\$select=path,channel,recipient,postedBy" | jq -M -c ".value"
+[{"path":"draft_response","channel":"reply_to_requester","recipient":"Oliver Grant","postedBy":"lead","ID":"8c4f3f2b-21ab-4994-aecf-4cfd0c996b86"}]
+$ curl -sS $LEAD "$API/ApprovalEvents?\$filter=runID%20eq%20$RUN&\$select=action,actor,reason&\$orderby=createdAt" | jq -M -c "[.value[]|{action,actor,reason}]"
+[{"action":"parked","actor":"system","reason":null},{"action":"edited","actor":"lead","reason":null},{"action":"paused","actor":"lead","reason":"checking with Identity and Access first"},{"action":"resumed","actor":"lead","reason":null},{"action":"approved","actor":"lead","reason":null},{"action":"posted","actor":"lead","reason":null}]
+
+### 10. Approving twice does not post twice
+$ curl -sS -X POST $API/approveRun -H "Content-Type: application/json" $LEAD -d "{\"runID\":\"$RUN\"}" | jq -M -c "{status, posted: (.posted|fromjson|.ID)}"
+{"status":"completed","posted":"8c4f3f2b-21ab-4994-aecf-4cfd0c996b86"}
+$ curl -sS $LEAD "$API/Outbox?\$count=true&\$top=0" | jq -M -c "{outboxRows: .\"@odata.count\"}"
+{"outboxRows":1}
+
+### 11. A P1 that code decided does not wait for anyone
+$ curl -sS -X POST $API/runIntake -H "Content-Type: application/json" $LEAD -d @/tmp/claude-2048/-home-user-projects-intake-agent/31b2d612-9d0e-4248-8385-2ddb1dd45598/scratchpad/p01.json | jq -M "{status, path, reason: .reasons[0], posted: (.posted|fromjson|{channel,recipient,postedBy})}"
+{
+  "status": "completed",
+  "path": "escalate_to_human",
+  "reason": "p1_signal: production_stopped",
+  "posted": {
+    "channel": "page_duty_manager",
+    "recipient": "it_duty_manager",
+    "postedBy": "code"
+  }
+}
+
+### 12. Stop the server
+$ pkill -f "[c]ds-serve"; sleep 2; ss -ltn | grep ":4004 " || echo "port 4004 free"
+port 4004 free
+
+Script done on 2026-09-24 07:02:59+00:00 [COMMAND_EXIT_CODE="0"]

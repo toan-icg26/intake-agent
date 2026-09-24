@@ -4,8 +4,8 @@ An intake-to-resolution agent for an IT service desk, built with **SAP CAP (Node
 
 It reads a messy service request, returns structured fields, and chooses one of four paths: **ask for missing info**, **draft a response**, **route to a resolver group**, or **escalate to a human**. P1 escalation and refusal rules are decided in application code, not by the model.
 
-> Status: Track C work items 1–3 (brief, structured output, state graph) were submitted together as the first post and tagged `assignment-1`. Work item 5 (checkpointing: a run survives process death and resumes) is built on top of that.
-> Not built yet: approval gate, UI, 50-fixture evaluation.
+> Status: work items 1–3 were submitted as the first post (tag `assignment-1`), work item 5 (checkpointing) as the second (tag `assignment-2`). On top of those: `SETUP.md` (work item 7) and the human approval gate (work item 8).
+> Not built yet: the UI, and the 50-fixture evaluation.
 
 ---
 
@@ -31,16 +31,18 @@ A missed escalation is the most expensive of the three.
 | 3 — Build | Explicit state graph, with policy checks in code that override the model | `srv/lib/graph.js`, `srv/lib/policy.js`, action `runIntake`, "Branch conditions" below |
 | 4 — SUBMIT | Items 1–3 submitted together as **"Assignment 1"** (repo tagged `assignment-1`; demo video and slide deck submitted separately, not in this repo) | see "How did you evaluate it?" below for the numbers they use |
 | 5 — Build | Checkpoint after every graph node, and `resumeIntake(runID)` to continue a run after the process died | `db/schema.cds` (`IntakeRuns`), `srv/lib/graph.js`, `srv/agent-service.js`, "Checkpointing" below |
+| 7 — Gate | `SETUP.md`: a first-time setup a stranger can follow, with expected output per step | [`SETUP.md`](SETUP.md), `test/setup-runs/` |
+| 8 — Build | Human approval gate: pause, edit, approve, resume, with an audit trail and an `Outbox` | `db/schema.cds` (`Outbox`, `ApprovalEvents`), `srv/agent-service.js`, "Approval gate" below |
 
 ## How does it work?
 
 ```
 POST /odata/v4/agent/runIntake { text }
 
-extract ──> lookup_context ──> classify ──> check_policy ──> choose_path ─┬─> ask_for_info
- (model)     (keyword match      (model)        (code)          (code)     ├─> draft_response (model writes the reply)
-             on SQLite KB)                                                 ├─> route_to_group
-                                                                           └─> escalate_to_human
+extract ──> lookup_context ──> classify ──> check_policy ──> choose_path ─┬─> ask_for_info      ─┐
+ (model)     (keyword match      (model)        (code)          (code)     ├─> draft_response    ─┤
+             on SQLite KB)                                                 ├─> route_to_group    ─┼─> approval_gate ──> post
+                                                                           └─> escalate_to_human ─┘   (a person)      (Outbox)
 ```
 
 - **Schema first.** `EXTRACTION_SCHEMA` and `CLASSIFICATION_SCHEMA` are defined in `srv/lib/schema.js`, and the prompts in `srv/lib/prompts.js` embed them. The model runs in JSON mode (`response_format: json_object`). Every response is validated in code by a small hand-written validator. No library is needed for this subset of JSON Schema.
@@ -49,6 +51,7 @@ extract ──> lookup_context ──> classify ──> check_policy ──> cho
 - **No framework.** The graph is a `while` loop over a `NODES` object. The flow is fixed, with one branching point, so a graph library would add dependencies without adding capability yet. See "Branch conditions" below.
 - **Rate limits.** `srv/lib/groq.js` retries only on HTTP 429, waiting exactly the `retry-after` seconds, up to 3 times.
 - **Checkpoints.** After every node, the whole graph state and the next node are written to the `IntakeRuns` table in `db.sqlite`. `POST resumeIntake { runID }` continues a run from there. See "Checkpointing" below.
+- **Nothing leaves without a person.** A proposed action waits at an approval gate until someone with the `approver` role releases it. Releasing writes a row to `Outbox`; the agent sends nothing anywhere. See "Approval gate" below.
 
 ## Branch conditions (assignment 3)
 
@@ -120,6 +123,51 @@ Also tested while building (not recorded):
 - `totalMs` covers only the last process that worked on the run. `modelCalls` and `modelLatencyMs` add up across resumes because they are part of the stored state.
 - Stored state is not versioned. A checkpoint written by an older version of `graph.js` may not resume correctly after the state shape changes.
 
+## Approval gate (assignment 8)
+
+Modelled on **park and post**: the agent parks a proposal, a person releases it. The agent itself performs only the reversible step.
+
+```
+choose_path ──> one of the four path nodes ──> approval_gate ──(a person approves)──> post ──> Outbox
+                                                    │
+     code-decided escalation (P1 / refusal / invalid output) ─────────────────────────────┘  (no gate)
+```
+
+**What a person can do**, all four required by the assignment, all restricted to the `approver` role:
+
+| Action | From → to | Notes |
+|---|---|---|
+| *(the gate itself)* | `running` → `awaiting_approval` | The graph pauses and checkpoints; nothing is sent |
+| `editProposal(runID, path?, owner?, message?, reason?)` | stays parked | Changing a path that a **code rule** decided requires a `reason`, otherwise 400 |
+| `pauseRun(runID, reason?)` | `awaiting_approval` → `on_hold` | Takes it out of the queue while the approver checks something |
+| `resumeRun(runID)` | `on_hold` → `awaiting_approval` | Back into the queue |
+| `approveRun(runID)` | `awaiting_approval` → `completed` | Continues the graph from the checkpoint and posts |
+
+The queue is `GET /odata/v4/agent/IntakeRuns?$filter=status eq 'awaiting_approval'`. Released actions are in `Outbox`, and every human action is in `ApprovalEvents` (`parked`, `edited`, `paused`, `resumed`, `approved`, `posted`, each with the actor and any reason).
+
+**Which paths wait.** Everything the model proposes waits: ask, draft, route, and an escalation the model asked for. An escalation that **code** decided (a P1 signal, a refusal rule, or invalid model output) posts immediately with `postedBy: code`. The brief requires the duty manager to hear about a P1 immediately, so parking those would rebuild the "slow escalation" failure this project exists to fix.
+
+**In-flight state while it waits.** The parked run is an ordinary checkpoint row: `status = awaiting_approval`, `nextNode = post`, plus the full `state` JSON and a readable `proposal`. Tested: park a run, stop the server, start it again, approve — the run finishes from the same state (`extract` … `approval_gate`, `resume`, `post`).
+
+**Why the human can override code.** An approver may turn a code decision into something else, but only with a reason, which is stored in `ApprovalEvents`. Code overriding the model is recorded the same way. Refusing the override outright would leave no way to correct a regex that matched the wrong request.
+
+**Guards** (each transition is `UPDATE … WHERE status = <expected>`, so two approvers cannot both release one run):
+- approving twice returns the stored result and posts once;
+- editing or approving after the post → 409;
+- approving while `on_hold` → 409;
+- `resumeIntake` on a parked run → 409, because a crash-resume must not skip the gate;
+- editing without the `approver` role → 403.
+
+**Evidence.** [`test/results/approval-gate-2026-09-24T07-02-48Z.log`](test/results/approval-gate-2026-09-24T07-02-48Z.log) is a `script` capture of one run going through all four operations: parked → edited → paused → (approve refused, 409) → resumed → **server killed with `kill -9` while parked** → restarted → approved → posted. It ends with the `Outbox` row, the audit trail, a second approval that does not post twice (`outboxRows: 1`), and a P1 that code posted with no gate. Replay it with `scriptreplay --log-timing test/results/approval-gate-2026-09-24T07-02-48Z.timing --log-out test/results/approval-gate-2026-09-24T07-02-48Z.log`.
+
+**Regression with the gate in place** (`test/results/intake-a8-gate-2026-09-24T07-02-23-696Z.json`): all 30 fixtures completed, 0 HTTP errors, **0 missed escalations**, 26/30 paths matched, code overrode the model 8 times. The 8 escalations decided by code posted immediately; the other 22 runs were left waiting for an approver.
+
+**Known limits**
+- Authentication is CAP's **mocked** auth (users `lead` with role `approver`, and `agent` without it). That is a development stand-in, not production authentication.
+- "Posting" writes to `Outbox` only. No mail, no ticketing system: the brief puts both out of scope.
+- There is no reject-and-close action yet; an approver edits and approves, or leaves the run parked.
+- Nothing expires a parked run, and nothing reminds anyone about it.
+
 ## How did you evaluate it?
 
 Every number below is measured, not estimated, and comes from a run saved under `test/results/` (each file name carries a timestamp and, where relevant, a `--label`).
@@ -129,16 +177,16 @@ Every number below is measured, not estimated, and comes from a run saved under 
 | `askAgent` end-to-end latency, 5 calls | p50 1841 ms, max 1901 ms |
 | Single-call triage: valid structure | 30 / 30 |
 | Single-call triage: P1 fixtures the **model** escalated | **0 / 4** |
-| State graph: completed end to end | 30 / 30 in each of 4 runs |
-| State graph: path equals the human label | **26–28 / 30** across 4 runs (28, 27, 26, 26) |
-| State graph: expected escalations not made | **0** in each of 4 runs |
+| State graph: completed end to end | 30 / 30 in each of 5 runs |
+| State graph: path equals the human label | **26–28 / 30** across 5 runs (28, 27, 26, 26, 26) |
+| State graph: expected escalations not made | **0** in each of 5 runs |
 | State graph: times code overrode the model | 6–8 per run |
 | State graph: invalid model outputs | 0–1 per run (the one case was repaired by the retry) |
 | State graph: model latency per request | p50 2235 ms, p95 3651 ms (15 Sep run) |
 | State graph: total per request in a batch run | p50 6729 ms, p95 13069 ms (15 Sep run; includes 124 s of `retry-after` waits across 40 HTTP 429s) |
 | Same graph with `allam-2-7b` (a model that breaks the schema) | 55 invalid outputs, 18 fallback escalations, 0 missed escalations |
 
-The four graph runs, in order: `intake-final-2026-09-15T07-42-29-984Z.json`, `intake-demo-2026-09-16T08-12-47-944Z.json`, `intake-demo-2026-09-16T08-47-56-498Z.json`, and `intake-a5-regression-2026-09-17T09-51-39-736Z.json` (after the checkpointing change, on a clean copy of the repo set up from the written setup steps). The requests go out with `temperature: 0`, but the model's answers are not the same from run to run on C04, A01, A03 and A04, so the match count moves between 26 and 28. The P1 and refusal fixtures escalated in every run, because those decisions are made in code.
+The five graph runs, in order: `intake-final-2026-09-15T07-42-29-984Z.json`, `intake-demo-2026-09-16T08-12-47-944Z.json`, `intake-demo-2026-09-16T08-47-56-498Z.json`, `intake-a5-regression-2026-09-17T09-51-39-736Z.json` (after the checkpointing change, on a clean copy of the repo set up from the written setup steps), and `intake-a8-gate-2026-09-24T07-02-23-696Z.json` (after the approval gate). The requests go out with `temperature: 0`, but the model's answers are not the same from run to run on C04, A01, A03 and A04, so the match count moves between 26 and 28 (A02 joined that list in the last two runs). The P1 and refusal fixtures escalated in every run, because those decisions are made in code.
 
 **What did not work**
 - **C04** (a joiner request with a named approver) is sent back for information in 3 of the 4 runs: the code completeness rule requires an affected system, and a new starter has none.
@@ -172,7 +220,7 @@ git clone https://github.com/toan-icg26/intake-agent.git && cd intake-agent
 npm ci
 cp .env.example .env           # put your key after GROQ_API_KEY=
 cds deploy                     # creates db.sqlite; run again after schema changes (deletes stored runs)
-npm start                      # then use the curl commands in SETUP.md, steps 8-10
+npm start                      # then use the curl commands in SETUP.md, steps 8-11
 ```
 
 Tested with: Node.js 24.17.0, `@sap/cds-dk` 10.0.7 (global), `@sap/cds` 10.1.0, `@cap-js/sqlite` 3.1.0.
