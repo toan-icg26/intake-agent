@@ -334,7 +334,30 @@ curl -sS -u lead: "http://localhost:4004/odata/v4/agent/ApprovalEvents?\$filter=
 
 > Escalations that a **code** rule decided (a P1 signal or a refusal) do not wait here. They post immediately with `postedBy: code`, because the duty manager has to hear about a P1 straight away.
 
-## 12. Stop
+## 12. Use the console instead of curl
+
+Everything above can also be done from a page in the browser, which is how a first-line agent would work.
+
+With the server running (step 7), open:
+
+```
+http://localhost:4004/ui/
+```
+
+In Business Application Studio, the port is exposed for you: open the **Ports** view (or the notification that appears when the server starts), open port 4004 in a browser tab, and add `/ui/` to the address.
+
+**You should see** a page titled *Lumen Industrial — IT service desk console*, with a request box on the left and an empty approval queue on the right.
+
+Try it:
+
+1. Click one of the example buttons, then **Send to the agent**. The node list fills in as the agent works, and the run appears on the right under *Waiting for a person*.
+2. Select it in the queue, change the message, and press **Save edit**.
+3. Switch the user in the header from `lead` to `agent` and press **Approve & release**: you get `403 Forbidden`, because only `lead` has the approver role. Switch back to `lead`.
+4. Press **Approve & release**. The run moves to *Released (Outbox)*, and *Who did what* shows the whole trail.
+
+> The page loads OpenUI5 1.148.0 from `sdk.openui5.org`, so it needs internet access. If the page stays blank, check the browser console for a failed request to that host.
+
+## 13. Stop
 
 Press **Ctrl+C** in terminal 1. When you are done for the day, stop the dev space on the BAS Dev Spaces page.
 

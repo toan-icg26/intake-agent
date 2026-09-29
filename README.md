@@ -5,7 +5,8 @@ An intake-to-resolution agent for an IT service desk, built with **SAP CAP (Node
 It reads a messy service request, returns structured fields, and chooses one of four paths: **ask for missing info**, **draft a response**, **route to a resolver group**, or **escalate to a human**. P1 escalation and refusal rules are decided in application code, not by the model.
 
 > Status: work items 1–3 were submitted as the first post (tag `assignment-1`), work item 5 (checkpointing) as the second (tag `assignment-2`). On top of those: `SETUP.md` (work item 7) and the human approval gate (work item 8).
-> Not built yet: the UI, and the 50-fixture evaluation.
+> Then work item 9: a console at `/ui/` that a first-line agent can drive without a terminal.
+> Not built yet: the 50-fixture evaluation.
 
 ---
 
@@ -33,6 +34,7 @@ A missed escalation is the most expensive of the three.
 | 5 — Build | Checkpoint after every graph node, and `resumeIntake(runID)` to continue a run after the process died | `db/schema.cds` (`IntakeRuns`), `srv/lib/graph.js`, `srv/agent-service.js`, "Checkpointing" below |
 | 7 — Gate | `SETUP.md`: a first-time setup a stranger can follow, with expected output per step | [`SETUP.md`](SETUP.md), `test/setup-runs/` |
 | 8 — Build | Human approval gate: pause, edit, approve, resume, with an audit trail and an `Outbox` | `db/schema.cds` (`Outbox`, `ApprovalEvents`), `srv/agent-service.js`, "Approval gate" below |
+| 9 — Build | A console a non-technical person can drive: node path, structured fields, and the approval gate on screen | `app/ui/`, "The console" below |
 
 ## How does it work?
 
@@ -168,6 +170,21 @@ The queue is `GET /odata/v4/agent/IntakeRuns?$filter=status eq 'awaiting_approva
 - There is no reject-and-close action yet; an approver edits and approves, or leaves the run parked.
 - Nothing expires a parked run, and nothing reminds anyone about it.
 
+## The console (assignment 9)
+
+`app/ui/` is a single page served by CAP at **<http://localhost:4004/ui/>**. A first-line agent pastes a request, watches the graph run, and clears the approval gate without touching a terminal.
+
+**Stack:** OpenUI5 **1.148.0** (LTS), loaded from `sdk.openui5.org` with the version pinned in `app/ui/index.html`. No build step, no `Component.js`, no manifest, and nothing added to `package.json`: one HTML file and one JS file that create `sap.m` controls and call the same OData service as `curl`. The trade-off is that the page needs to reach the CDN; everything else runs locally.
+
+**What it shows**
+- **Node by node, while it runs.** The page polls `IntakeRuns` every 500 ms and paints each node as its checkpoint lands, then replaces that with the real trace and the note each node wrote. The checkpoint table from assignment 5 is what makes this possible without any server change.
+- **What the agent read** from the request: requester, affected system, urgency, category, the model's confidence.
+- **Where code overruled the model**: the rule, what the model said, what code decided.
+- **The approval gate**: the queue of parked runs, the proposed message (editable), and Hold / Back to queue / Approve & release. The header has a user switcher — `lead` may approve, `agent` may not — so the 403 is visible on screen instead of being described.
+- **What was released** (Outbox) and **who did what** (the audit trail).
+
+**What it deliberately hides:** the prompts, the raw model JSON, the state blob, token counts and latency numbers. Those matter when debugging, not when deciding whether to send a reply to Oliver. The one exception is the override panel: the moment code disagrees with the model is exactly the moment a human should see.
+
 ## How did you evaluate it?
 
 Every number below is measured, not estimated, and comes from a run saved under `test/results/` (each file name carries a timestamp and, where relevant, a `--label`).
@@ -220,7 +237,7 @@ git clone https://github.com/toan-icg26/intake-agent.git && cd intake-agent
 npm ci
 cp .env.example .env           # put your key after GROQ_API_KEY=
 cds deploy                     # creates db.sqlite; run again after schema changes (deletes stored runs)
-npm start                      # then use the curl commands in SETUP.md, steps 8-11
+npm start                      # then SETUP.md steps 8-11 (curl) or open http://localhost:4004/ui/
 ```
 
 Tested with: Node.js 24.17.0, `@sap/cds-dk` 10.0.7 (global), `@sap/cds` 10.1.0, `@cap-js/sqlite` 3.1.0.
