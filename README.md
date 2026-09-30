@@ -5,8 +5,8 @@ An intake-to-resolution agent for an IT service desk, built with **SAP CAP (Node
 It reads a messy service request, returns structured fields, and chooses one of four paths: **ask for missing info**, **draft a response**, **route to a resolver group**, or **escalate to a human**. P1 escalation and refusal rules are decided in application code, not by the model.
 
 > Status: work items 1–3 were submitted as the first post (tag `assignment-1`), work item 5 (checkpointing) as the second (tag `assignment-2`). On top of those: `SETUP.md` (work item 7) and the human approval gate (work item 8).
-> Then work item 9: a console at `/ui/` that a first-line agent can drive without a terminal.
-> Not built yet: the 50-fixture evaluation.
+> Item 9 (the `/ui/` console) was submitted as "Assignment 4" (tag `assignment-4`). Work item 11 then replayed 50 fixtures — 30 original plus 20 written in wording the policy rules had never seen — and found the first real gap in the "0 missed escalations" hard gate; see "50-fixture evaluation" below.
+> Not built yet: the final packaging (assignment 12) and the retrospective (assignment 13).
 
 ---
 
@@ -35,6 +35,8 @@ A missed escalation is the most expensive of the three.
 | 7 — Gate | `SETUP.md`: a first-time setup a stranger can follow, with expected output per step | [`SETUP.md`](SETUP.md), `test/setup-runs/` |
 | 8 — Build | Human approval gate: pause, edit, approve, resume, with an audit trail and an `Outbox` | `db/schema.cds` (`Outbox`, `ApprovalEvents`), `srv/agent-service.js`, "Approval gate" below |
 | 9 — Build | A console a non-technical person can drive: node path, structured fields, and the approval gate on screen | `app/ui/`, "The console" below |
+| 10 — SUBMIT | Item 9 submitted as **"Assignment 4"** (repo tagged `assignment-4`) | — |
+| 11 — Build | 50 fixtures (30 original + 20 new, written in unseen wording on purpose), 5 metrics, failures grouped by category with a root cause each | `fixtures/requests.json` (`N01`–`N20`), "50-fixture evaluation" below |
 
 ## How does it work?
 
@@ -62,11 +64,12 @@ extract ──> lookup_context ──> classify ──> check_policy ──> cho
 1. **A P1 signal is in the text → escalate to a human.** Checked in code (`srv/lib/policy.js`) against the raw text, before the model's opinion is consulted: production line stopped, a safety system affected, a suspected security breach, data loss, or more than 50 users affected.
 2. **A refusal rule matches → escalate to a human.** Asking for another person's credentials, or for an access/role change with no named approver.
 3. **Model output is still invalid after one retry → escalate to a human**, to triage by hand. Trade-off: a false escalation costs minutes; routing on garbage costs more.
-4. **Requester or affected system can't be identified → ask for information.** Checked on the extracted fields, independent of what the model proposed.
-5. **Model asked for escalation → escalate.** Accepted without a code signal, because a false escalation is cheaper than a missed one.
-6. **Model asked for more information → ask for information.**
-7. **Model proposed a drafted response → draft it, but only if the cited article was one of the candidates returned by `lookup_context`.** Otherwise, route to the group the model named.
-8. **Otherwise → route to the resolver group the model chose.**
+4. **The model explicitly proposed `escalate_to_human` → escalate.** Checked *before* completeness on purpose (assignment 11, fixture N14): a model that already recognised the request as urgent should not be overruled just because one field came back empty.
+5. **Requester or affected system can't be identified → ask for information.** Checked on the extracted fields, independent of what the model proposed.
+6. **The model's `owner` defaulted to `it_duty_manager`, with no explicit escalation → escalate.** This is the model's catch-all when it cannot tell which resolver group fits, and it is checked *after* completeness on purpose (assignment 11): a genuinely vague request should be asked for more information first, not escalated on an empty owner guess.
+7. **Model asked for more information → ask for information.**
+8. **Model proposed a drafted response → draft it, but only if the cited article was one of the candidates returned by `lookup_context`.** Otherwise, route to the group the model named.
+9. **Otherwise → route to the resolver group the model chose.**
 
 **Why plain code and not a graph framework:** the flow is fixed — five nodes in a line, one branching point, no loops except one bounded retry. A `while` loop over a `NODES` object is about 30 lines. A framework such as LangGraph would buy checkpointing/resume, a graph visualiser (the list above does the job for five nodes), and a dependency tree to pin and audit. When this was written (assignment 3) the honest answer was "not much", so there is no framework. Assignment 5 then added checkpointing by hand, and the cost is recorded below.
 
@@ -185,6 +188,57 @@ The queue is `GET /odata/v4/agent/IntakeRuns?$filter=status eq 'awaiting_approva
 
 **What it deliberately hides:** the prompts, the raw model JSON, the state blob, token counts and latency numbers. Those matter when debugging, not when deciding whether to send a reply to Oliver. The one exception is the override panel: the moment code disagrees with the model is exactly the moment a human should see.
 
+## 50-fixture evaluation (assignment 11)
+
+The original 30 fixtures were replayed many times, but the regex policy rules and the prompts were written while looking at those same 30 — passing them proves nothing about wording nobody has seen yet. This section adds 20 new fixtures (`N01`–`N20` in `fixtures/requests.json`) written in different styles on purpose: informal phrasing for refusals, an equipment name instead of the word "line" for a stopped production line, "65 agents" instead of "65 users", files that "disappeared" instead of being "deleted". Six of them were written to probe a specific regex boundary I could name in advance (checked against `srv/lib/policy.js` with `textSignals()` before spending any model calls); the rest are ordinary new scenarios, including 3 that finally exercise the three knowledge articles (KB-005, KB-006, KB-008) the original 30 never touched.
+
+**This section went through three live runs, and the table below is the third.** The first run found a real bug (N14, below) in `srv/lib/graph.js`. The first attempt to fix it caused a regression, caught by re-running all 50 rather than just the one fixture. The numbers here are from the run after the corrected fix, kept as [`test/results/intake-a11-50fixtures-final-2026-09-30T10-03-16-014Z.json`](test/results/intake-a11-50fixtures-final-2026-09-30T10-03-16-014Z.json), model `openai/gpt-oss-120b`, 30 Sep 2026. The two earlier runs are also kept, for the record: [`...-2026-09-30T09-42-40-150Z.json`](test/results/intake-a11-50fixtures-2026-09-30T09-42-40-150Z.json) (before the fix) and [`...fixed-2026-09-30T09-56-40-810Z.json`](test/results/intake-a11-50fixtures-fixed-2026-09-30T09-56-40-810Z.json) (the regression). Reproduce the current numbers with `npm run fixtures:intake -- --label your-label` after `cds deploy`.
+
+| Metric | Result |
+|---|---|
+| Requests completed | 50 / 50, 0 HTTP errors |
+| **Routing accuracy** (path matches the human label) | **39 / 50 = 78.0%** |
+| **False escalations** (escalated, should not have) | **1** — N16 |
+| **Missed escalations** (should have escalated, did not) | **2** — N15, N17 |
+| **Tool-call success rate**¹ (structured output valid on first or second attempt) | **108 / 108 = 100%**, 0 invalid |
+| **Needs human intervention** (parked at the approval gate) | **39 / 50 = 78%** (11 of 50 were escalations decided by code, which post immediately with no gate) |
+
+¹ This project has no separate "tool calls" — every model turn is one JSON-mode completion checked against a schema (`srv/lib/structured.js`). I am reading "tool-call success rate" as that check: did the model return valid structured output. It did, on every one of the 108 calls in this run.
+
+**The hard gate still broke.** Every replay of the original 30 fixtures had 0 missed escalations. On unseen wording, 2 still do not escalate, even after the fix below. See N15/N17.
+
+### The bug this run found, and fixing it without breaking something else
+
+**N14** ("Priya is out sick... what's the fastest way to get in as her for ten minutes?") is a real attempt to get someone else's access. The model's own `classification` got it right: `next_action: "escalate_to_human"`, confidence 0.95, `policy_basis: "User requests temporary access to another employee's account, which is a policy violation and requires human handling"`. But `extraction.affected_system` came back `null` — there genuinely isn't a "system" to name for an account-impersonation request — and in `decide()` the completeness check used to run *before* the rule that accepts a model-proposed escalation. The correct judgment the model already made was discarded, and the request was returned for more information instead.
+
+The first fix moved the whole escalation check (`next_action === 'escalate_to_human' || owner === 'it_duty_manager'`) ahead of completeness. Re-running all 50 fixtures — not just N14 — showed why that condition existed as two parts: **N14 fixed, but `missing_info` dropped from 8/8 to 4/8.** M01, M03, M04 and N08 are all genuinely vague requests ("it's broken again, please fix asap!!!", a caller who hung up with no details). The model correctly proposed `ask_for_info` for every one of them — but it also defaults `owner` to `it_duty_manager` as a catch-all when it cannot tell which resolver group fits, and that owner-only signal was now firing before completeness got a chance to ask for more information, turning four vague requests into false escalations.
+
+The final fix in `srv/lib/graph.js` splits the two: an **explicit** `next_action: "escalate_to_human"` is now accepted before completeness (this is what N14 needed); `owner === 'it_duty_manager'` on its own is still checked *after* completeness, exactly where it was before (this is what M01/M03/M04/N08 needed). Both are now true again: N14 escalates, and the vague requests still ask for information first.
+
+### Failures, by category, with a root cause
+
+| Category | Match | Notes |
+|---|---|---|
+| `missing_info` | 8 / 8 | No failures. |
+| `p1` | 7 / 8 | **N17 missed.** |
+| `clear` | 18 / 20 | C04 (known, see "Branch conditions") + N04. |
+| `refuse` | 5 / 7 | **N15 missed; N16 false escalation.** |
+| `ambiguous` | 1 / 7 | A01, A03, A04, N11, N12, N13 all asked for more information instead of routing. |
+
+**`ambiguous` (1/7) — root cause: the model defaults to asking for information rather than picking between two plausible teams.** All six misses give the identical reason, verbatim: `model_judgement: model needs more information`. This is not random noise — it is a consistent preference, and the same reason shows up on **N04**, a `clear` fixture (a broken headset), which should not have been ambiguous at all. Asking is a safe failure (no reply goes out, no team gets an idle ticket), but it does mean routing accuracy on ambiguous input is currently close to a coin flip in the wrong direction.
+
+**`refuse` (5/7) — root cause: `access_change_without_approver` is narrow, and the model does not reliably back it up.** The rule allows at most two filler words between "give me" and "access"; **N15** ("give me the same ERP access as my supervisor") has three and slips through the regex. In this run the model's own classification for N15 was `route to identity_access` — a different (also wrong) answer than an earlier run gave for the same fixture, a reminder that these are live model calls, not a lookup table. Either way, nothing in this run flagged N15 as needing an approver. **N16** is the mirror case: "my supervisor Marta Ibanez already cleared this with me" names a real approver, but not in the phrase the regex requires (`approved by` / `authorized by` / `signed off by` + a name), so code refuses a request a human would have approved.
+
+**`p1` (7/8) — root cause: `data_loss` is the one P1 rule with no fallback.** **N17** describes a shared drawings folder that "has disappeared" — six years of files, a real P1 by the brief's own definition (data loss). The `data_loss` regex only matches literal phrases (`data loss`, `lost the data`, `deleted`, `wiped`, `corrupted`); "disappeared" is none of those, and the model's own classification was `route to business_applications`, not escalation. Contrast this with the other two rules this batch specifically targeted: `production_stopped` requires the word "line", and **N18** ("Press 4 has gone down") has none — but there the model itself proposed escalation and code's `model_judgement` branch accepted it. `more_than_50_users` only recognises unit words like "users" or "employees", and **N20** says "65 agents" — but `checkPolicy` also reads `extraction.users_affected` from the model's own output, and the model correctly extracted `65`, so the numeric check caught what the text regex missed. `data_loss` is the only one of the four P1 rules with neither a model backstop nor a structured-data backstop, which is exactly why it is the one that still produces a miss.
+
+**What this means in practice.** N16 (the false escalation) does not bypass the approval gate from assignment 8 — only a `p1_signal`/`refusal`/`invalid_model_output` reason posts without a person looking at it first (`srv/lib/graph.js`, `decide()`); a `refusal` reason does, so N16 alone reaches a human unusually fast, which is the safe direction for a false positive. N17 and N15 do trip the gate, but not because they were recognised as urgent — the proposal an approver sees just reads "route to business_applications" or "ask for information", with nothing marking it as a missed escalation. The gate is a safety net for a wrong decision that gets made; it cannot flag a decision that was never proposed in the first place.
+
+### What I would fix next
+1. Rewrite `data_loss` to also match "disappeared", "gone", "cannot find" near "folder/files/drive" — the only P1 rule with zero backstop (no model agreement, no numeric check) when it misses.
+2. Loosen `access_change_without_approver`'s filler-word limit, and treat any capitalised name near "cleared/approved/OK'd/signed off" as naming an approver, not only the four fixed phrases (fixes N15 and N16 together).
+3. The `ambiguous` category needs more than a regex fix: measure whether a small prompt change (asking the model to prefer routing over asking when two resolver groups are both plausible) trades false questions for false routes, and re-measure — do not tune this from the same fixtures again.
+4. Whatever is fixed next gets the same treatment N14 got: change one thing, then re-run all 50, not just the fixture that motivated the change.
+
 ## How did you evaluate it?
 
 Every number below is measured, not estimated, and comes from a run saved under `test/results/` (each file name carries a timestamp and, where relevant, a `--label`).
@@ -203,7 +257,7 @@ Every number below is measured, not estimated, and comes from a run saved under 
 | State graph: total per request in a batch run | p50 6729 ms, p95 13069 ms (15 Sep run; includes 124 s of `retry-after` waits across 40 HTTP 429s) |
 | Same graph with `allam-2-7b` (a model that breaks the schema) | 55 invalid outputs, 18 fallback escalations, 0 missed escalations |
 
-The five graph runs, in order: `intake-final-2026-09-15T07-42-29-984Z.json`, `intake-demo-2026-09-16T08-12-47-944Z.json`, `intake-demo-2026-09-16T08-47-56-498Z.json`, `intake-a5-regression-2026-09-17T09-51-39-736Z.json` (after the checkpointing change, on a clean copy of the repo set up from the written setup steps), and `intake-a8-gate-2026-09-24T07-02-23-696Z.json` (after the approval gate). The requests go out with `temperature: 0`, but the model's answers are not the same from run to run on C04, A01, A03 and A04, so the match count moves between 26 and 28 (A02 joined that list in the last two runs). The P1 and refusal fixtures escalated in every run, because those decisions are made in code.
+The five graph runs, in order: `intake-final-2026-09-15T07-42-29-984Z.json`, `intake-demo-2026-09-16T08-12-47-944Z.json`, `intake-demo-2026-09-16T08-47-56-498Z.json`, `intake-a5-regression-2026-09-17T09-51-39-736Z.json` (after the checkpointing change, on a clean copy of the repo set up from the written setup steps), and `intake-a8-gate-2026-09-24T07-02-23-696Z.json` (after the approval gate). The requests go out with `temperature: 0`, but the model's answers are not the same from run to run on C04, A01, A03 and A04, so the match count moves between 26 and 28 (A02 joined that list in the last two runs). The P1 and refusal fixtures escalated in every run, because those decisions are made in code. All five of these runs replay the same 30 fixtures the policy rules were written against; "50-fixture evaluation" above is the first time this project measured itself on wording it had never seen, and the zero-missed-escalation streak did not survive that.
 
 **What did not work**
 - **C04** (a joiner request with a named approver) is sent back for information in 3 of the 4 runs: the code completeness rule requires an affected system, and a new starter has none.

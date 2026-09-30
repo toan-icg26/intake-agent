@@ -147,11 +147,23 @@ export function decide({ extraction, classification: c, policy, articles }) {
     reasons.push('invalid_model_output: a person must triage this request')
     return result('escalate_to_human', 'it_duty_manager')
   }
+  // Checked before completeness, and deliberately narrower than the rule below: only an
+  // explicit next_action of escalate_to_human jumps the queue. Found via assignment 11's
+  // fixture N14 — extraction had no affected_system, but the model had already classified
+  // this correctly as escalate_to_human, and completeness used to discard that.
+  if (c.next_action === 'escalate_to_human') {
+    reasons.push('model_judgement: model requested escalation (accepted; a false escalation is cheaper than a missed one)')
+    return result('escalate_to_human', 'it_duty_manager')
+  }
   if (policy.incomplete.length) {
     reasons.push(`incomplete: ${policy.incomplete.join(', ')}`)
     return result('ask_for_info', null)
   }
-  if (c.next_action === 'escalate_to_human' || c.owner === 'it_duty_manager') {
+  // owner=it_duty_manager without an explicit escalation is the model's fallback when it
+  // cannot tell what team fits — checked after completeness, so a vague request is asked
+  // for more information first rather than escalated on an empty owner guess (assignment 11,
+  // M01/M03/M04/N08: the model did not ask to escalate, it just had nowhere else to put it).
+  if (c.owner === 'it_duty_manager') {
     reasons.push('model_judgement: model requested escalation (accepted; a false escalation is cheaper than a missed one)')
     return result('escalate_to_human', 'it_duty_manager')
   }
