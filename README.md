@@ -4,9 +4,9 @@ An intake-to-resolution agent for an IT service desk, built with **SAP CAP (Node
 
 It reads a messy service request, returns structured fields, and chooses one of four paths: **ask for missing info**, **draft a response**, **route to a resolver group**, or **escalate to a human**. P1 escalation and refusal rules are decided in application code, not by the model.
 
-> Status: work items 1–3 were submitted as the first post (tag `assignment-1`), work item 5 (checkpointing) as the second (tag `assignment-2`). On top of those: `SETUP.md` (work item 7) and the human approval gate (work item 8).
-> Item 9 (the `/ui/` console) was submitted as "Assignment 4" (tag `assignment-4`). Work item 11 then replayed 50 fixtures — 30 original plus 20 written in wording the policy rules had never seen — and found the first real gap in the "0 missed escalations" hard gate; see "50-fixture evaluation" below.
-> Not built yet: the final packaging (assignment 12) and the retrospective (assignment 13).
+> Status: work items 1–3 were submitted as the first post (tag `assignment-1`), work item 5 (checkpointing) as the second (tag `assignment-2`), and work item 8 (the human approval gate) as the third (tag `assignment-3`), on top of `SETUP.md` (work item 7).
+> Item 9 (the `/ui/` console) was submitted as the fourth (tag `assignment-4`). Work item 11 then replayed 50 fixtures — 30 original plus 20 written in wording the policy rules had never seen — found and fixed a real bug, and left two genuine gaps documented; see "50-fixture evaluation" below.
+> This README is work item 12: the final packaging. Work item 13, the retrospective, is next.
 
 ---
 
@@ -264,19 +264,20 @@ The five graph runs, in order: `intake-final-2026-09-15T07-42-29-984Z.json`, `in
 - **A01** (ambiguous "Connection refused" from home): the model asks for more information instead of routing. This happened in all 4 runs.
 - **A03 and A04** (ambiguous): sent back for information instead of routed in 3 of the 4 runs.
 - The P1 and refusal regular expressions were written against the same 30 fixtures they pass. That proves nothing about unseen wording.
-- Batch runs spend most of their time waiting on the free tier's 8,000 tokens/minute limit.
+- Batch runs spend most of their time waiting on the free tier's 8,000 tokens/minute limit. There is also a separate 200,000 tokens/day limit, found the hard way while re-verifying `SETUP.md` on 30 Sep after replaying the 50-fixture set three times in one session: `Rate limit reached for model \`openai/gpt-oss-120b\` ... on tokens per day (TPD): Limit 200000, Used 199348, Requested 1113. Please try again in 3m19.152s.`
 - **Setup:** the originally planned model `llama-3.3-70b-versatile` returned `The model \`llama-3.3-70b-versatile\` does not exist or you do not have access to it.` for this account.
 
 **Not measured yet:** routing accuracy on unseen requests, false-escalation rate on a larger set, token cost per request (token counts are logged per call but not aggregated).
 
 ## What would you change before production?
 
-- Replace the regex policy rules with rules reviewed by the service desk, and test them on requests they were not written against.
+- Fix the two policy gaps assignment 11 actually found on unseen wording — `data_loss` matches only literal phrases, and `access_change_without_approver` is too strict on filler words and too loose on how an approver is named — then re-measure on fresh fixtures, not the ones that found the gaps.
 - Make the completeness rule depend on category, so a service request needs no "affected system".
-- Put a human approval gate before any routing or escalation leaves the system (assignment 8).
+- Measure whether a small prompt change (favour routing over asking when two resolver groups are both plausible) actually improves the `ambiguous` category, instead of guessing that it will.
+- Add reject-and-close and an expiry/reminder to the approval queue from assignment 8 — today an approver can only edit-and-approve or leave a run parked forever.
 - Store checkpoints in a server database with schema migrations instead of `cds deploy`, lock a run while it executes so it cannot be resumed twice, and version the stored state.
+- Replace CAP's mocked auth with real authentication, and scope approvers to their resolver group instead of one global `approver` role.
 - Use a model endpoint with an SLA and limits sized for 800 requests/week, instead of a free tier.
-- Add authentication. The service currently runs with CAP's mocked auth for local development.
 
 ---
 

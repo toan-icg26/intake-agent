@@ -3,8 +3,10 @@
 This guide takes you from nothing to:
 
 - a running agent,
-- all 30 synthetic requests replayed through it,
-- a run that you interrupt and then resume.
+- all 50 synthetic requests replayed through it,
+- a run that you interrupt and then resume,
+- a proposal released through the human approval gate, with an audit trail,
+- the same work done from a browser console instead of `curl`.
 
 Everything runs in **SAP Business Application Studio (BAS)** on a free **SAP BTP trial** account. The model comes from **Groq's** free tier. You need no credit card and nothing installed on your own machine.
 
@@ -65,7 +67,7 @@ npm ci
 
 **You should see** npm finish without any `npm ERR!` lines. `npm ci` installs the exact versions recorded in `package-lock.json`: `@sap/cds` 10.1.0 and `@cap-js/sqlite` 3.1.0.
 
-The 30 synthetic test requests are already in the repo, in `fixtures/requests.json`. You do not need any other data.
+The 50 synthetic test requests are already in the repo, in `fixtures/requests.json` (the original 30, plus 20 added for the 50-fixture evaluation — see README.md). You do not need any other data.
 
 ---
 
@@ -201,22 +203,22 @@ The P1 rule runs in code, so this request escalates whatever the model proposes.
 
 ---
 
-## 9. Replay all 30 synthetic requests (terminal 2)
+## 9. Replay all 50 synthetic requests (terminal 2)
 
 ```bash
 npm run fixtures:intake -- --label setup
 ```
 
-This takes **about 3–5 minutes** (191 s and 277 s in two test runs on 22 Sep). The free tier allows 8,000 tokens per minute, so terminal 1 will show lines like `HTTP 429, waiting retry-after=5s`. That is expected: the server waits for as long as Groq asks, then continues.
+This is now 50 requests, not 30, so it takes longer than it used to — expect several minutes at minimum, growing with how many `HTTP 429, waiting retry-after=...Ns` waits you hit in terminal 1 (that is expected; the server waits for as long as Groq asks, then continues). Free-tier Groq accounts have **two separate limits**: tokens per minute, and tokens per day. Running this replay repeatedly in one day adds up — see the troubleshooting row below if you hit the daily one.
 
 Terminal 2 prints one line per request, then a `SUMMARY`. **Check these fields:**
 
 | Field | Expected |
 |---|---|
 | `"httpErrors"` | `[]` |
-| `"completedGraph"` | `30` |
-| `"escalationsExpectedButNotMade"` | `[]` (**the most important one**: no missed escalations) |
-| `"pathMatchesExpected"` | about `"26/30"` to `"28/30"` (the model's answers vary between runs) |
+| `"completedGraph"` | `50` |
+| `"escalationsExpectedButNotMade"` | **`["N15","N17"]`** — not `[]`. These two are a known, documented gap, not a setup problem on your side: see "50-fixture evaluation" in README.md for the root cause of each. On the original 30 fixtures this field was `[]` in every run; the 20 fixtures added in unseen wording are what broke the streak. If you see other IDs here, that is worth reporting. |
+| `"pathMatchesExpected"` | in the high 30s out of 50 (measured `39/50` on 30 Sep 2026; the model's answers vary between runs the same way they do on the smaller 30-fixture set) |
 
 The full result is saved as `test/results/intake-setup-<timestamp>.json`.
 
@@ -274,12 +276,14 @@ curl -sS -X POST http://localhost:4004/odata/v4/agent/resumeIntake \
 {
   "path": "draft_response",
   "modelCalls": 3,
-  "nodes": ["extract", "lookup_context", "resume", "classify", "check_policy", "choose_path", "draft_response"],
+  "nodes": ["extract", "lookup_context", "resume", "classify", "check_policy", "choose_path", "draft_response", "approval_gate"],
   "resume": "resumed from checkpoint at classify; 2 earlier nodes not re-run"
 }
 ```
 
 In terminal 1, only `[model] - [classify#1]` and `[model] - [draft_response]` appear after the restart. `extract` did not run again. The model's `path` can occasionally be different (for example `route_to_group`). The resume behaviour is what this step checks.
+
+The run does not finish here. `approval_gate` is the last node, and the run is now parked at `awaiting_approval` with nothing sent — step 11 releases it.
 
 > **Resuming any run.** A run that is still `running` after a crash, or that ended `failed` (for example after a model error), resumes the same way: `POST /odata/v4/agent/resumeIntake` with its `runID`. Calling it on a `completed` run returns the stored result without calling the model. All runs are listed at `http://localhost:4004/odata/v4/agent/IntakeRuns`.
 
@@ -334,6 +338,8 @@ curl -sS -u lead: "http://localhost:4004/odata/v4/agent/ApprovalEvents?\$filter=
 
 > Escalations that a **code** rule decided (a P1 signal or a refusal) do not wait here. They post immediately with `postedBy: code`, because the duty manager has to hear about a P1 straight away.
 
+---
+
 ## 12. Use the console instead of curl
 
 Everything above can also be done from a page in the browser, which is how a first-line agent would work.
@@ -357,6 +363,8 @@ Try it:
 
 > The page loads OpenUI5 1.148.0 from `sdk.openui5.org`, so it needs internet access. If the page stays blank, check the browser console for a failed request to that host.
 
+---
+
 ## 13. Stop
 
 Press **Ctrl+C** in terminal 1. When you are done for the day, stop the dev space on the BAS Dev Spaces page.
@@ -375,7 +383,8 @@ Messages below are quoted exactly as they appear.
 | ``The model `...` does not exist or you do not have access to it.`` | Your Groq account cannot use the model in `GROQ_MODEL` | Step 5, "list the models" |
 | `listen EADDRINUSE: address already in use :::4004` | Another server is still running, perhaps `cds watch` in another terminal | Press Ctrl+C in that terminal. If you cannot find it, run `pkill -f "[c]ds-serve"; pkill -f "[c]ds watch"`, then start again |
 | `curl: (7) Failed to connect to localhost port 4004 after 0 ms: Could not connect to server` | The server is not running | Step 7 in terminal 1 |
-| Terminal 1: `HTTP 429, waiting retry-after=...` | Groq's free-tier rate limit | Nothing. The request waits and continues |
+| Terminal 1: `HTTP 429, waiting retry-after=...` | Groq's free-tier rate limit, tokens per minute | Nothing. The request waits and continues |
+| Terminal 1: `` Rate limited by the model endpoint (retry-after=200): {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization ... service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199348, Requested 1113. Please try again in 3m19.152s. ...","type":"tokens","code":"rate_limit_exceeded"}} `` | Groq's free-tier **daily** token limit (200,000 TPD), separate from the per-minute one above. Running the 50-fixture replay (step 9) several times in one day is enough to hit this | **Stop and wait for the daily quota to reset.** Unlike the per-minute case, retrying does not help: `srv/lib/groq.js` waits for `retry-after` at most 3 times, then gives up and returns HTTP 429 to the caller, so a fixture run started near the daily cap fails with entries in `"httpErrors"` rather than finishing slowly |
 | Step 10c prints `[]` | The run finished before the kill | Run 10a again |
 | `jq: error (at <stdin>:0): Cannot iterate over null (null)` | The previous command returned an error, or `RUN` is empty | Run the command again without the `\| jq ...` part to see the actual response |
 | Terminal 1: `tail: /tmp/intake-server.log: file truncated` | Only if you watch the log with `tail -F`: a restart overwrote the log file | Nothing |
